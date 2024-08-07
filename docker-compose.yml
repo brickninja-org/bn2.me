@@ -1,0 +1,30 @@
+version: '4'
+
+services:
+  web:
+    image: ghcr.io/brickninja-org/bn2.me/web:${IMAGE_VERSION:-latest}
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://bn2me:bn2me@database:5432/bn2me?schema=public
+      - BASE_DOMAIN=localhost
+      - FORCE_COLOR=1
+      - JWT_SECRET=bn2.me-secret
+    ports:
+      - 4000:3000
+
+  database:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=bn2me
+      - POSTGRES_PASSWORD=bn2me
+      - POSTGRES_DB=bn2me
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - .docker/database:/var/lib/postgresql/data
+    ports:
+      - 54327:5432
+

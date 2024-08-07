@@ -1,0 +1,6 @@
+.header {
+  grid-template:
+    "icon title" 32px
+    "icon subtitle" 24px /
+    min-content 1fr;
+}

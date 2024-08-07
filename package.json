@@ -1,0 +1,23 @@
+{
+  "name": "bn2.me",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "turbo run dev --filter=web",
+    "dev:demo": "turbo run dev --filter=demo",
+    "prisma:studio": "npm run prisma:studio -w @bn2me/database",
+    "prisma:migrate-dev": "npm run prisma:migrate-dev -w @bn2me/database",
+    "build": "turbo run build",
+    "lint": "turbo run lint -- -f gha",
+    "test": "turbo run test",
+    "publish-package": "turbo run publish-package"
+  },
+  "devDependencies": {
+    "eslint-formatter-gha": "1.5.0",
+    "turbo": "2.0.9"
+  },
+  "packageManager": "npm@10.8.2"
+}

@@ -1,0 +1,10 @@
+{
+  "extends": "@brickninja-org/tsconfig/base",
+  "compilerOptions": {
+    "outDir": "./lib",
+
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+  },
+  "include": ["./src"],
+}

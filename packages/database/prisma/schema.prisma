@@ -1,0 +1,248 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  name  String  @unique
+  email String?
+
+  roles UserRole[]
+
+  sessions  UserSession[]  @relation("session")
+  providers UserProvider[] @relation("provider")
+  passkeys  Passkey[]      @relation("userPasskeys")
+
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  applications   Application[]   @relation("applications")
+  authorizations Authorization[] @relation("userAuthorization")
+
+  accounts       Account[]      @relation("userAccount")
+}
+
+enum UserRole {
+  Admin
+}
+
+model UserSession {
+  id String @id @default(uuid())
+  
+  info String
+
+  user   User @relation("session", fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  lastUsed  DateTime @default(now())
+}
+
+model UserProvider {
+  provider          UserProviderType
+  providerAccountId String
+  @@id([provider, providerAccountId])
+
+  displayName String
+  
+  token Json?
+  
+  passkey   Passkey?
+  passkeyId String? @unique
+
+  userId String
+  user   User   @relation("provider", fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  usedAt         DateTime?
+}
+
+model UserProviderRequest {
+  id    String @id @default(uuid())
+  state String @unique
+
+  provider UserProviderType
+  type     UserProviderRequestType
+
+  userId String?
+
+  redirect_uri  String
+  code_verifier String?
+  
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+enum UserProviderType {
+  github
+  google
+  passkey
+}
+
+enum UserProviderRequestType {
+  login
+  add
+}
+
+model Passkey {
+  id        String @id
+  publicKey Bytes
+
+  provider UserProvider @relation(fields: [id], references: [passkeyId], onDelete: Cascade)
+  
+  user           User   @relation("userPasskeys", fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  webAuthnUserId String
+  @@unique([webAuthnUserId, userId])
+
+  counter    BigInt
+  deviceType String
+  backedUp   Boolean
+  transports String[]
+}
+
+model Application {
+  id           String @default(uuid()) @id
+
+  type         ApplicationType
+
+  name         String   @unique
+  description  String   @default("")
+  public       Boolean  @default(false)
+  publicUrl    String   @default("")
+
+  privacyPolicyUrl  String @default("")
+  termsOfServiceUrl String @default("")
+  
+  imageId      String?
+  image        File?    @relation("applicationImage", fields: [imageId], references: [id], onDelete: SetNull)
+
+  clientId     String   @unique
+  clientSecret String?  @unique
+
+  callbackUrls String[] @default([])
+
+  ownerId      String
+  owner        User     @relation("applications", fields: [ownerId], references: [id], onDelete: Cascade)
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  authorizations Authorization[] @relation("appAuthorization")
+}
+
+enum ApplicationType {
+  Confidential
+  Public
+}
+
+model Authorization {
+  id String @default(uuid()) @id
+
+  type  AuthorizationType
+  token String
+
+  scope String[]
+
+  redirectUri   String?
+  codeChallenge String?
+
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  usedAt    DateTime?
+
+  applicationId String
+  application   Application @relation("appAuthorization", fields: [applicationId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation("userAuthorization", fields: [userId], references: [id], onDelete: Cascade)
+
+  accounts Account[] @relation("accountAuthorization")
+
+  @@unique([type, token])
+  @@unique([type, applicationId, userId])
+}
+
+enum AuthorizationType {
+  Code
+  AccessToken
+  RefreshToken
+}
+
+model ApiToken {
+  id String @default(uuid()) @id
+
+  name  String
+  token String
+
+  permissions String[]
+
+  accountId String
+  account   Account @relation("accountApiToken", fields: [accountId], references: [id], onDelete: Cascade)
+
+  errorCount Int @default(0)
+
+  usedAt DateTime?
+  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Account {
+  id String @default(uuid()) @id
+
+  accountId String
+  accountName String
+
+  displayName String?
+
+  verified Boolean @default(false)
+
+  userId String
+  user   User @relation("userAccount", fields: [userId], references: [id], onDelete: Cascade)
+
+  apiTokens ApiToken[] @relation("accountApiToken")
+  authorizations Authorization[] @relation("accountAuthorization")
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([accountId, userId])
+}
+
+model File {
+  id       String    @default(uuid()) @id
+
+  data      Bytes
+  sha256    String   @unique
+  type      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // relations
+  applicationImage Application[] @relation("applicationImage")
+}
+
+model ApiRequest {
+  id String @id @default(uuid())
+
+  endpoint String
+  queryParameters String
+  apiKey String?
+  
+  status Int
+  response String?
+  responseTimeMs Float
+  
+  createdAt DateTime @default(now()) 
+}

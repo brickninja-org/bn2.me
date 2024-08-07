@@ -1,0 +1,44 @@
+{
+  "name": "@bn2me/client",
+  "version": "0.0.1",
+  "description": "bn2.me client library",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && if test $CI; then npm run build:ci; else npm run build:local; fi",
+    "build:local": "tsup src/index.ts && tsc --emitDeclarationOnly --declaration --declarationMap",
+    "build:ci": "tsup src/index.ts --minify --dts",
+    "clean": "rm -rf dist/",
+    "lint": "eslint src",
+    "publish-package": "brickninja-org-publish-package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brickninja-org/bn2.me.git"
+  },
+  "keywords": [
+    "bn2me",
+    "bn2",
+    "lego",
+    "auth",
+    "oauth2"
+  ],
+  "files": [
+    "dist/"
+  ],
+  "author": "@brickninja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brickninja-org/bn2.me/issues"
+  },
+  "homepage": "https://github.com/brickninja-org/bn2.me#readme",
+  "devDependencies": {
+    "@brickninja-org/tsconfig": "file://../../../brick.ninja/packages/tsconfig",
+    "@typescript-eslint/eslint-plugin": "7.17.0",
+    "@typescript-eslint/parser": "7.17.0",
+    "eslint": "8.57.0",
+    "tsup": "8.2.3",
+    "typescript": "5.5.4",
+    "undici-types": "6.19.4"
+  }
+}

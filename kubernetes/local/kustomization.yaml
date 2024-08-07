@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: bn2me
+
+commonLabels:
+  app.kubernetes.io/part-of: bn2me
+
+resources:
+- ../base
+- database
+- web
+
+images:
+- name: ghcr.io/brickninja-org/bn2.me/web
+  newTag: latest

@@ -1,0 +1,10 @@
+kind: ConfigMap
+apiVersion: v1
+
+metadata:
+  name: web
+
+data:
+  db: postgresql://bn2me:857a45cc-3a98-4e66-b352-1ffdfe76ad1c@database:5432/bn2me?schema=public
+  domain: bn2me.kubernetes.localhost
+  jwt_secret: bn2.me-secret
