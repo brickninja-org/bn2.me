@@ -12,7 +12,9 @@ model User {
   id String @id @default(uuid())
 
   name  String  @unique
-  email String?
+
+  email UserEmail[] @relation("emails")
+  defaultEmail UserEmail? @relation("default")
 
   roles UserRole[]
 
@@ -31,6 +33,30 @@ model User {
 
 enum UserRole {
   Admin
+}
+
+model UserEmail {
+  id String @id @default(uuid())
+
+  email String
+  verified Boolean @default(false)
+
+  verificationToken String? @unique
+
+  userId String
+  user   User @relation("emails", fields: [userId], references: [id], onDelete: Cascade)
+
+  isDefaultForUserId String? @unique
+  isDefaultForUser User? @relation("default", fields: [isDefaultForUserId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  verifiedAt DateTime?
+
+  authorizations Authorization[]
+  applications   Application[] @relation("email")
+
+  @@unique([userId, email])
 }
 
 model UserSession {
@@ -132,6 +158,9 @@ model Application {
 
   ownerId      String
   owner        User     @relation("applications", fields: [ownerId], references: [id], onDelete: Cascade)
+
+  emailId      String?
+  email        UserEmail? @relation("email", fields: [emailId], references: [id], onDelete: SetNull)
   
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -166,6 +195,9 @@ model Authorization {
   userId String
   user   User   @relation("userAuthorization", fields: [userId], references: [id], onDelete: Cascade)
 
+  emailId String?
+  email   UserEmail? @relation(fields: [emailId], references: [id], onDelete: Cascade)
+
   accounts Account[] @relation("accountAuthorization")
 
   @@unique([type, token])
@@ -190,11 +222,10 @@ model ApiToken {
   account   Account @relation("accountApiToken", fields: [accountId], references: [id], onDelete: Cascade)
 
   errorCount Int @default(0)
-
-  usedAt DateTime?
   
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  usedAt DateTime?
 }
 
 model Account {

@@ -14,7 +14,7 @@
     "@prisma/client": "5.17.0"
   },
   "devDependencies": {
-    "@brickninja-org/tsconfig": "file://../../../brick.ninja/packages/tsconfig",
+    "@brickninja-org/tsconfig": "^0.0.1",
     "prisma": "5.17.0"
   }
 }
