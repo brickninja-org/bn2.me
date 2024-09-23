@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { SignerOptions, createSigner as jwtSigner, createVerifier as jwtVerifier } from 'fast-jwt';
+import { type SignerOptions, createSigner as jwtSigner, createVerifier as jwtVerifier } from 'fast-jwt';
 
 function getKey() {
   const key = process.env.JWT_SECRET;

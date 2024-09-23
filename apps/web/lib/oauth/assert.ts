@@ -1,4 +1,4 @@
-import { Falsy } from '@brickninja-org/helper/is';
+import type { Falsy } from '@brickninja-org/helper/is';
 import { OAuth2ErrorCode, OAuth2Error } from './error';
 
 /**

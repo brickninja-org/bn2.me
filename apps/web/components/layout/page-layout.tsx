@@ -1,11 +1,12 @@
-import { FC, ReactNode } from 'react';
-import { cn } from '@brickninja-org/ui';
+import type { FC, ReactNode } from 'react';
+
+import { cn } from '@brickninja-org/ui/lib';
 
 interface PageLayoutProps {
   children: ReactNode;
   thin?: boolean;
   className?: string;
-};
+}
 
 export const PageLayout: FC<PageLayoutProps> = ({ children, thin = false, className }) => {
   return (

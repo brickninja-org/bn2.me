@@ -3,9 +3,9 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { isString } from '@brickninja-org/helper/is';
-import { FormState } from '@brickninja-org/ui/components/form';
+import type { FormState } from '@brickninja-org/ui/components/form';
 
-import { Authorization, AuthorizationType } from '@bn2me/database';
+import { type Authorization, AuthorizationType } from '@bn2me/database';
 import { Scope } from '@bn2me/client';
 
 import { expiresAt } from '@/lib/date';
@@ -37,7 +37,7 @@ export async function authorize(params: AuthorizeActionParams, _: FormState, for
   }
 
   return authorizeInternal(params, accountIds);
-};
+}
 
 export async function authorizeInternal(
   { applicationId, redirect_uri, scopes, state, codeChallenge }: AuthorizeActionParams,

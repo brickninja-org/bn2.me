@@ -1,7 +1,7 @@
 'use client';
 
-import { Notice, NoticeProps } from '@brickninja-org/ui/components/notice';
-import { FC, ReactNode, createContext, useContext, useMemo, useState } from 'react';
+import { Notice, type NoticeProps } from '@brickninja-org/ui/components/notice';
+import { type FC, type ReactNode, createContext, useContext, useMemo, useState } from 'react';
 
 export interface NoticeContext {
   show: (notice: NoticeProps | null) => void

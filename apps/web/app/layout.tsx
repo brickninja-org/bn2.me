@@ -1,16 +1,15 @@
-import { ReactNode } from 'react';
+import '@/styles/app.css';
+// import '@brickninja-org/ui/styles/globals.css';
+
+import type { ReactNode } from 'react';
 import { Bitter } from 'next/font/google';
-// import localFont from 'next/font/local';
-
-import './globals.css';
-// import './variables.css';
-
-// import styles from './layout.module.css';
 import Link from 'next/link';
+
+import { cn } from '@brickninja-org/ui/lib';
+import { DataTableContext } from '@brickninja-org/ui/components/table/data-table-context';
+import { LinkButton } from '@brickninja-org/ui/components/form/button';
+
 import { getUser } from '@/lib/session';
-import { cn } from '@brickninja-org/ui/';
-// import { LinkButton } from '@brickninja-org/ui/components/Form/Button';
-// import { DataTableContext } from '@brickninja-org/ui/components/Table/DataTableContext';
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -21,16 +20,6 @@ const bitter = Bitter({
   weight: '700',
   variable: '--font-bitter',
 });
-
-/*
-const wotfard = localFont({
-  src: [
-    { path: '../fonts/wotfard-regular-webfont.woff2', weight: '400' },
-    { path: '../fonts/wotfard-medium-webfont.woff2', weight: '500' },
-  ],
-  variable: '--font-wotfard',
-});
-*/
 
 export const dynamic = 'force-dynamic';
 
@@ -43,24 +32,19 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <div className="flex flex-col min-h-[100svh]">
           <div className="sticky top-0 flex gap-4 items-center h-12 p-4 bg-white border-b z-[2]">
             {/* <Icon icon="gw2me" color="var(--color-brand)"/> */}
-            <Link href="/" className="">bn2.me</Link>
-            <div className="">by <a href="https://brick.ninja/">brick.ninja</a></div>
+            <Link href="/" className="mt-0.5 font-bitter text-xl underline-offset-2 hover:underline">bn2.me</Link>
+            <div className="hidden sm:inline-block">by <a href="https://brick.ninja/" className="text-red-700 underline-offset-2 hover:underline">brick.ninja</a></div>
             <nav>
-              {/*
-              <LinkButton appearance="menu" href="/discover" className={styles.mobileHidden}>Discover</LinkButton>
-              <LinkButton appearance="menu" href="/extension" className={styles.mobileHidden}>Extension</LinkButton>
-              */}
+              <LinkButton appearance="menu" href="/discover" className="hidden sm:inline-flex">Discover</LinkButton>
+              <LinkButton appearance="menu" href="/extension" className="hidden sm:inline-flex">Extension</LinkButton>
             </nav>
             <div className="ml-auto">
-              {/*<LinkButton appearance="menu" href={user ? '/profile' : '/login'} icon="user">{user ? user.name : 'Login'}</LinkButton>*/}
+              <LinkButton appearance="menu" href={user ? '/profile' : '/login'}>{user ? user.name : 'Login'}</LinkButton>
             </div>
           </div>
-          {/*
           <DataTableContext>
             {children}
           </DataTableContext>
-          */}
-          {children}
           <div className="flex justify-between gap-4 flex-wrap border-t p-4">
             <div className=""><b>bn2.me</b> by <a href="https://brick.ninja/">brick.ninja</a> © {new Date().getFullYear()}</div>
             <div className="flex gap-4 flex-wrap">

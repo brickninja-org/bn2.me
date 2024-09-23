@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -9,7 +10,7 @@ import { getSession } from '@/lib/session';
 import { PageLayout } from '@/components/layout/page-layout';
 import { LoginForm } from './form';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export default async function LoginPage() {
   const session = await getSession();
@@ -27,7 +28,11 @@ export default async function LoginPage() {
         <Notice>Logout successful</Notice>
       )}
 
-      <LoginForm />
+      <LoginForm/>
     </PageLayout>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Login',
+};

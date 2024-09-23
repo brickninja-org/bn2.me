@@ -4,7 +4,7 @@ import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Prisma, User } from '@bn2me/database';
+import { Prisma, type User } from '@bn2me/database';
 
 import { db } from '@/lib/db';
 

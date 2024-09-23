@@ -1,4 +1,4 @@
-import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
+import type { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
 import { LoginError } from 'app/login/form';
 

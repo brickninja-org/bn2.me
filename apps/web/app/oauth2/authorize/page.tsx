@@ -1,8 +1,10 @@
+import type { FC, ReactNode } from 'react';
 import { redirect } from 'next/navigation';
-import { Form, FormState } from '@brickninja-org/ui/components/form';
+import { Form, type FormState } from '@brickninja-org/ui/components/form';
+import { LinkButton } from '@brickninja-org/ui/components/form/button';
 import { Notice } from '@brickninja-org/ui/components/notice';
 
-import { AuthorizationType } from '@bn2me/database';
+import { AuthorizationType, type User } from '@bn2me/database';
 import { Scope } from '@bn2me/client';
 
 import { getSession, getUser } from '@/lib/session';
@@ -11,8 +13,9 @@ import { OAuth2ErrorCode } from '@/lib/oauth/error';
 import { createRedirectUrl } from '@/lib/redirect-url';
 import { LoginForm } from 'app/login/form';
 
-import { authorize, AuthorizeActionParams, authorizeInternal } from './actions';
+import { authorize, type AuthorizeActionParams, authorizeInternal } from './actions';
 import { getApplicationByClientId, validateRequest, type AuthorizeRequestParams } from './validate';
+import { hasBn2Scopes } from '@/lib/scope';
 
 interface AuthorizePageProps {
   searchParams: Partial<AuthorizeRequestParams> & Record<string, string>;
@@ -31,7 +34,7 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
 
   // get current user
   const session = await getSession();
-  const user = getUser();
+  const user = await getUser();
 
   // declare some variables for easier access
   const application = await getApplicationByClientId(request.client_id);
@@ -110,15 +113,35 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
         <>
           <p>To authorize this application, you need to log in first.</p>
           <LoginForm returnTo={returnUrl}/>
+          <LinkButton external href={cancelUrl.toString()} flex appearance="tertiary" className="">Cancel</LinkButton>
         </>
       ) : (
         <Form action={authorizeAction} initialState={autoAuthorizeState}>
-          <div className="">Form</div>
+          <div className="">
+            {newScopes.length === 0 ? (
+              <p>{application.name} wants to reauthorize access to your bn2.me account.</p>
+            ) : oldScopes.length === 0 ? (
+              <p>{application.name} wants to access the following data of your bn2.me account.</p>
+            ) : (
+              <p>{application.name} wants to access additional data.</p>
+            )}
+
+            {newScopes.length > 0 && renderScopes(newScopes, user)}
+          </div>
         </Form>
       )}
     </>
   );
 }
+
+export interface ScopeItemProps {
+  // icon: IconProp;
+  children: ReactNode;
+}
+
+const ScopeItem: FC<ScopeItemProps> = ({ /* icon, */ children }) => {
+  return <li className="grid [grid-template-columns:_16px_auto] gap-3 rounded-sm border leading-6"><div>{children}</div></li>;
+};
 
 function getPreviousAuthorization(applicationId: string, userId: string) {
   return db.authorization.findFirst({
@@ -134,4 +157,17 @@ function normalizeScopes(scopes: Set<Scope>): void {
   if (bn2Scopes.some((scope) => scopes.has(scope)) || scopes.has(Scope.Accounts_Verified)) {
     scopes.add(Scope.Accounts);
   }
+}
+
+function renderScopes(scopes: Scope[], user: User) {
+  return (
+    <ul className="m-0 p-0 list-none">
+      {scopes.includes(Scope.Identify) && <ScopeItem>Your username <strong>{user.name}</strong></ScopeItem>}
+      {hasBn2Scopes(scopes) && (
+        <ScopeItem>
+          <p className="">Read-only access to the brick.ninja API</p>
+        </ScopeItem>
+      )}
+    </ul>
+  );
 }
