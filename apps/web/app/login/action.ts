@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { UserProviderRequestType } from '@bn2me/database';
-import { FormState } from '@brickninja-org/ui/components/form';
+import type { FormState } from '@brickninja-org/ui/components/form';
 
 import { db } from '@/lib/db';
 import { getSessionOrRedirect } from '@/lib/session';

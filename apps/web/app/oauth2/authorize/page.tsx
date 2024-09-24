@@ -1,10 +1,11 @@
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
 import { Form, type FormState } from '@brickninja-org/ui/components/form';
 import { LinkButton } from '@brickninja-org/ui/components/form/button';
 import { Notice } from '@brickninja-org/ui/components/notice';
+// import { Select } from '@brickninja-org/ui/components/form/select';
 
-import { AuthorizationType, type User } from '@bn2me/database';
+import { AuthorizationType /*, type User, type UserEmail */ } from '@bn2me/database';
 import { Scope } from '@bn2me/client';
 
 import { getSession, getUser } from '@/lib/session';
@@ -15,7 +16,7 @@ import { LoginForm } from 'app/login/form';
 
 import { authorize, type AuthorizeActionParams, authorizeInternal } from './actions';
 import { getApplicationByClientId, validateRequest, type AuthorizeRequestParams } from './validate';
-import { hasBn2Scopes } from '@/lib/scope';
+// import { hasBn2Scopes } from '@/lib/scope';
 
 interface AuthorizePageProps {
   searchParams: Partial<AuthorizeRequestParams> & Record<string, string>;
@@ -39,19 +40,27 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
   // declare some variables for easier access
   const application = await getApplicationByClientId(request.client_id);
   const previousAuthorization = session ? await getPreviousAuthorization(application.id, session.userId) : undefined;
-  const previousScopes = new Set(previousAuthorization?.scope as Scope[]);
+  const previousScope = new Set(previousAuthorization?.scope as Scope[]);
   const previousAccountIds = previousAuthorization?.accounts.map(({ id }) => id) ?? [];
   const scopes = new Set(decodeURIComponent(request.scope).split(' ') as Scope[]);
   const redirect_uri = new URL(request.redirect_uri);
 
   // normalize the previous scopes
-  normalizeScopes(previousScopes);
+  normalizeScopes(previousScope);
 
-  const verifiedAccountsOnly = scopes.has(Scope.Accounts_Verified) && request.verified_accounts_only === 'true';
+  // if `include_granted_scopes` is set add all previous scopes to the current scopes
+  if(request.include_granted_scopes) {
+    previousScope.forEach((scope) => scopes.add(scope));
+  }
+
+  // normalize the current scopes
+  normalizeScopes(scopes);
+
+  // const verifiedAccountsOnly = scopes.has(Scope.Accounts_Verified) && request.verified_accounts_only === 'true';
 
   // get new/existing scopes
-  const newScopes = Array.from(scopes).filter((scope) => !previousScopes.has(scope));
-  const oldScopes = Array.from(previousScopes).filter((scope) => scopes.has(scope));
+  const newScopes = Array.from(scopes).filter((scope) => !previousScope.has(scope));
+  const oldScopes = Array.from(previousScope).filter((scope) => scopes.has(scope));
 
   // build params for the authorize action
   const authorizeActionParams: AuthorizeActionParams = {
@@ -80,8 +89,16 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
     redirect(errorUrl.toString());
   }
 
+  // get emails
+  /*
+  const emails = user && scopes.has(Scope.Email)
+    ? await db.userEmail.findMany({ where: { userId: user.id }, orderBy: { email: 'asc' }})
+    : [];
+  */
+
   // get accounts
-  const bn2Permissions = Array.from(scopes).filter((scope) => scope.startsWith('bn2:')).map((permission) => permission.substring(4));
+  // const bn2Permissions = Array.from(scopes).filter((scope) => scope.startsWith('bn2:')).map((permission) => permission.substring(4));
+  /*
   const accounts = session && scopes.has(Scope.Accounts)
     ? await db.account.findMany({
         where: { userId: session.userId },
@@ -92,6 +109,7 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
         }
       })
     : [];
+  */
 
   // build cancel url
   const cancelUrl = createRedirectUrl(redirect_uri, {
@@ -125,8 +143,6 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
             ) : (
               <p>{application.name} wants to access additional data.</p>
             )}
-
-            {newScopes.length > 0 && renderScopes(newScopes, user)}
           </div>
         </Form>
       )}
@@ -139,9 +155,9 @@ export interface ScopeItemProps {
   children: ReactNode;
 }
 
-const ScopeItem: FC<ScopeItemProps> = ({ /* icon, */ children }) => {
-  return <li className="grid [grid-template-columns:_16px_auto] gap-3 rounded-sm border leading-6"><div>{children}</div></li>;
-};
+// const ScopeItem: FC<ScopeItemProps> = ({ /* icon, */ children }) => {
+//   return <li className="grid [grid-template-columns:_16px_auto] gap-3 rounded-sm border leading-6"><div>{children}</div></li>;
+// };
 
 function getPreviousAuthorization(applicationId: string, userId: string) {
   return db.authorization.findFirst({
@@ -159,10 +175,27 @@ function normalizeScopes(scopes: Set<Scope>): void {
   }
 }
 
-function renderScopes(scopes: Scope[], user: User) {
+/*
+function renderScopes(scopes: Scope[], user: User & { defaultEmail: null | { id: string }}, emails: UserEmail[], emailId: undefined | string, returnUrl: string) {
   return (
     <ul className="m-0 p-0 list-none">
       {scopes.includes(Scope.Identify) && <ScopeItem>Your username <strong>{user.name}</strong></ScopeItem>}
+      {scopes.includes(Scope.Email) && (
+        <ScopeItem>
+          <p className="">Your email address</p>
+          <div className="flex gap-4 m-2">
+            {emails.length > 0 && (<Select name="email" options={emails.map(({ id, email }) => ({ label: email, value: id }))} defaultValue={emailId}/>)}
+          </div>
+        </ScopeItem>
+      )}
+      {(scopes.includes(Scope.Accounts_DisplayName) && scopes.includes(Scope.Accounts)) ? (
+        <ScopeItem>Your brick.ninja account names and custom display names</ScopeItem>
+      ) : scopes.includes(Scope.Accounts) ? (
+        <ScopeItem>Your brick.ninja account names</ScopeItem>
+      ) : scopes.includes(Scope.Accounts_DisplayName) && (
+        <ScopeItem>Custom display names for your brick.ninja accounts</ScopeItem>
+      )}
+      {scopes.includes(Scope.Accounts_Verified) && <ScopeItem>Your brick.ninja account verification status</ScopeItem>}
       {hasBn2Scopes(scopes) && (
         <ScopeItem>
           <p className="">Read-only access to the brick.ninja API</p>
@@ -171,3 +204,4 @@ function renderScopes(scopes: Scope[], user: User) {
     </ul>
   );
 }
+*/
