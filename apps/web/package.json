@@ -14,7 +14,7 @@
     "@bn2me/database": "*",
     "@brickninja-org/helper": "^0.0.1",
     "@brickninja-org/ui": "^0.0.12",
-    "@brickset-api/fetch": "0.0.16",
+    "@brickset-api/fetch": "0.0.17",
     "@simplewebauthn/browser": "10.0.0",
     "@simplewebauthn/server": "10.0.1",
     "aaguids": "0.0.7",
