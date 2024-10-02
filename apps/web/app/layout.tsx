@@ -1,5 +1,4 @@
-import '@/styles/app.css';
-// import '@brickninja-org/ui/styles/globals.css';
+import '@/styles/app.scss';
 
 import type { ReactNode } from 'react';
 import { Bitter } from 'next/font/google';
