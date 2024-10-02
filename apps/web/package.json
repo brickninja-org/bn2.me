@@ -31,7 +31,7 @@
   "devDependencies": {
     "@brickninja-org/eslint-config": "^0.0.2",
     "@brickninja-org/tsconfig": "^0.0.1",
-    "@brickset-api/types": "0.0.15",
+    "@brickset-api/types": "0.0.16",
     "@simplewebauthn/types": "10.0.0",
     "@testing-library/jest-dom": "6.5.0",
     "@testing-library/react": "16.0.1",
