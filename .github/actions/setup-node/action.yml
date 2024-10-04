@@ -8,9 +8,6 @@ inputs:
   npm-version:
     description: Version of npm
     required: true
-  npm-token:
-    description: The NPM token to authenticate with the private NPM package
-    required: true
   turbo-cache-key:
     description: The prefix for cache key for turbo or 'false' to disable caching
     required: false
@@ -33,9 +30,6 @@ runs:
       run: |
         npm install --global npm@${{ inputs.npm-version }}
         npm -v
-    - name: Authenticate with private NPM package
-      shell: bash
-      run: echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token }}" > ~/.npmrc
     - name: Install dependencies
       shell: bash
       run: npm ci
