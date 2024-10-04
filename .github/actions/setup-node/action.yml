@@ -24,7 +24,7 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         cache: npm
-        registry-url: 'https://registry.npmjs.org'
+        registry-url: 'https://npm.pkg.github.com'
     - name: Install latest npm
       shell: bash
       run: |
@@ -32,7 +32,7 @@ runs:
         npm -v
     - name: Install dependencies
       shell: bash
-      run: npm ci
+      run: npm ci --ignore-scripts
     - name: Cache turbo
       if: inputs.turbo-cache-key != 'false'
       uses: actions/cache@v4
