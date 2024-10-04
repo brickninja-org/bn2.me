@@ -30,6 +30,9 @@ runs:
       run: |
         npm install --global npm@${{ inputs.npm-version }}
         npm -v
+    - name: Authenticate with private NPM package
+      shell: bash
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
     - name: Install dependencies
       shell: bash
       run: npm ci
