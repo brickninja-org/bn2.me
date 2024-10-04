@@ -13,7 +13,7 @@ model User {
 
   name  String  @unique
 
-  email UserEmail[] @relation("emails")
+  emails UserEmail[] @relation("emails")
   defaultEmail UserEmail? @relation("default")
 
   roles UserRole[]

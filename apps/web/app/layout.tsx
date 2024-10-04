@@ -29,7 +29,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" className={cn(bitter.variable /*, wotfard.variable */)}>
       <body>
         <div className="flex flex-col min-h-[100svh]">
-          <div className="sticky top-0 flex gap-4 items-center h-12 p-4 bg-white border-b z-[2]">
+          <div className="sticky top-0 flex gap-4 items-center h-12 px-[--max-page-width--padding] bg-white border-b z-[3]">
             {/* <Icon icon="gw2me" color="var(--color-brand)"/> */}
             <Link href="/" className="mt-0.5 font-bitter text-xl underline-offset-2 hover:underline">bn2.me</Link>
             <div className="hidden sm:inline-block">by <a href="https://brick.ninja/" className="text-red-700 underline-offset-2 hover:underline">brick.ninja</a></div>
@@ -41,6 +41,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               <LinkButton appearance="menu" href={user ? '/profile' : '/login'}>{user ? user.name : 'Login'}</LinkButton>
             </div>
           </div>
+          <hr className="sticky top-12 -mb-[1px] h-[1px] bg-transparent z-[2]"/>
           <DataTableContext>
             {children}
           </DataTableContext>

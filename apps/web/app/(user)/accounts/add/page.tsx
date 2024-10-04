@@ -1,4 +1,4 @@
-import { PageLayout } from '@/components/layout/page-layout';
+import { PageLayout } from '@/components/layout/PageLayout';
 import { Headline } from '@brickninja-org/ui/components/headline';
 import { Metadata } from 'next';
 

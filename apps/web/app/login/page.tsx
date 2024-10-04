@@ -7,7 +7,7 @@ import { Headline } from '@brickninja-org/ui/components/headline';
 import { Notice } from '@brickninja-org/ui/components/notice';
 
 import { getSession } from '@/lib/session';
-import { PageLayout } from '@/components/layout/page-layout';
+import { PageLayout } from '@/components/layout/PageLayout';
 import { LoginForm } from './form';
 
 export const dynamic = 'force-dynamic';

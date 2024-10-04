@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 import { UserProviderType } from '@bn2me/database';
 import { FlexRow } from '@brickninja-org/ui/components/flex-row';
-import { Form } from '@brickninja-org/ui/components/form';
+import { Form } from '@brickninja-org/ui/components/form/form';
 import { Button } from '@brickninja-org/ui/components/form/button';
 import { Notice } from '@brickninja-org/ui/components/notice';
 
@@ -13,12 +13,14 @@ import { LoginErrorCookieName, UserCookieName } from '@/lib/cookie';
 import { db } from '@/lib/db';
 import { createVerifier } from '@/lib/jwt';
 // import { PasskeyAuthenticationButton } from '@/components/Passkey/PasskeyAuthenticationButton';
-import { NoticeContext } from '@/components/notice-context/notice-context';
+import { NoticeContext } from '@/components/notice-context/NoticeContext';
 
 import { providers } from 'app/auth/providers';
 import { GitHubIcon } from 'app/auth/github';
 import { GoogleIcon } from 'app/auth/google';
 import { login, type LoginOptions } from './action';
+import { DevLogin } from './dev-login';
+import { Icon } from '@brickninja-org/ui';
 
 interface LoginFormProps {
   returnTo?: string;
@@ -39,37 +41,37 @@ export const LoginForm: FC<LoginFormProps> = async ({ returnTo }) => {
   const error = getLoginErrorCookieValue();
 
   return (
-    <div className="">
-      <Form action={login.bind(null, 'login', options)}>
-        {error === LoginError.Unknown && (<Notice color="error">Unknown error</Notice>)}
-        {error === LoginError.WrongUser && (<Notice color="error">The login provider you tried to login with is not linked to your user.<br/>Please login with the login provider you have previously used. You can add additional login providers in your profile after successfully logging in.</Notice>)}
+    <div className="max-w-xl mx-auto">
+      <form>
+        {error === LoginError.Unknown && (<Notice type="error">Unknown error</Notice>)}
+        {error === LoginError.WrongUser && (<Notice type="error">The login provider you tried to login with is not linked to your user.<br/>Please login with the login provider you have previously used. You can add additional login providers in your profile after successfully logging in.</Notice>)}
         <NoticeContext>
           {prevUser ? (
-            <div style={{ marginBottom: 16 }}>
+            <div className="mb-4">
               <FlexRow align="between">
                 <span>Login as <b>{prevUser.name}</b></span>
                 <Button type="submit" formAction={switchUser} appearance="tertiary">Not you?</Button>
               </FlexRow>
             </div>
           ) : (
-            <Notice color="warning">If you have used gw2.me before, please <b>use the same login provider</b> to access your account. You can add additional providers after login.</Notice>
+            <Notice type="warning">If you have used bn2.me before, please <b>use the same login provider</b> to access your account. You can add additional providers after login.</Notice>
           )}
 
-          <div className="">
+          <div className="max-w-xl flex flex-col gap-2">
             {/* <PasskeyAuthenticationButton className={styles.button} options={options}/> */}
-            {availableProviders[UserProviderType.google] && (<Button className="" type="submit" name="provider" value="google" icon={<GoogleIcon/>}>Login with Google</Button>)}
-            {availableProviders[UserProviderType.github] && (<Button className="" type="submit" name="provider" value="github" icon={<GitHubIcon/>}>Login with GitHub</Button>)}
-            {/* process.env.NODE_ENV !== 'production' && (<DevLogin username={prevUser?.name}/>) */}
+            {availableProviders[UserProviderType.google] && (<Button className="w-full justify-center" type="submit" name="provider" value="google" icon={<GoogleIcon/>}>Login with Google</Button>)}
+            {availableProviders[UserProviderType.github] && (<Button className="w-full justify-center" type="submit" name="provider" value="github" icon={<GitHubIcon/>}>Login with GitHub</Button>)}
+            {process.env.NODE_ENV !== 'production' && (<DevLogin username={prevUser?.name}/>)}
           </div>
         </NoticeContext>
 
-        <div className="">
+        <div className="mt-4 py-3 px-4 border rounded-sm">
           <FlexRow>
-            {/* <Icon icon="cookie"/> */}
-            <p>By logging in you accept that gw2.me will store cookies in your browser.</p>
+            <Icon icon="cookie"/>
+            <p>By logging in you accept that bn2.me will store cookies in your browser.</p>
           </FlexRow>
         </div>
-      </Form>
+      </form>
     </div>
   );
 };

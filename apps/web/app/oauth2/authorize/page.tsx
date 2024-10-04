@@ -30,7 +30,7 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
   const { error, request } = await validateRequest(searchParams);
 
   if (error !== undefined) {
-    return <Notice color="error">{error}</Notice>;
+    return <Notice type="error">{error}</Notice>;
   }
 
   // get current user
