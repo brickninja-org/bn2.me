@@ -30,6 +30,7 @@ jobs:
       with:
         node-version: ${{ matrix.node }}
         npm-version: ${{ env.NPM_VERSION }}
+        npm-token: ${{ secrets.NPM_TOKEN }}
         turbo-cache-key: build
     - name: Run Build
       run: npm run build
@@ -44,6 +45,7 @@ jobs:
       with:
         node-version: 20
         npm-version: ${{ env.NPM_VERSION }}
+        npm-token: ${{ secrets.NPM_TOKEN }}
         turbo-cache-key: lint
     - name: Run Lint
       run: npm run lint
@@ -140,6 +142,7 @@ jobs:
       with:
         node-version: 20
         npm-version: ${{ env.NPM_VERSION }}
+        npm-token: ${{ secrets.NPM_TOKEN }}
         turbo-cache-key: test
     - name: Run Tests
       run: npm run test
@@ -206,6 +209,7 @@ jobs:
       with:
         node-version: 20
         npm-version: ${{ env.NPM_VERSION }}
+        npm-token: ${{ secrets.NPM_TOKEN }}
         turbo-cache-key: publish
     - name: Run Publish
       run: npm run publish-package -- --filter=@bn2me/${{ matrix.target }} --env-mode=loose
