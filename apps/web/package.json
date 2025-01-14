@@ -48,7 +48,7 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-mock-extended": "^3.0.7",
     "postcss": "8.4.47",
-    "sass": "1.79.4",
+    "sass": "1.83.4",
     "tailwindcss": "3.4.13",
     "ts-node": "10.9.2",
     "typescript": "5.6.2"
