@@ -1,13 +1,24 @@
 {
   "name": "@bn2me/client",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "bn2.me client library",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./pkce": {
+      "types": "./dist/pkce.d.ts",
+      "default": "./dist/pkce.js"
+    }
+  },
   "scripts": {
-    "build": "npm run clean && if test $CI; then npm run build:ci; else npm run build:local; fi",
-    "build:local": "tsup src/index.ts && tsc --emitDeclarationOnly --declaration --declarationMap",
-    "build:ci": "tsup src/index.ts --minify --dts",
+    "build": "pnpm run clean && if test $CI; then pnpm run build:ci; else pnpm run build:local; fi",
+    "build:local": "tsup src/index.ts src/pkce.ts && tsc --emitDeclarationOnly --declaration --declarationMap",
+    "build:ci": "tsup src/index.ts src/pkce.ts --minify --dts",
     "clean": "rm -rf dist/",
     "lint": "eslint src",
     "publish-package": "brickninja-org-publish-package"
@@ -33,12 +44,12 @@
   },
   "homepage": "https://github.com/brickninja-org/bn2.me#readme",
   "devDependencies": {
-    "@brickninja-org/eslint-config": "^0.0.2",
-    "@brickninja-org/publish-package": "^0.0.1",
-    "@brickninja-org/tsconfig": "^0.0.1",
+    "@brickninja-org/eslint-config": "0.0.5",
+    "@brickninja-org/publish-package": "0.0.1-rc.0",
+    "@brickninja-org/tsconfig": "0.0.2",
     "eslint": "8.57.1",
-    "tsup": "8.3.0",
-    "typescript": "5.6.2",
-    "undici-types": "6.19.8"
+    "tsup": "8.3.5",
+    "typescript": "5.7.2",
+    "undici-types": "7.2.0"
   }
 }

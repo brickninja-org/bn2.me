@@ -1,0 +1,27 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": [
+    "//"
+  ],
+  "tasks": {
+    "build": {
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
+    },
+    "dev": {
+      "dependsOn": [
+        "^build",
+        "demo-setup"
+      ]
+    },
+    "demo-setup": {
+      "cache": false,
+      "dependsOn": [
+        "^build",
+        "@bn2me/database#prisma:migrate"
+      ]
+    }
+  }
+}

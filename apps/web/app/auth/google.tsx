@@ -1,6 +1,8 @@
+import type { FC } from 'react';
+import type { ProviderConfig } from './providers';
+
 import { UserProviderType } from '@bn2me/database';
-import { ProviderConfig, getJsonIfOk } from './providers';
-import { FC } from 'react';
+import { getJsonIfOk } from './providers';
 import icon from './_icons/google.svg';
 import Image from 'next/image';
 

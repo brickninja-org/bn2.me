@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  database-old:
+    image: postgres:16.4-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=bn2me
+      - POSTGRES_PASSWORD=bn2me
+      - POSTGRES_DB=bn2me
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - .docker/database-pg16:/var/lib/postgresql/data

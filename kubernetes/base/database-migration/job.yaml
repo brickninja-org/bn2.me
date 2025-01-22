@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: database-migration
+
+spec:
+  ttlSecondsAfterFinished: 10
+  template:
+    spec:
+      tolerations:
+      - key: arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule
+      containers:
+      - name: database-migration
+        image: ghcr.io/brickninja-org/bn2.me/database-migration:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: web
+              key: db
+      restartPolicy: Never

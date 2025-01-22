@@ -1,6 +1,8 @@
 import 'server-only';
 
-import { UserProviderRequest, UserProviderType } from '@bn2me/database';
+import type { UserProviderRequest } from '@bn2me/database';
+
+import { UserProviderType } from '@bn2me/database';
 
 import { github } from './github';
 import { google } from './google';
@@ -22,7 +24,7 @@ export interface ProviderProfile {
   /** display name that is used on the provider side to identify the user */
   accountName: string;
 
-  /** username that should be used on gw2.me  */
+  /** username that should be used on bn2.me  */
   username: string;
 
   /** email */

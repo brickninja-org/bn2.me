@@ -16,6 +16,8 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
-    ".next/types/**/*.ts"
+    "**/.well-known/**/*.ts",
+    ".next/types/**/*.ts",
+    "postcss.config.mjs"
   ],
 }

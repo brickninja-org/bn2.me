@@ -1,0 +1,22 @@
+{
+  "extends": "@brickninja-org/tsconfig/nextjs",
+  "compilerOptions": {
+    // TODO: remove verbatimModuleSyntax override
+    "verbatimModuleSyntax": false,
+
+    "baseUrl": "./",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/lib/*": ["lib/*"],
+      "@/styles/*": ["styles/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    ".next/types/**/*.ts",
+    "postcss.config.mjs"
+  ],
+}

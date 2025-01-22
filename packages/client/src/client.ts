@@ -1,4 +1,5 @@
 import { Bn2MeApi } from './api';
+import { Bn2MeError, Bn2MeOAuthError } from './error';
 import { Bn2MeFedCM } from './fed-cm';
 import { type ClientInfo, type Options, Scope } from './types';
 import { jsonOrError } from './util';
@@ -26,11 +27,30 @@ export interface RefreshTokenParams {
 
 export interface TokenResponse {
   access_token: string,
+  issued_token_type: 'urn:ietf:params:oauth:token-type:access_token',
   token_type: 'Bearer',
   expires_in: number,
   refresh_token?: string,
   scope: string,
 }
+
+export interface RevokeTokenParams {
+  token: string;
+}
+
+export interface IntrospectTokenParams {
+  token: string;
+}
+
+export type IntrospectTokenResponse = {
+  active: true;
+  scope: string;
+  client_id: string;
+  token_type: 'Bearer';
+  exp?: number;
+} | {
+  active: false;
+};
 
 export class Bn2MeClient {
   #client_id: string;
@@ -95,8 +115,10 @@ export class Bn2MeClient {
       code, client_id: this.#client_id, redirect_uri,
     });
 
+    const headers: Record<string, string> = { 'Content-Type': 'application/x-www-form-urlencoded' };
+
     if(this.#client_secret) {
-      data.set('client_secret', this.#client_secret);
+      headers.Authorization = `Basic ${btoa(`${this.#client_id}:${this.#client_secret}`)}`;
     }
 
     if(code_verifier) {
@@ -105,7 +127,7 @@ export class Bn2MeClient {
 
     const token = await fetch(this.#getUrl('/api/token'), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers,
       body: data,
       cache: 'no-store'
     }).then(jsonOrError);
@@ -115,22 +137,105 @@ export class Bn2MeClient {
 
   async refreshToken({ refresh_token }: RefreshTokenParams): Promise<TokenResponse> {
     if(!this.#client_secret) {
-      throw new Error('client_secret required');
+      throw new Bn2MeError('client_secret required');
     }
 
     const data = new URLSearchParams({
       grant_type: 'refresh_token',
-      refresh_token, client_id: this.#client_id, client_secret: this.#client_secret,
+      refresh_token, client_id: this.#client_id,
     });
+
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic ${btoa(`${this.#client_id}:${this.#client_secret}`)}`,
+    };
 
     const token = await fetch(this.#getUrl('/api/token'), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers,
       body: data,
       cache: 'no-store',
     }).then(jsonOrError);
 
     return token;
+  }
+
+  async revokeToken({ token }: RevokeTokenParams): Promise<void> {
+    const body = new URLSearchParams({ token });
+
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    if(this.#client_secret) {
+      headers.Authorization = `Basic ${btoa(`${this.#client_id}:${this.#client_secret}`)}`;
+    }
+
+    await fetch(this.#getUrl('/api/token/revoke'), {
+      method: 'POST',
+      headers,
+      body,
+      cache: 'no-store',
+    }).then(jsonOrError);
+  }
+
+  async introspectToken({ token }: IntrospectTokenParams): Promise<IntrospectTokenResponse> {
+    const body = new URLSearchParams({ token });
+
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    if(this.#client_secret) {
+      headers.Authorization = `Basic ${btoa(`${this.#client_id}:${this.#client_secret}`)}`;
+    }
+
+    const response = await fetch(this.#getUrl('/api/token/introspect'), {
+      method: 'POST',
+      headers,
+      body,
+      cache: 'no-store',
+    }).then(jsonOrError);
+
+    return response;
+  }
+
+  /**
+   * Parses the search params received from bn2.me on the redirect url (code and state).
+   * If bn2.me returned an error response, this will throw an error.
+   *
+   * @returns The code and optional state.
+   */
+  parseAuthorizationResponseSearchParams(searchParams: URLSearchParams): { code: string, state: string | undefined } {
+    // make sure searchParams have iss set (see RFC 9207)
+    const expectedIssuer = this.#getUrl('/').origin;
+    const receivedIssuer = searchParams.get('iss');
+
+    if(!receivedIssuer) {
+      throw new Bn2MeError('Issuer Identifier verification failed: parameter `iss` is missing');
+    }
+
+    if(receivedIssuer !== expectedIssuer) {
+      throw new Bn2MeError(`Issuer Identifier verification failed: expected "${expectedIssuer}", got "${receivedIssuer}"`);
+    }
+
+    // check if `error` (and `error_description`/`error_uri` are set)
+    const error = searchParams.get('error');
+    if(error) {
+      const error_description = searchParams.get('error_description') ?? undefined;
+      const error_uri = searchParams.get('error_uri') ?? undefined;
+
+      throw new Bn2MeOAuthError(error, error_description, error_uri);
+    }
+
+    // get the code
+    const code = searchParams.get('code');
+    if(!code) {
+      throw new Bn2MeError('Parameter `code` is missing');
+    }
+
+    // get state if set
+    const state = searchParams.get('state') || undefined;
+
+    return { code, state };
   }
 
   api(access_token: string) {

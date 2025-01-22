@@ -5,10 +5,22 @@
   "kubernetes": {
     "fileMatch": ["kubernetes/.+\\.yaml$"]
   },
+  "ignorePaths": [
+    "**/node_modules/**",
+    "docker-compose.database-migration.yml"
+  ],
   "packageRules": [
     {
       "matchSourceUrls": "https://github.com/brickninja-org/brick.ninja",
       "groupName": "brickninja packages"
+    }, {
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["@simplewebauthn/**"],
+      "groupName": "SimpleWebAuthn"
+    }, {
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["@react-email/**", "react-email"],
+      "groupName": "react-email"
     }
   ],
   "customManagers": [

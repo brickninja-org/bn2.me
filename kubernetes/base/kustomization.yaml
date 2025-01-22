@@ -8,4 +8,6 @@ commonLabels:
 resources:
 - namespace.yaml
 - database
+- database-migration
 - web
+- demo

@@ -1,0 +1,8 @@
+{
+  "extends": "@brickninja-org/tsconfig/base",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "es2020"
+  },
+  "include": ["./setup.ts"]
+}

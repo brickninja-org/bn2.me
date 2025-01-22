@@ -1,8 +1,9 @@
-// import { Icon } from '@brickninja-org/ui';
+import { Icon } from '@brickninja-org/ui';
 
 import { db } from '@/lib/db';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { PageTitle } from '@/components/layout/PageTitle';
+import { ApplicationImage } from '@/components/application/ApplicationImage';
 
 export const revalidate = 300;
 
@@ -21,13 +22,15 @@ export default async function DiscoverPage() {
   return (
     <PageLayout>
       <PageTitle>Discover</PageTitle>
-      <p>Here are some of the applications that support bn2.me.</p>
-      <div className="">
+      <p className="mb-4">Here are some of the applications that support bn2.me.</p>
+      <div className="grid [grid-template-columns:repeat(auto-fill,minmax(320px,auto))] gap-4">
         {applications.map((app) => (
-          <a key={app.id} className="" href={app.publicUrl} target="_blank" rel="noreferrer nooper">
-            {/* TODO: Application image */}
-            <div className="">{app.name} {/* <Icon icon="external-link"/> */}</div>
-            <p>{app.description}</p>
+          <a key={app.id} className="grid grid-cols-[auto_1fr] grid-rows-[auto_auto] gap-[8px_16px] p-4 rounded-xs border hover:shadow-lg hover:border-gray-300 hover:translate-y-[-2px] transition-all will-change-transform" href={app.publicUrl} target="_blank" rel="noreferrer nooper">
+            <div className="order-1 row-span-2">
+              <ApplicationImage fileId={app.imageId} size={64}/>
+            </div>
+            <div className="order-2 col-start-2 font-medium text-lg">{app.name} <Icon icon="arrow-up-right"/></div>
+            <p className="order-3 col-start-2 row-start-2 m-0">{app.description}</p>
           </a>
         ))}
       </div>

@@ -1,3 +1,5 @@
+import { Bn2MeError } from './error';
+
 export async function jsonOrError(response: Response) {
   const isJson = response.headers.get('Content-Type') === 'application/json';
 
@@ -11,11 +13,11 @@ export async function jsonOrError(response: Response) {
       errorMessage = error.error_message;
     }
 
-    throw new Error(`bn2.me returned an error: ${errorMessage ?? 'Unknown error'}`);
+    throw new Bn2MeError(`bn2.me returned an error: ${errorMessage ?? 'Unknown error'}`);
   }
 
   if(!isJson) {
-    throw new Error('bn2.me did not return a valid JSON response');
+    throw new Bn2MeError('bn2.me did not return a valid JSON response');
   }
 
   return response.json();

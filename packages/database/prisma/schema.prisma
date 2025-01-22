@@ -138,8 +138,6 @@ model Passkey {
 model Application {
   id           String @default(uuid()) @id
 
-  type         ApplicationType
-
   name         String   @unique
   description  String   @default("")
   public       Boolean  @default(false)
@@ -151,11 +149,6 @@ model Application {
   imageId      String?
   image        File?    @relation("applicationImage", fields: [imageId], references: [id], onDelete: SetNull)
 
-  clientId     String   @unique
-  clientSecret String?  @unique
-
-  callbackUrls String[] @default([])
-
   ownerId      String
   owner        User     @relation("applications", fields: [ownerId], references: [id], onDelete: Cascade)
 
@@ -165,12 +158,42 @@ model Application {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  authorizations Authorization[] @relation("appAuthorization")
+  clients       Client[]       @relation("applicationClients")
 }
 
-enum ApplicationType {
+model Client {
+  id String @id @default(uuid())
+
+  type ClientType
+
+  callbackUrls String[] @default([])
+
+  applicationId String
+  application   Application @relation("applicationClients", fields: [applicationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorizations Authorization[] @relation("clientAuthorization")
+  secrets       ClientSecret[] @relation("clientSecret")
+}
+
+enum ClientType {
   Confidential
   Public
+}
+
+model ClientSecret {
+  id String @id @default(uuid())
+
+  secret String @unique
+
+  clientId String
+  client   Client @relation("clientSecret", fields: [clientId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  usedAt    DateTime?
 }
 
 model Authorization {
@@ -189,8 +212,8 @@ model Authorization {
   updatedAt DateTime  @updatedAt
   usedAt    DateTime?
 
-  applicationId String
-  application   Application @relation("appAuthorization", fields: [applicationId], references: [id], onDelete: Cascade)
+  clientId String
+  client Client @relation("clientAuthorization", fields: [clientId], references: [id], onDelete: Cascade)
 
   userId String
   user   User   @relation("userAuthorization", fields: [userId], references: [id], onDelete: Cascade)
@@ -201,7 +224,7 @@ model Authorization {
   accounts Account[] @relation("accountAuthorization")
 
   @@unique([type, token])
-  @@unique([type, applicationId, userId])
+  @@unique([type, clientId, userId])
 }
 
 enum AuthorizationType {

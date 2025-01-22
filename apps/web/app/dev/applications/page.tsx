@@ -1,0 +1,61 @@
+import { cache } from 'react';
+
+import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
+import { LinkButton } from '@brickninja-org/ui/components/form/Button';
+import { Headline } from '@brickninja-org/ui/components/headline/Headline';
+import { createDataTable } from '@brickninja-org/ui/components/table/DataTable';
+
+import { db } from '@/lib/db';
+import { getSessionOrRedirect } from '@/lib/session';
+import { ApplicationImage } from '@/components/application/ApplicationImage';
+import { PageLayout } from '@/components/layout/PageLayout';
+
+export const dynamic = 'force-dynamic';
+
+const getApplications = cache(async () => {
+  const session = await getSessionOrRedirect();
+
+  return db.application.findMany({
+    where: { ownerId: session.userId },
+    select: {
+      id: true,
+      name: true,
+      imageId: true,
+      clients: {
+        select: {
+          authorizations: {
+            select: { id: true },
+            where: { OR: [{ expiresAt: { gte: new Date() }}, { expiresAt: null }], type: { in: ['AccessToken', 'RefreshToken'] }},
+            distinct: 'userId'
+          },
+        }
+      }
+    },
+    orderBy: { createdAt: 'asc' },
+  });
+});
+
+export default async function DevPage() {
+  const applications = await getApplications();
+  const Applications = createDataTable(applications, ({ id }) => id);
+
+  return (
+    <PageLayout>
+      <Headline id="applications" actions={<LinkButton href="/dev/applications/create" icon="add">Create</LinkButton>}>Your Applications</Headline>
+
+      <Applications.Table>
+        <Applications.Column id="app" title="Application" sortBy="name">{({ name, imageId }) => (<FlexRow><ApplicationImage fileId={imageId}/>{name}</FlexRow>)}</Applications.Column>
+        <Applications.Column id="users" title="Users" sortBy={({ clients }) => clients.map(({ authorizations }) => authorizations.length).reduce(sumReducer, 0)}>{({ clients }) => clients.map(({ authorizations }) => authorizations.length).reduce(sumReducer, 0)}</Applications.Column>
+        <Applications.Column id="actions" title="Actions" small>{({ id }) => (<LinkButton href={`/dev/applications/${id}`} icon="settings">Manage</LinkButton>)}</Applications.Column>
+      </Applications.Table>
+    </PageLayout>
+  );
+}
+
+export const metadata = {
+  title: 'Your Applications'
+};
+
+function sumReducer(total: number, current: number) {
+  return total + current;
+}

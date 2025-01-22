@@ -1,11 +1,13 @@
 'use server';
 
+import type { FormState } from '@brickninja-org/ui/components/form/Form';
+import type { Authorization } from '@bn2me/database';
+
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { isString } from '@brickninja-org/helper/is';
-import type { FormState } from '@brickninja-org/ui/components/form';
 
-import { type Authorization, AuthorizationType } from '@bn2me/database';
+import { AuthorizationType } from '@bn2me/database';
 import { Scope } from '@bn2me/client';
 
 import { expiresAt } from '@/lib/date';
@@ -15,9 +17,10 @@ import { generateCode } from '@/lib/token';
 import { hasBn2Scopes } from '@/lib/scope';
 import { createRedirectUrl } from '@/lib/redirect-url';
 import { userCookie } from '@/lib/cookie';
+import { getFormDataString } from '@/lib/form-data';
 
 export interface AuthorizeActionParams {
-  applicationId: string,
+  clientId: string,
   redirect_uri: string,
   scopes: Scope[],
   state?: string,
@@ -29,23 +32,34 @@ export async function authorize(params: AuthorizeActionParams, _: FormState, for
   // get account ids from form
   const accountIds = formData.getAll('accounts').filter(isString);
 
+  // get email id from form
+  const emailId = getFormDataString(formData, 'email');
+
+  // get session
   const session = await getSession();
 
   if(session) {
     // make sure user cookie is set for better login flow later
-    cookies().set(userCookie(session.userId));
+    const cookieStore = await cookies();
+    cookieStore.set(userCookie(session.userId));
   }
 
-  return authorizeInternal(params, accountIds);
+  return authorizeInternal(params, accountIds, emailId);
 }
 
 export async function authorizeInternal(
-  { applicationId, redirect_uri, scopes, state, codeChallenge }: AuthorizeActionParams,
-  accountIds: string[]
+  { clientId, redirect_uri, scopes, state, codeChallenge }: AuthorizeActionParams,
+  accountIds: string[],
+  emailId: string | undefined
 ) {
   // verify at least one account was selected
   if((hasBn2Scopes(scopes) || scopes.includes(Scope.Accounts)) && accountIds.length === 0) {
     return { error: 'At least one account has to be selected.' };
+  }
+
+  // verify email was selected
+  if(scopes.includes(Scope.Email) && !emailId) {
+    return { error: 'Email has to be selected' };
   }
 
   // get session and verify
@@ -60,7 +74,7 @@ export async function authorizeInternal(
   try {
     const identifier = {
       type: AuthorizationType.Code,
-      applicationId,
+      clientId,
       userId: session.userId
     };
 
@@ -78,6 +92,7 @@ export async function authorizeInternal(
           token: generateCode(),
           expiresAt: expiresAt(60),
           accounts: { connect: accountIds.map((id) => ({ id })) },
+          emailId
         },
       }),
     ]);
@@ -88,7 +103,7 @@ export async function authorizeInternal(
   }
 
   // build redirect url with token and state
-  const url = createRedirectUrl(redirect_uri, {
+  const url = await createRedirectUrl(redirect_uri, {
     state,
     code: authorization.token,
   });

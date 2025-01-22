@@ -1,0 +1,74 @@
+@import 'tailwindcss';
+
+@source "../node_modules/@brickninja-org/ui/components";
+@source "../node_modules/@brickninja-org/ui/icons";
+
+@variant dark (&:is(.dark *));
+
+@theme {
+  --font-bitter: var(--font-bitter), serif;
+
+  --icon-size: 20px;
+
+  --max-page-width: 1400px;
+  --max-page-width--padding: max(16px, (100vw - var(--max-page-width) + 16px) / 2);
+
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-black);
+  --color-brand: var(--color-red-800);
+  --color-focus: var(--color-blue-600);
+  --color-error: var(--color-red-600);
+  --color-muted: var(--color-gray-700);
+  --color-dark: var(--color-gray-300);
+  --color-light: var(--color-gray-100);
+}
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+
+  /*
+    The default border color has changed to `currentColor` in Tailwind CSS v4,
+    so we've added these compatibility styles to make sure everything still
+    looks the same as it did with Tailwind CSS v3.
+
+    If we ever want to remove these styles, we need to add an explicit border
+    color utility to any element that depends on these defaults.
+  */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  p {
+    @apply mb-6 leading-normal;
+  }
+
+  p:last-child {
+    @apply mb-0;
+  }
+
+  a {
+    @apply text-inherit;
+  }
+
+  a:where(:any-link) {
+    @apply text-brand underline underline-offset-2 decoration-2 decoration-transparent ease-in transition-colors duration-300;
+  }
+
+  a:where(:any-link):hover {
+    @apply decoration-current transition-colors ease-out duration-150;
+  }
+
+  select {
+    @apply w-full text-ellipsis whitespace-nowrap;
+  }
+
+  li {
+    @apply relative;
+  }
+}

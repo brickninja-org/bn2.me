@@ -1,23 +1,29 @@
 {
   "name": "bn2.me",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev:web": "turbo run dev --filter=web",
     "dev:demo": "turbo run dev --filter=demo",
-    "prisma:studio": "npm run prisma:studio -w @bn2me/database",
-    "prisma:migrate-dev": "npm run prisma:migrate-dev -w @bn2me/database",
+    "dev:emails": "turbo run dev --filter=@bn2me/emails",
+    "prisma:studio": "pnpm run --filter @bn2me/database prisma:studio",
+    "prisma:migrate-dev": "pnpm run --filter @bn2me/database prisma:migrate-dev",
     "build": "turbo run build",
     "lint": "turbo run lint --continue -- -f gha",
     "test": "turbo run test",
     "publish-package": "turbo run publish-package"
   },
   "devDependencies": {
-    "eslint-formatter-gha": "1.5.1",
-    "turbo": "2.1.3"
+    "eslint-formatter-gha": "1.5.2",
+    "turbo": "2.3.3",
+    "typescript": "5.7.2"
   },
-  "packageManager": "npm@10.8.3"
+  "pnpm": {
+    "overrides": {
+      "react": "19.0.0",
+      "react-dom": "19.0.0",
+      "@types/react": "19.0.2",
+      "@types/react-dom": "19.0.2"
+    }
+  },
+  "packageManager": "pnpm@9.15.1"
 }

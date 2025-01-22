@@ -1,18 +1,16 @@
 import 'server-only';
 
-import { cache } from 'react';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-
-import { Prisma, type User } from '@bn2me/database';
-
 import { db } from '@/lib/db';
-
+import { cache } from 'react';
 import { SessionCookieName } from './cookie';
+import { Prisma } from '@bn2me/database';
+import { redirect } from 'next/navigation';
 
 /** Get the current session */
 export const getSession = cache(async function getSession(): Promise<{ id: string, userId: string } | undefined> {
-  const sessionId = cookies().get(SessionCookieName)?.value;
+  const cookieStore = await cookies();
+  const sessionId = cookieStore.get(SessionCookieName)?.value;
 
   return sessionId
     ? await getSessionFromDb(sessionId)
@@ -30,12 +28,19 @@ export async function getSessionOrRedirect() {
 }
 
 /** Get the user for the current session */
-export const getUser = cache(async function getUser(): Promise<User | undefined> {
+export const getUser = cache(async function getUser() {
   const session = await getSession();
 
-  return session
-    ? (await db.user.findUnique({ where: { id: session.userId }}) ?? undefined)
-    : undefined;
+  if(!session) {
+    return undefined;
+  }
+
+  const user = await db.user.findUnique({
+    where: { id: session.userId },
+    include: { defaultEmail: { select: { id: true, email: true }}}
+  });
+
+  return user ?? undefined;
 });
 
 

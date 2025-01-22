@@ -1,0 +1,8 @@
+{
+  "root": true,
+
+  "extends": [
+    "next/core-web-vitals",
+    "@brickninja-org/eslint-config/react"
+  ]
+}

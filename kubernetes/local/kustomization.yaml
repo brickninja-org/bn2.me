@@ -9,7 +9,14 @@ resources:
 - ../base
 - database
 - web
+- demo
 
 images:
 - name: ghcr.io/brickninja-org/bn2.me/web
+  newTag: latest
+
+- name: ghcr.io/brickninja-org/bn2.me/database-migration
+  newTag: latest
+
+- name: ghcr.io/brickninja-org/bn2.me/demo
   newTag: latest

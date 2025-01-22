@@ -64,12 +64,6 @@ spec:
               name: web
               key: github_client_secret
               optional: true
-        - name: STEAM_API_KEY
-          valueFrom:
-            configMapKeyRef:
-              name: web
-              key: steam_api_key
-              optional: true
         - name: GOOGLE_CLIENT_ID
           valueFrom:
             configMapKeyRef:
@@ -81,6 +75,30 @@ spec:
             configMapKeyRef:
               name: web
               key: google_client_secret
+              optional: true
+        - name: SMTP_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: web
+              key: smtp_host
+              optional: true
+        - name: SMTP_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: web
+              key: smtp_port
+              optional: true
+        - name: SMTP_USER
+          valueFrom:
+            configMapKeyRef:
+              name: web
+              key: smtp_user
+              optional: true
+        - name: SMTP_PASS
+          valueFrom:
+            configMapKeyRef:
+              name: web
+              key: smtp_pass
               optional: true
         ports:
         - containerPort: 3000

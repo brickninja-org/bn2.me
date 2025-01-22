@@ -1,0 +1,7 @@
+{
+  "root": true,
+
+  "extends": ["@brickninja-org/eslint-config"],
+
+  "ignorePatterns": ["dist/**"]
+}

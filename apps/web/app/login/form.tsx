@@ -1,24 +1,26 @@
 import type { FC } from 'react';
+import type { LoginOptions } from './action';
+
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { UserProviderType } from '@bn2me/database';
-import { FlexRow } from '@brickninja-org/ui/components/flex-row';
-import { Form } from '@brickninja-org/ui/components/form/form';
-import { Button } from '@brickninja-org/ui/components/form/button';
-import { Notice } from '@brickninja-org/ui/components/notice';
+import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
+import { Button } from '@brickninja-org/ui/components/form/Button';
+import { Form } from '@brickninja-org/ui/components/form/Form';
+import { Notice } from '@brickninja-org/ui/components/notice/Notice';
 
 import { LoginErrorCookieName, UserCookieName } from '@/lib/cookie';
 import { db } from '@/lib/db';
 import { createVerifier } from '@/lib/jwt';
-// import { PasskeyAuthenticationButton } from '@/components/Passkey/PasskeyAuthenticationButton';
-import { NoticeContext } from '@/components/notice-context/NoticeContext';
+import { NoticeContext } from '@/components/notice/NoticeContext';
+import { PasskeyAuthenticationButton } from '@/components/passkey/PasskeyAuthenticationButton';
 
 import { providers } from 'app/auth/providers';
 import { GitHubIcon } from 'app/auth/github';
 import { GoogleIcon } from 'app/auth/google';
-import { login, type LoginOptions } from './action';
+import { login } from './action';
 import { DevLogin } from './dev-login';
 import { Icon } from '@brickninja-org/ui';
 
@@ -34,15 +36,15 @@ export const LoginForm: FC<LoginFormProps> = async ({ returnTo }) => {
     userId: prevUser?.id,
   };
 
-  const availableProviders = Object.fromEntries(Object.entries(providers).map(
+  const availableProviders = Object.fromEntries(Object.entries({ ...providers, [UserProviderType.passkey]: true }).map(
     ([provider, config]) => [provider, config !== undefined && (!prevUser || prevUser.providers.some((p) => p.provider === provider))] as const
   )) as Record<UserProviderType, boolean>;
 
-  const error = getLoginErrorCookieValue();
+  const error = await getLoginErrorCookieValue();
 
   return (
     <div className="max-w-xl mx-auto">
-      <form>
+      <Form action={login.bind(null, 'login', options)}>
         {error === LoginError.Unknown && (<Notice type="error">Unknown error</Notice>)}
         {error === LoginError.WrongUser && (<Notice type="error">The login provider you tried to login with is not linked to your user.<br/>Please login with the login provider you have previously used. You can add additional login providers in your profile after successfully logging in.</Notice>)}
         <NoticeContext>
@@ -50,7 +52,7 @@ export const LoginForm: FC<LoginFormProps> = async ({ returnTo }) => {
             <div className="mb-4">
               <FlexRow align="between">
                 <span>Login as <b>{prevUser.name}</b></span>
-                <Button type="submit" formAction={switchUser} appearance="tertiary">Not you?</Button>
+                <Button type="submit" formAction={switchUser}>Not you?</Button>
               </FlexRow>
             </div>
           ) : (
@@ -58,26 +60,27 @@ export const LoginForm: FC<LoginFormProps> = async ({ returnTo }) => {
           )}
 
           <div className="max-w-xl flex flex-col gap-2">
-            {/* <PasskeyAuthenticationButton className={styles.button} options={options}/> */}
-            {availableProviders[UserProviderType.google] && (<Button className="w-full justify-center" type="submit" name="provider" value="google" icon={<GoogleIcon/>}>Login with Google</Button>)}
-            {availableProviders[UserProviderType.github] && (<Button className="w-full justify-center" type="submit" name="provider" value="github" icon={<GitHubIcon/>}>Login with GitHub</Button>)}
+            {availableProviders[UserProviderType.passkey] && <PasskeyAuthenticationButton className="justify-center" options={options}/>}
+            {availableProviders[UserProviderType.google] && (<Button className="justify-center" type="submit" name="provider" value="google" icon={<GoogleIcon/>}>Login with Google</Button>)}
+            {availableProviders[UserProviderType.github] && (<Button className="justify-center" type="submit" name="provider" value="github" icon={<GitHubIcon/>}>Login with GitHub</Button>)}
             {process.env.NODE_ENV !== 'production' && (<DevLogin username={prevUser?.name}/>)}
           </div>
         </NoticeContext>
 
-        <div className="mt-4 py-3 px-4 border rounded-sm">
+        <div className="mt-4 py-3 px-4 border rounded-xs">
           <FlexRow>
             <Icon icon="cookie"/>
             <p>By logging in you accept that bn2.me will store cookies in your browser.</p>
           </FlexRow>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };
 
 export async function getPreviousUser() {
-  const jwt = cookies().get(UserCookieName)?.value;
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get(UserCookieName)?.value;
 
   if(!jwt) {
     return undefined;
@@ -111,7 +114,8 @@ export async function getPreviousUser() {
 async function switchUser() {
   'use server';
 
-  cookies().delete(UserCookieName);
+  const cookieStore = await cookies();
+  cookieStore.delete(UserCookieName);
 
   revalidatePath('/login');
   redirect('/login');
@@ -124,8 +128,9 @@ export const enum LoginError {
   WrongUser,
 }
 
-export function getLoginErrorCookieValue(): LoginError | undefined {
-  const errorCookie = cookies().get(LoginErrorCookieName)?.value;
+export async function getLoginErrorCookieValue(): Promise<LoginError | undefined> {
+  const cookieStore = await cookies();
+  const errorCookie = cookieStore.get(LoginErrorCookieName)?.value;
 
   if(errorCookie === undefined) {
     return undefined;

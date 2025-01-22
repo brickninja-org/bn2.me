@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: database
+  name: database-pg17
 
 spec:
   replicas: 1
   revisionHistoryLimit: 1
   selector:
     matchLabels:
-      name: database
+      name: database-pg17
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        name: database
+        name: database-pg17
     spec:
       tolerations:
       - key: arch
@@ -23,12 +23,12 @@ spec:
         value: arm64
         effect: NoSchedule
       volumes:
-      - name: database-data
+      - name: database-pg17-data
         persistentVolumeClaim:
-          claimName: database
+          claimName: database-pg17
       containers:
-      - name: database
-        image: postgres:17-alpine
+      - name: database-pg17
+        image: postgres:17.2-alpine
         resources:
           requests:
             memory: "256Mi"
@@ -43,15 +43,15 @@ spec:
         - name: POSTGRES_USER
           valueFrom:
             configMapKeyRef:
-              name: database
+              name: database-pg17
               key: user
         - name: POSTGRES_PASSWORD
           valueFrom:
             configMapKeyRef:
-              name: database
+              name: database-pg17
               key: password
         - name: POSTGRES_DB
-          value: gw2me
+          value: bn2me
         - name: PGDATA
           value: /var/lib/postgresql/data/pgdata
 
@@ -80,7 +80,7 @@ spec:
           successThreshold: 1
           failureThreshold: 3
         volumeMounts:
-        - name: database-data
+        - name: database-pg17-data
           mountPath: /var/lib/postgresql/data
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File

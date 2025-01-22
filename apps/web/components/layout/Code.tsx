@@ -1,8 +1,7 @@
-import { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 
 import { Source_Code_Pro } from 'next/font/google';
 import { tv } from 'tailwind-variants';
-
 import { cn } from '@brickninja-org/ui';
 
 interface CodeProps {
@@ -32,7 +31,7 @@ const code = tv({
     inline: false,
   },
   compoundVariants: [
-    { borderless: false, inline: true, class: 'px-1 rounded-sm border border-gray-200 bg-gray-100' }, // inlineBorder
+    { borderless: false, inline: true, class: 'px-1 rounded-xs border border-gray-200 bg-gray-100' }, // inlineBorder
     { borderless: true, inline: true, class: '' }, // inline
     { borderless: true, inline: false, class: 'my-4 overflow-x-auto' }, // code
     { borderless: false, inline: false, class: 'my-4 -ml-4 p-4 rounded-e-sm border border-l-0 border-gray-200 bg-gray-100 overflow-x-auto' }, // codeBorder

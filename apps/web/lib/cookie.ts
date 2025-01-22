@@ -1,7 +1,6 @@
 import type { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
 import { LoginError } from 'app/login/form';
-
 import { createSigner } from './jwt';
 
 const baseDomain = process.env.BASE_DOMAIN;

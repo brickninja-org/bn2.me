@@ -1,0 +1,8 @@
+{
+  "extends": "@brickninja-org/tsconfig/base",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "jsx": "react-jsx"
+  },
+  "include": ["./emails"],
+}

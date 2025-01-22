@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { revalidatePath } from 'next/cache';
+
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Headline } from '@brickninja-org/ui/components/headline';
-import { Notice } from '@brickninja-org/ui/components/notice';
+import { Headline } from '@brickninja-org/ui/components/headline/Headline';
+import { Notice } from '@brickninja-org/ui/components/notice/Notice';
 
 import { getSession } from '@/lib/session';
 import { PageLayout } from '@/components/layout/PageLayout';
@@ -16,15 +16,16 @@ export default async function LoginPage() {
   const session = await getSession();
 
   if (session) {
-    revalidatePath('/profile');
     redirect('/profile');
   }
+
+  const cookieStore = await cookies();
 
   return (
     <PageLayout thin>
       <Headline id="login">Login</Headline>
 
-      {cookies().has('logout') && (
+      {cookieStore.has('logout') && (
         <Notice>Logout successful</Notice>
       )}
 

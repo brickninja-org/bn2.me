@@ -1,0 +1,44 @@
+{
+  "name": "@bn2me/emails",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "scripts": {
+    "dev": "email dev",
+    "build": "pnpm run clean && if test $CI; then pnpm run build:ci; else pnpm run build:local; fi",
+    "build:local": "tsc --declaration --declarationMap",
+    "build:ci": "tsc --declaration",
+    "clean": "rm -rf dist/",
+    "lint": "eslint emails"
+  },
+  "devDependencies": {
+    "@brickninja-org/eslint-config": "0.0.5",
+    "@brickninja-org/tsconfig": "0.0.2",
+    "@react-email/render": "1.0.3",
+    "@types/react": "19.0.2",
+    "eslint": "8.57.1",
+    "react-email": "3.0.4",
+    "typescript": "5.7.2"
+  },
+  "dependencies": {
+    "@react-email/body": "0.0.11",
+    "@react-email/column": "0.0.13",
+    "@react-email/container": "0.0.15",
+    "@react-email/head": "0.0.12",
+    "@react-email/html": "0.0.11",
+    "@react-email/img": "0.0.11",
+    "@react-email/link": "0.0.12",
+    "@react-email/preview": "0.0.12",
+    "@react-email/row": "0.0.12",
+    "@react-email/section": "0.0.16",
+    "@react-email/text": "0.0.11"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}
