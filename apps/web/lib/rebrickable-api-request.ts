@@ -10,7 +10,7 @@ import { db } from './db';
 
 const fetchOptions: FetchOptions = {};
 
-export async function fetchRebrickableApi<Url extends KnownEndpoint | (string & {})>(endpoint: Url, options: OptionsByEndpoint<Url>): Promise<EndpointType<url>> {
+export async function fetchRebrickableApi<Url extends KnownEndpoint | (string & {})>(endpoint: Url, options: OptionsByEndpoint<Url>): Promise<EndpointType<Url>> {
   const url = new URL(endpoint, 'https://rebrickable.com/');
 
   const startTime = performance.now();
@@ -18,6 +18,7 @@ export async function fetchRebrickableApi<Url extends KnownEndpoint | (string & 
   let response;
   try {
     console.log(`> ${endpoint}`, options);
+    // @ts-expect-error - this is a known issue with the fetch function
     response = await fetch<Url>(endpoint, { ...options, ...fetchOptions });
   } catch (error) {
     console.error(error);

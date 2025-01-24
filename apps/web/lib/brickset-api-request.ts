@@ -13,6 +13,7 @@ export async function fetchBricksetApi<Url extends KnownEndpoint | (string & {})
   let response;
   try {
     console.log(`> ${endpoint}`, options);
+    // @ts-expect-error - this is a known issue with the fetch function
     response = await fetch<Url>(endpoint, { ...options, ...fetchOptions });
 
     if (Array.isArray(response) && response.length === 2) {
@@ -60,7 +61,7 @@ export async function fetchBricksetApi<Url extends KnownEndpoint | (string & {})
 
 function getAccessTokenFromOptions(options: AuthenticatedOptions | Record<never, never>): string | undefined {
   if ('accessToken' in options) {
-    return options.accessToken;
+    return options.accessToken as string;
   }
 
   return undefined;

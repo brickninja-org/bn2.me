@@ -139,11 +139,11 @@ importers:
         specifier: 1.0.3
         version: 1.0.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@rebrickableapi/fetch':
-        specifier: ^0.0.5
-        version: 0.0.5(@rebrickableapi/types@0.0.4)
+        specifier: ^0.0.6
+        version: 0.0.6(@rebrickableapi/types@0.0.5)
       '@rebrickableapi/types':
-        specifier: ^0.0.4
-        version: 0.0.4
+        specifier: ^0.0.5
+        version: 0.0.5
       '@simplewebauthn/browser':
         specifier: 13.0.0
         version: 13.0.0
@@ -2385,13 +2385,13 @@ packages:
     peerDependencies:
       react: 19.0.0
 
-  '@rebrickableapi/fetch@0.0.5':
-    resolution: {integrity: sha512-vwuVeuLUlIZDz5cAU4arq7MWMgEgdromv2vKQKybCN+QTN/iY0nHzxS1VSUTcp3ClPL0OLd46U7eA3O2CsmJ0g==}
+  '@rebrickableapi/fetch@0.0.6':
+    resolution: {integrity: sha512-0fa2LJkGTzpeKoa8ulbqHcXb3bZGEYxYx1vmqcX+2FEvd69TNhFN0mcbH8IDrKKtFYO5CLVcfHuvgHl0auHQyw==}
     peerDependencies:
-      '@rebrickableapi/types': ~0.0.4
+      '@rebrickableapi/types': ~0.0.5
 
-  '@rebrickableapi/types@0.0.4':
-    resolution: {integrity: sha512-9RH16Z/EonCHfNGncSC3tpHWP3dRXycmS8adDtcahKDWHxxTuOBYm3uOSH5PDjTQFPj7fEM0MtHOAYm63mBbNQ==}
+  '@rebrickableapi/types@0.0.5':
+    resolution: {integrity: sha512-OACkH4db+aJx67xrD5VQ0lzmxaTkdisERnJhLxmJc+hWq/75yPTEfbXjVXxNc7aM0vDML8WyMtD6MEYzKYYbZQ==}
 
   '@rollup/rollup-android-arm-eabi@4.28.1':
     resolution: {integrity: sha512-2aZp8AES04KI2dy3Ss6/MDjXbwBzj+i0GqKtWXgw2/Ma6E4jJvujryO6gJAghIRVz7Vwr9Gtl/8na3nDUKpraQ==}
@@ -8523,11 +8523,11 @@ snapshots:
       '@react-types/shared': 3.26.0(react@19.0.0)
       react: 19.0.0
 
-  '@rebrickableapi/fetch@0.0.5(@rebrickableapi/types@0.0.4)':
+  '@rebrickableapi/fetch@0.0.6(@rebrickableapi/types@0.0.5)':
     dependencies:
-      '@rebrickableapi/types': 0.0.4
+      '@rebrickableapi/types': 0.0.5
 
-  '@rebrickableapi/types@0.0.4': {}
+  '@rebrickableapi/types@0.0.5': {}
 
   '@rollup/rollup-android-arm-eabi@4.28.1':
     optional: true
