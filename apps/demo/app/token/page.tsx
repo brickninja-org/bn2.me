@@ -89,7 +89,7 @@ export default async function TokenPage({ searchParams: asyncSearchParams }: Pag
       </Label>
 
       <FlexRow>
-        <Button icon="revision" type="submit" formAction={refreshTokenAction} disabled={!refresh_token}>Refresh Token</Button>
+        <Button icon={undefined /* "revision" */} type="submit" formAction={refreshTokenAction} disabled={!refresh_token}>Refresh Token</Button>
         <Button icon="delete" type="submit" formAction={revokeAccessToken} disabled={!access_token}>Revoke access_token</Button>
         <Button icon="delete" type="submit" formAction={revokeRefreshToken} disabled={!refresh_token}>Revoke refresh_token</Button>
       </FlexRow>

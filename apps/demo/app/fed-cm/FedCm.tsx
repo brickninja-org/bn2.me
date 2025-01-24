@@ -85,7 +85,7 @@ export const FedCm: FC<FedCmProps> = ({ clientId, bn2meUrl }) => {
       )}
 
       <FlexRow>
-        <Button onClick={handleClick} icon={abort ? 'loading' : 'bn2me'}>Trigger FedCM</Button>
+        <Button onClick={handleClick} icon={abort ? 'loading' : undefined /* 'bn2me' */}>Trigger FedCM</Button>
         {abort && <Button onClick={() => { abort.abort(); setAbort(undefined); }}>Cancel</Button>}
       </FlexRow>
 
