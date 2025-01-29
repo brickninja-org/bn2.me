@@ -65,7 +65,7 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-mock-extended": "4.0.0-beta1",
     "postcss": "8.5.1",
-    "tailwindcss": "4.0.0-beta.9",
+    "tailwindcss": "4.0.1",
     "ts-node": "10.9.2",
     "typescript": "5.7.2"
   }
