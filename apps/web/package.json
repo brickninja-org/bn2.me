@@ -22,7 +22,7 @@
     "@nextui-org/link": "^2.2.6",
     "@nextui-org/react": "2.6.10",
     "@nextui-org/snippet": "^2.2.9",
-    "@nextui-org/theme": "2.4.4",
+    "@nextui-org/theme": "2.4.5",
     "@nextui-org/use-clipboard": "2.1.1",
     "@react-email/render": "1.0.3",
     "@rebrickableapi/fetch": "^0.0.6",
