@@ -11,6 +11,7 @@ import { getRequestAuthorization, RequestAuthorization } from './auth';
 
 const client: Client & { secrets: ClientSecret[] } = {
   id: 'test',
+  name: 'Test Client',
   applicationId: 'app-id',
   callbackUrls: [],
   createdAt: new Date(),
