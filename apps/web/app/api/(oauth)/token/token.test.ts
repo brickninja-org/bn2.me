@@ -16,6 +16,7 @@ type MockAuthorization = Authorization & { accounts: Pick<Account, 'id'>[] };
 const mockAuthorization: MockAuthorization = {
   id: 'id',
   clientId: 'client-id',
+  applicationId: 'app-id',
   codeChallenge: null,
   expiresAt: expiresAt(60),
   redirectUri: '/redirect',
@@ -26,12 +27,12 @@ const mockAuthorization: MockAuthorization = {
   updatedAt: new Date(),
   usedAt: new Date(),
   userId: 'user-id',
-  emailId: null,
   accounts: [],
 };
 
 const client: Client = {
   id: 'test',
+  name: 'Test',
   applicationId: 'app-id',
   callbackUrls: [],
   createdAt: new Date(),

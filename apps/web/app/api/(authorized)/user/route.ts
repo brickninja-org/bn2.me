@@ -15,16 +15,21 @@ export const GET = withAuthorization([Scope.Identify])(
       select: { id: true, name: true }
     });
 
-    const email = authorization.emailId
-      ? await db.userEmail.findUnique({
-        where: { id: authorization.emailId },
-        select: { email: true, verified: true }
-      })
-      : undefined;
-
-    if(!user) {
+    if (!user) {
       return NextResponse.json({ error: true }, { status: 404 });
     }
+
+    // load email and settings
+    const grant = await db.applicationGrant.findUnique({
+      where: { userId_applicationId: { userId: authorization.userId, applicationId: authorization.applicationId }},
+      select: { email: authorization.scope.includes(Scope.Email), settings: true },
+    });
+
+    if (!grant) {
+      return NextResponse.json({ error: true }, { status: 404 });
+    }
+
+    const { email, settings } = grant;
 
     const response: UserResponse = {
       user: {
@@ -32,7 +37,8 @@ export const GET = withAuthorization([Scope.Identify])(
         name: user.name,
         email: email?.email,
         emailVerified: email?.verified,
-      }
+      },
+      settings: settings?.settings ?? undefined,
     };
 
     return NextResponse.json(response);

@@ -1,25 +1,24 @@
-ARG node_version=22.12.0-alpine3.20
+ARG node_version=22.14.0-alpine3.21
 
 # renovate: datasource=npm packageName=turbo
-ARG turbo_version=2.3.3
+ARG turbo_version=2.4.4
 # renovate: datasource=npm packageName=pnpm
-ARG pnpm_version=9.15.1
+ARG pnpm_version=10.7.0
 
 FROM --platform=$BUILDPLATFORM node:${node_version} AS source
 ARG turbo_version
-ARG pnpm_version
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat \
-  && corepack enable pnpm && corepack install -g pnpm@${pnpm_version}
+  && npm i -g turbo@${turbo_version}
 WORKDIR /source
 COPY . .
-RUN pnpx turbo@${turbo_version} prune demo --docker
+RUN turbo prune demo --docker
 
 # Install dependencies only when needed
 FROM --platform=$BUILDPLATFORM node:${node_version} AS builder
 ARG pnpm_version
 RUN apk add --no-cache libc6-compat \
-  && corepack enable pnpm && corepack install -g pnpm@${pnpm_version}
+  && npm i -g pnpm@${pnpm_version}
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 

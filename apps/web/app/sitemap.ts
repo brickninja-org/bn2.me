@@ -8,6 +8,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: 'https://bn2.me/extension' },
     { url: 'https://bn2.me/dev/docs' },
     { url: 'https://bn2.me/legal' },
-    { url: 'https://bn2.me/privacy' },
+    { url: 'https://bn2.me/legal/privacy-policy' },
   ];
 }

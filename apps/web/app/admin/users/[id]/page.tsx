@@ -19,6 +19,10 @@ import { ensureUserIsAdmin } from 'app/admin/admin';
 import { notFound } from 'next/navigation';
 import { Icon } from '@brickninja-org/ui';
 import { Provider } from '@/components/provider/Provider';
+import { Features, State } from 'app/admin/authorization-requests/components';
+import { AuthorizationRequestState } from '@bn2me/database';
+import { isExpired } from '@/lib/date';
+import { AuthorizationRequestData } from 'app/(authorize)/authorize/types';
 
 const getUser = cache(function getUser(id: string) {
   return db.user.findUnique({
@@ -26,12 +30,7 @@ const getUser = cache(function getUser(id: string) {
     include: {
       authorizations: {
         include: {
-          client: {
-            include: {
-              application: { select: { name: true, imageId: true }},
-            },
-          },
-          email: { select: { email: true }},
+          application: { select: { name: true, imageId: true }},
         },
       },
       accounts: {
@@ -39,10 +38,17 @@ const getUser = cache(function getUser(id: string) {
       },
       providers: true,
       emails: {
-        include: { _count: { select: { authorizations: true }}},
+        include: { _count: { select: { applicationGrants: true }}},
         orderBy: { email: 'asc' },
       },
-      sessions: { orderBy: { lastUsed: 'desc' }}
+      sessions: { orderBy: { lastUsed: 'desc' }},
+      authorizationRequests: {
+        include: {
+          client: { select: { application: { select: { imageId: true, name: true }}}},
+        },
+        orderBy: { createdAt: 'desc' },
+        take: 250,
+      },
     },
   });
 });
@@ -63,6 +69,7 @@ export default async function AdminUserDetailPage({ params }: AdminUserDetailPag
   const Providers = createDataTable(user.providers, ({ provider, providerAccountId }) => `${provider}:${providerAccountId}`);
   const Emails = createDataTable(user.emails, ({ id }) => id);
   const Sessions = createDataTable(user.sessions, ({ id }) => id);
+  const AuthorizationRequests = createDataTable(user.authorizationRequests, ({ id }) => id);
 
   return (
     <PageLayout>
@@ -71,11 +78,11 @@ export default async function AdminUserDetailPage({ params }: AdminUserDetailPag
       <Headline id="authorizations" actions={<ColumnSelection table={Authorizations}/>}>Authorizations ({user.authorizations.length})</Headline>
       <Authorizations.Table>
         <Authorizations.Column id="id" title="Id" hidden>{({ id }) => <Code inline borderless>{id}</Code>}</Authorizations.Column>
-        <Authorizations.Column id="app" title="App">{({ client }) => <FlexRow>{/* <ApplicationImage fileId={client.application.imageId}/> */} {client.application.name}</FlexRow>}</Authorizations.Column>
-        <Authorizations.Column id="clientId" title="Client Id" hidden>{({ client }) => <Code inline borderless>{client.id}</Code>}</Authorizations.Column>
+        <Authorizations.Column id="app" title="App">{({ application }) => <FlexRow>{/* <ApplicationImage fileId={client.application.imageId}/> */} {application.name}</FlexRow>}</Authorizations.Column>
+        <Authorizations.Column id="clientId" title="Client Id" hidden>{({ clientId }) => <Code inline borderless>{clientId}</Code>}</Authorizations.Column>
+        <Authorizations.Column id="applicationId" title="Application Id" hidden>{({ applicationId }) => <Code inline borderless>{applicationId}</Code>}</Authorizations.Column>
         <Authorizations.Column id="type" title="Type" sortBy="type">{({ type }) => type}</Authorizations.Column>
         <Authorizations.Column id="scope" title="Scope" hidden>{({ scope }) => scope.join(' ')}</Authorizations.Column>
-        <Authorizations.Column id="email" title="Email" hidden>{({ email }) => email?.email}</Authorizations.Column>
         <Authorizations.Column id="createdAt" title="Created At" sortBy="createdAt">{({ createdAt }) => <FormatDate date={createdAt}/>}</Authorizations.Column>
         <Authorizations.Column id="expiresAt" title="Expires At" sortBy="expiresAt">{({ expiresAt }) => expiresAt ? <FormatDate date={expiresAt}/> : 'Never'}</Authorizations.Column>
         <Authorizations.Column id="usedAt" title="Used At" sortBy="usedAt">{({ usedAt }) => usedAt ? <FormatDate date={usedAt}/> : 'Never'}</Authorizations.Column>
@@ -108,7 +115,7 @@ export default async function AdminUserDetailPage({ params }: AdminUserDetailPag
           <Emails.Column id="email" title="Email">{({ email }) => email}</Emails.Column>
           <Emails.Column id="default" title="Default">{({ isDefaultForUserId }) => isDefaultForUserId && <Icon icon="checkmark"/>}</Emails.Column>
           <Emails.Column id="verified" title="Verified">{({ verified, verificationToken }) => verified ? <Icon icon="checkmark"/> : !!verificationToken && <Icon icon="time"/>}</Emails.Column>
-          <Emails.Column id="authorizations" title="Authorizations">{({ _count }) => _count.authorizations}</Emails.Column>
+          <Emails.Column id="grants" title="Grants">{({ _count }) => _count.applicationGrants}</Emails.Column>
           <Emails.Column id="createdAt" title="Created At" sortBy="createdAt">{({ createdAt }) => <FormatDate date={createdAt}/>}</Emails.Column>
           <Emails.Column small title="Actions" id="actions">
             {({ id, verified }) => (
@@ -126,6 +133,18 @@ export default async function AdminUserDetailPage({ params }: AdminUserDetailPag
         <Sessions.Column id="createdAt" title="Created At" sortBy="createdAt">{({ createdAt }) => <FormatDate date={createdAt}/>}</Sessions.Column>
         <Sessions.Column id="lastUsedAt" title="Last Used At" sortBy="lastUsed">{({ lastUsed }) => <FormatDate date={lastUsed}/>}</Sessions.Column>
       </Sessions.Table>
+
+      <Headline id="authRequests" actions={<ColumnSelection table={AuthorizationRequests}/>}>Authorization Requests ({user.authorizationRequests.length})</Headline>
+      <AuthorizationRequests.Table>
+        <AuthorizationRequests.Column id="id" title="Id" hidden>{({ id }) => <Code inline borderless>{id}</Code>}</AuthorizationRequests.Column>
+        <AuthorizationRequests.Column id="type" title="Type" sortBy="type">{({ type }) => type}</AuthorizationRequests.Column>
+        <AuthorizationRequests.Column id="state" title="Status" sortBy="state">{({ state, expiresAt }) => <State state={state === AuthorizationRequestState.Pending && isExpired(expiresAt) ? 'Expired' : state}/>}</AuthorizationRequests.Column>
+        <AuthorizationRequests.Column id="app" title="Application" sortBy="clientId">{({ client }) => <FlexRow>{/* <ApplicationImage fileId={client.application.imageId}/> */} {client.application.name}</FlexRow>}</AuthorizationRequests.Column>
+        <AuthorizationRequests.Column id="features" title="Features">{({ type, data }) => <Features type={type} data={(data as unknown as AuthorizationRequestData)}/>}</AuthorizationRequests.Column>
+        <AuthorizationRequests.Column id="createAt" title="Created At" sortBy="createdAt">{({ createdAt }) => <FormatDate date={createdAt}/>}</AuthorizationRequests.Column>
+        <AuthorizationRequests.Column id="updatedAt" title="Updated At" sortBy="updatedAt" hidden>{({ updatedAt }) => <FormatDate date={updatedAt}/>}</AuthorizationRequests.Column>
+        <AuthorizationRequests.Column id="expiresAt" title="Expires At" sortBy="expiresAt" hidden>{({ expiresAt }) => expiresAt ? <FormatDate date={expiresAt}/> : 'never'}</AuthorizationRequests.Column>
+      </AuthorizationRequests.Table>
     </PageLayout>
   );
 }

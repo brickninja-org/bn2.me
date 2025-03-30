@@ -3,7 +3,6 @@ import type { LoginOptions } from './action';
 
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 import { UserProviderType } from '@bn2me/database';
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
@@ -117,8 +116,7 @@ async function switchUser() {
   const cookieStore = await cookies();
   cookieStore.delete(UserCookieName);
 
-  revalidatePath('/login');
-  redirect('/login');
+  revalidatePath('');
 }
 
 export const enum LoginError {

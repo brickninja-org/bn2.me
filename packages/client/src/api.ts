@@ -1,5 +1,5 @@
 import type { Options } from './types';
-import { jsonOrError } from './util';
+import { jsonOrError, okOrError } from './util';
 
 export interface UserResponse {
   user: {
@@ -7,7 +7,8 @@ export interface UserResponse {
     name: string;
     email?: string;
     emailVerified?: boolean;
-  }
+  },
+  settings?: unknown;
 }
 
 export interface AccountsResponse {
@@ -17,6 +18,10 @@ export interface AccountsResponse {
     verified?: boolean;
     displayName?: string | null;
   }[]
+}
+
+export interface SubtokenOptions {
+  permissions?: string[];
 }
 
 export interface SubtokenResponse {
@@ -34,6 +39,17 @@ export class Bn2MeApi {
     }).then(jsonOrError);
   }
 
+  saveSettings(settings: unknown): Promise<void> {
+    return fetch(this.#getUrl('api/user/settings'), {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${this.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(settings),
+    }).then(okOrError);
+  }
+
   accounts(): Promise<AccountsResponse> {
     return fetch(this.#getUrl('api/accounts'), {
       headers: { 'Authorization': `Bearer ${this.access_token}` },
@@ -41,8 +57,14 @@ export class Bn2MeApi {
     }).then(jsonOrError);
   }
 
-  subtoken(accountId: string): Promise<SubtokenResponse> {
-    return fetch(this.#getUrl(`api/accounts/${accountId}/subtoken`), {
+  subtoken(accountId: string, options?: SubtokenOptions): Promise<SubtokenResponse> {
+    const url = this.#getUrl(`api/accounts/${accountId}/subtoken`);
+
+    if (options?.permissions) {
+      url.searchParams.set('permissions', options.permissions.join(','));
+    }
+
+    return fetch(url, {
       headers: { 'Authorization': `Bearer ${this.access_token}` },
       cache: 'no-store',
     }).then(jsonOrError);

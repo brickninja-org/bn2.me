@@ -5,8 +5,11 @@ import { Button } from '@brickninja-org/ui/components/form/Button';
 import { Label } from '@brickninja-org/ui/components/form/Label';
 import { TextInput } from '@brickninja-org/ui/components/form/TextInput';
 
-import { bn2me } from '@/lib/client';
+import { bn2me, getBn2MeUrl } from '@/lib/client';
 import { PageProps } from '@/lib/next';
+import { Checkbox } from '@brickninja-org/ui/components/form/Checkbox';
+import { SubmitButton } from '@brickninja-org/ui/components/form/buttons/SubmitButton';
+import { Client } from './client';
 
 export const dynamic = 'force-dynamic';
 
@@ -50,7 +53,7 @@ async function revokeRefreshToken(data: FormData) {
   redirect(`/token?access_token=${access_token}`);
 }
 
-async function getSubToken(accountId: string, data: FormData) {
+async function getSubtoken(accountId: string, data: FormData) {
   'use server';
 
   const access_token = data.get('access_token')?.toString();
@@ -80,38 +83,53 @@ export default async function TokenPage({ searchParams: asyncSearchParams }: Pag
   ]);
 
   return (
-    <form>
-      <Label label="access_token">
-        <TextInput value={access_token} name="access_token" readOnly/>
-      </Label>
-      <Label label="refresh_token">
-        <TextInput value={refresh_token} name="refresh_token" readOnly/>
-      </Label>
+    <>
+      <Client clientId={process.env.DEMO_CLIENT_ID!} bn2meUrl={getBn2MeUrl()} accessToken={access_token}/>
 
-      <FlexRow>
-        <Button icon={undefined /* "revision" */} type="submit" formAction={refreshTokenAction} disabled={!refresh_token}>Refresh Token</Button>
-        <Button icon="delete" type="submit" formAction={revokeAccessToken} disabled={!access_token}>Revoke access_token</Button>
-        <Button icon="delete" type="submit" formAction={revokeRefreshToken} disabled={!refresh_token}>Revoke refresh_token</Button>
-      </FlexRow>
-      <br/>
+      <form>
+        <Label label="access_token">
+          <TextInput value={access_token} name="access_token" readOnly/>
+        </Label>
+        <Label label="refresh_token">
+          <TextInput value={refresh_token} name="refresh_token" readOnly/>
+        </Label>
 
-      <div>
-        <b>/api/user</b>
-        <pre className="my-4">{JSON.stringify(user, undefined, '  ')}</pre>
-        <b>/api/accounts</b>
-        <pre className="my-4">{JSON.stringify(accounts, undefined, '  ')}</pre>
-        <b>/api/token/introspect</b> (access_token)
-        <pre className="my-4">{JSON.stringify(introspectAccessToken, undefined, '  ')}</pre>
-        <b>/api/token/introspect</b> (refresh_token)
-        <pre className="my-4">{JSON.stringify(introspectRefreshToken, undefined, '  ')}</pre>
-      </div>
+        <FlexRow>
+          <Button icon={undefined /* "revision" */} type="submit" formAction={refreshTokenAction} disabled={!refresh_token}>Refresh Token</Button>
+          <Button icon="delete" type="submit" formAction={revokeAccessToken} disabled={!access_token}>Revoke access_token</Button>
+          <Button icon="delete" type="submit" formAction={revokeRefreshToken} disabled={!refresh_token}>Revoke refresh_token</Button>
+        </FlexRow>
+        <br/>
 
-      <FlexRow>
-        {typeof accounts === 'object' && accounts?.accounts?.map((account) => (
-          <Button key={account.id} icon="key" type="submit" formAction={getSubToken.bind(null, account.id)}>Get Subtoken{account.name}</Button>
-        ))}
-      </FlexRow>
-    </form>
+        <div>
+          <b>/api/user</b>
+          <pre className="my-4">{JSON.stringify(user, undefined, '  ')}</pre>
+          <b>/api/accounts</b>
+          <pre className="my-4">{JSON.stringify(accounts, undefined, '  ')}</pre>
+          <b>/api/token/introspect</b> (access_token)
+          <pre className="my-4">{JSON.stringify(introspectAccessToken, undefined, '  ')}</pre>
+          <b>/api/token/introspect</b> (refresh_token)
+          <pre className="my-4">{JSON.stringify(introspectRefreshToken, undefined, '  ')}</pre>
+        </div>
+
+        <FlexRow>
+          {typeof accounts === 'object' && typeof introspectAccessToken === 'object' && introspectAccessToken.active && accounts?.accounts?.map((account) => (
+            <form key={account.id} action={getSubtoken.bind(null, account.id)} style={{ marginBottom: 16 }}>
+              <input type="hidden" name="access_token" value={access_token}/>
+              <b>{account.displayName ? `${account.displayName} (${account.name})` : account.name}</b>
+              <FlexRow>
+                {introspectAccessToken.scope.split(' ').filter((scope) => scope.startsWith('bn2:')).map((scope) => scope.substring(4)).map((permission) => (
+                  <Checkbox key={permission} defaultChecked name="permission" formValue={permission}>{permission}</Checkbox>
+                ))}
+              </FlexRow>
+              <FlexRow>
+                <SubmitButton icon="key">Get Subtoken</SubmitButton>
+              </FlexRow>
+            </form>
+          ))}
+        </FlexRow>
+      </form>
+    </>
   );
 }
 

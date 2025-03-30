@@ -6,7 +6,7 @@ import type { SelectProps } from '@brickninja-org/ui/components/form/Select';
 import { useActionState, useCallback } from 'react';
 import Link from 'next/link';
 
-import { Application, Client, ClientSecret, UserEmail } from '@bn2me/database';
+import { Application, UserEmail } from '@bn2me/database';
 import type { FormState } from '@brickninja-org/ui/components/form/Form';
 
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
@@ -23,7 +23,6 @@ import { Textarea } from '@/components/textarea/Textarea';
 export interface ApplicationFormProps {
   applicationId: string;
   application: Application;
-  clients: (Client & { secrets: Pick<ClientSecret, 'id' | 'createdAt' | 'usedAt'>[] })[];
   emails: UserEmail[];
   editApplicationAction: (state: FormState, data: FormData) => Promise<FormState>;
 }

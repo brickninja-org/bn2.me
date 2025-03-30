@@ -1,9 +1,13 @@
 import { Bn2MeError } from './error';
+import { Scope } from './types';
 
 export interface FedCMRequestOptions {
+  scopes: Scope[];
   mediation?: CredentialMediationRequirement;
-  mode?: 'button';
+  mode?: 'passive' | 'active';
   signal?: AbortSignal;
+  code_challenge: string;
+  code_challenge_method: 'S256';
 }
 
 export class Bn2MeFedCM {
@@ -19,7 +23,7 @@ export class Bn2MeFedCM {
     return typeof window !== 'undefined' && 'IdentityCredential' in window;
   }
 
-  request({ mediation, signal, mode }: FedCMRequestOptions) {
+  request({ scopes, mediation, signal, mode, code_challenge, code_challenge_method }: FedCMRequestOptions) {
     if(!this.isSupported()) {
       throw new Bn2MeError('FedCM is not supported');
     }
@@ -30,8 +34,19 @@ export class Bn2MeFedCM {
         providers: [{
           configURL: this.#configUrl,
           clientId: this.#clientId,
+          fields: [
+            scopes.includes(Scope.Identify) && 'name',
+            scopes.includes(Scope.Email) && 'email',
+          ].filter(Boolean),
+          // also pass the PKCE challenge as nonce for browser not supporting params
+          nonce: `${code_challenge_method}:${code_challenge}`,
+          params: {
+            scope: scopes.join(' '),
+            code_challenge,
+            code_challenge_method,
+          },
         }],
-        mode
+        mode,
       }
     } as CredentialCreationOptions) as unknown as Promise<null | { token: string, type: 'identity' }>;
   }

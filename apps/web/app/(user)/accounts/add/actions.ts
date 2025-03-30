@@ -45,7 +45,7 @@ export async function addAccount(returnTo: string | undefined, requireVerificati
 
   let account;
   try {
-    account = await fetchBricksetApi('/v3/account', { accessToken: apiKey });
+    account = await fetchBricksetApi('/v3/account', { apiKey });
   } catch {
     return { error: 'Could not load account from Guild Wars 2 API.' };
   }

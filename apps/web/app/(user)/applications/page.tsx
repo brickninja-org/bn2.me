@@ -85,7 +85,7 @@ export default async function ProfilePage() {
                     {client.application.public ? (
                       <a href={client.application.publicUrl} target="_blank" rel="noopener noreferrer">
                         <FlexRow>
-                          <ApplicationImage fileId={client.application.imageId}/> {client.application.name} <Icon icon="arrow-up-right"/>
+                          <ApplicationImage fileId={client.application.imageId}/> {client.application.name} <Icon icon="external-link"/>
                         </FlexRow>
                       </a>
                     ) : (

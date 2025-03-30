@@ -8,14 +8,13 @@
 @theme {
   --font-bitter: var(--font-bitter), serif;
 
-  --icon-size: 20px;
-
   --max-page-width: 1400px;
   --max-page-width--padding: max(16px, (100vw - var(--max-page-width) + 16px) / 2);
 
   --color-background: var(--color-white);
   --color-foreground: var(--color-black);
   --color-brand: var(--color-red-800);
+  --color-border: var(--color-gray-200);
   --color-focus: var(--color-blue-600);
   --color-error: var(--color-red-600);
   --color-muted: var(--color-gray-700);
@@ -70,5 +69,24 @@
 
   li {
     @apply relative;
+  }
+
+  table > thead > tr > th {
+    @apply sticky top-(--table-sticky-top,48px) py-2 px-4 border-b-3 border-(--color-border) bg-(--color-background) font-medium text-left z-1 whitespace-nowrap;
+  }
+
+  table > tbody > tr > td,
+  table > thead > tr > th {
+    @apply h-[1px] py-2 px-4 font-normal text-left leading-normal transition-colors duration-100;
+  }
+
+  table > tbody > tr + tr > td,
+  table > tbody > tr + tr > th {
+    @apply border-t border-(--color-border);
+  }
+
+  table > tbody > tr:hover td,
+  table > tbody > tr:hover th {
+    @apply bg-(--color-light);
   }
 }

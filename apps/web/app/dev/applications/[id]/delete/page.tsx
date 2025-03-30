@@ -1,37 +1,22 @@
 import type { PageProps } from '@/lib/next';
 
-import { notFound } from 'next/navigation';
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
 import { Form } from '@brickninja-org/ui/components/form/Form';
 import { LinkButton } from '@brickninja-org/ui/components/form/Button';
 import { SubmitButton } from '@brickninja-org/ui/components/form/buttons/SubmitButton';
 import { Headline } from '@brickninja-org/ui/components/headline/Headline';
 
-import { db } from '@/lib/db';
 import { getSessionOrRedirect } from '@/lib/session';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { deleteApplication } from './actions';
-
-async function getApplication(id: string) {
-  const session = await getSessionOrRedirect();
-
-  const application = await db.application.findUnique({
-    where: { id, ownerId: session.userId },
-    select: { id: true, name: true },
-  });
-
-  if (!application) {
-    notFound();
-  }
-
-  return application;
-}
+import { getApplicationById } from '../helper';
 
 type DeleteApplicationPageProps = PageProps<{ id: string }>;
 
 export default async function DeleteApplicationPage({ params }: DeleteApplicationPageProps) {
   const { id } = await params;
-  const app = await getApplication(id);
+  const session = await getSessionOrRedirect();
+  const app = await getApplicationById(id, session.userId);
 
   return (
     <PageLayout>
@@ -51,7 +36,8 @@ export default async function DeleteApplicationPage({ params }: DeleteApplicatio
 
 export async function generateMetadata({ params }: DeleteApplicationPageProps) {
   const { id } = await params;
-  const app = await getApplication(id);
+  const session = await getSessionOrRedirect();
+  const app = await getApplicationById(id, session.userId);
 
   return {
     title: `Delete ${app.name}`,

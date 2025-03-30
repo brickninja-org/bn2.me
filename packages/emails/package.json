@@ -22,8 +22,8 @@
     "@react-email/render": "1.0.3",
     "@types/react": "19.0.2",
     "eslint": "8.57.1",
-    "react-email": "3.0.4",
-    "typescript": "5.7.2"
+    "react-email": "3.0.7",
+    "typescript": "5.8.2"
   },
   "dependencies": {
     "@react-email/body": "0.0.11",
@@ -36,7 +36,7 @@
     "@react-email/preview": "0.0.12",
     "@react-email/row": "0.0.12",
     "@react-email/section": "0.0.16",
-    "@react-email/text": "0.0.11"
+    "@react-email/text": "0.1.0"
   },
   "peerDependencies": {
     "react": "^19.0.0"

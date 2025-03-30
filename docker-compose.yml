@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   web:
     image: ghcr.io/brickninja-org/bn2.me/web:${IMAGE_VERSION:-latest}
@@ -26,7 +28,7 @@ services:
       - 4001:3000
 
   database:
-    image: postgres:17.2-alpine
+    image: postgres:17.4-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_USER=bn2me

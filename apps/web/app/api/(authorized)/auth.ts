@@ -111,3 +111,13 @@ function responseHeaders(request: NextRequest) {
     'Cache-Control': 'no-store'
   };
 }
+
+export function getApplicationGrantByAuthorization(authorization: Authorization) {
+  return db.applicationGrant.findUnique({
+    where: { userId_applicationId: { userId: authorization.userId, applicationId: authorization.applicationId }},
+  });
+}
+
+export function OptionsHandler(request: NextRequest) {
+  return new NextResponse(null, { headers: corsHeaders(request), status: 204 });
+}

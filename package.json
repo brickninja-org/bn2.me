@@ -14,16 +14,23 @@
   },
   "devDependencies": {
     "eslint-formatter-gha": "1.5.2",
-    "turbo": "2.3.3",
-    "typescript": "5.7.2"
+    "turbo": "2.4.4",
+    "typescript": "5.8.2"
   },
   "pnpm": {
     "overrides": {
       "react": "19.0.0",
       "react-dom": "19.0.0",
-      "@types/react": "19.0.2",
-      "@types/react-dom": "19.0.2"
-    }
+      "@types/react": "19.0.12",
+      "@types/react-dom": "19.0.4"
+    },
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma",
+      "sharp"
+    ]
   },
-  "packageManager": "pnpm@9.15.1"
+  "packageManager": "pnpm@10.7.0"
 }

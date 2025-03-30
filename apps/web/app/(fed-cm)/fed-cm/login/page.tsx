@@ -4,6 +4,7 @@ import { Headline } from '@brickninja-org/ui/components/headline/Headline';
 import { LoginForm } from 'app/login/form';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { getSession } from '@/lib/session';
+import { SetLoginStatus } from './SetLoginStatus';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,9 +14,10 @@ export default async function FedCMLoginPage() {
   if (session) {
     return (
       <PageLayout thin>
-        <div style={{ '--icon-size': '64px' }}>
+        <div className="[--icon-size:64px]">
           <Icon icon="loading" color="var(--color-primary)"/>
         </div>
+        <SetLoginStatus/>
       </PageLayout>
     );
   }

@@ -5,18 +5,18 @@ import { unstable_noStore } from 'next/cache';
 import { Bn2MeClient } from '@bn2me/client';
 import { generatePKCEPair, type PKCEPair } from '@bn2me/client/pkce';
 
-let pkce: PKCEPair | undefined = undefined;
+const globalForPKCE = globalThis as unknown as { pkce: PKCEPair | undefined };
 
 // generate PKCE pair on first invocation
 // otherwise return cached PKCE pair because we don't store it
 // reusing a PKCE pair is against the spec, but this is just a demo
 // DO NOT DO IT LIKE THIS IN A REAL-WORLD APPLICATION
 export async function getPKCEPair() {
-  if(!pkce) {
-    pkce = await generatePKCEPair();
+  if(!globalForPKCE.pkce) {
+    globalForPKCE.pkce = await generatePKCEPair();
   }
 
-  return pkce;
+  return globalForPKCE.pkce;
 }
 
 export const bn2me = new Bn2MeClient({

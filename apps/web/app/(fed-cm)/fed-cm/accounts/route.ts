@@ -1,0 +1,48 @@
+import { corsHeaders } from '@/lib/cors-header';
+import { db } from '@/lib/db';
+import { OAuth2ErrorCode } from '@/lib/oauth/error';
+import { getUser } from '@/lib/session';
+// import { getUrlFromRequest } from '@/lib/url';
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function GET(request: NextRequest) {
+  // verify `Sec-Fetch-Dest: webidentity` header is set
+  if (request.headers.get('Sec-Fetch-Dest') !== 'webidentity') {
+    console.error('[fed-cm/accounts] Sec-Fetch-Dest invalid');
+    return Response.json(
+      { error: { code: OAuth2ErrorCode.invalid_request, details: 'Missing `Sec-Fetch-Dest: webidentity` header' }},
+      { status: 400, headers: corsHeaders(request) },
+    );
+  }
+
+  // get user session
+  const user = await getUser();
+
+  if (!user) {
+    console.error('[fed-cm/accounts] no session');
+    return Response.json(
+      { error: { code: OAuth2ErrorCode.access_denied, details: 'No session' }},
+      { status: 401, headers: corsHeaders(request) },
+    );
+  }
+
+  // get approved applications that are not expired and include the scopes "identify email"
+  const approvedClients = await db.client.findMany({
+    where: { application: { users: { some: { id: user.id }}}},
+    select: { id: true },
+  });
+
+  // get base url to build absolute url to picture
+  // const baseUrl = getUrlFromRequest(request);
+
+  // respond with account
+  return NextResponse.json({
+    accounts: [{
+      id: user.id,
+      name: user.name,
+      email: user.defaultEmail?.email ?? user.name,
+      // picture: new URL(accountIcon.src, baseUrl),
+      approved_clients: approvedClients.map(({ id }) => id),
+    }]
+  });
+}

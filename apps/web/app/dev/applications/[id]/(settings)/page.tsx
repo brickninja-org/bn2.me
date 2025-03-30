@@ -1,34 +1,18 @@
 import type { PageProps } from '@/lib/next';
 
-import { cache } from 'react';
-import { notFound } from 'next/navigation';
-
 import { db } from '@/lib/db';
 import { getSessionOrRedirect } from '@/lib/session';
 
 import { editApplication } from '../../_actions/edit';
+import { getApplicationById } from '../helper';
 import { ApplicationForm } from './Form';
-
-const getApplication = cache(async (id: string) => {
-  const session = await getSessionOrRedirect();
-
-  const application = await db.application.findFirst({
-    where: { id, ownerId: session.userId },
-    include: { clients: { include: { secrets: { select: { id: true, createdAt: true, usedAt: true }}}}}
-  });
-
-  if(!application) {
-    notFound();
-  }
-
-  return application;
-});
 
 type EditApplicationPageProps = PageProps<{ id: string }>;
 
 export default async function EditApplicationPage({ params }: EditApplicationPageProps) {
   const { id } = await params;
-  const application = await getApplication(id);
+  const session = await getSessionOrRedirect();
+  const application = await getApplicationById(id, session.userId);
 
   const emails = await db.userEmail.findMany({
     where: { userId: application.ownerId, verified: true },
@@ -38,7 +22,10 @@ export default async function EditApplicationPage({ params }: EditApplicationPag
     <>
       <p>Check the <a href="/dev/docs/manage-apps#settings">documentation</a> for more information on how to manage your application.</p>
 
-      <ApplicationForm application={application} applicationId={application.id} emails={emails} clients={application.clients}
+      <ApplicationForm
+        application={application}
+        applicationId={application.id}
+        emails={emails}
         editApplicationAction={editApplication.bind(null, application.id)}/>
     </>
   );
@@ -46,7 +33,8 @@ export default async function EditApplicationPage({ params }: EditApplicationPag
 
 export async function generateMetadata({ params }: EditApplicationPageProps) {
   const { id } = await params;
-  const application = await getApplication(id);
+  const session = await getSessionOrRedirect();
+  const application = await getApplicationById(id, session.userId);
 
   return {
     title: `Edit ${application.name}`

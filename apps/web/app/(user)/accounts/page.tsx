@@ -1,7 +1,6 @@
 import { cache } from 'react';
 import { redirect } from 'next/navigation';
 
-import { AuthorizationType } from '@bn2me/database';
 import { Icon } from '@brickninja-org/ui';
 import { createDataTable } from '@brickninja-org/ui/components/table/DataTable';
 import { Headline } from '@brickninja-org/ui/components/headline/Headline';
@@ -21,7 +20,7 @@ const getAccounts = cache(async () => {
     include: {
       _count: {
         select: {
-          authorizations: { where: { type: AuthorizationType.AccessToken }},
+          applicationGrants: true,
           apiTokens: true
         }
       }
@@ -42,7 +41,7 @@ export default async function ProfilePage() {
 
   return (
     <PageLayout>
-      <Headline id="accounts" actions={<LinkButton href="/accounts/add" icon="key-add">Add API Key</LinkButton>}>Guild Wars 2 Accounts</Headline>
+      <Headline id="accounts" actions={<LinkButton href="/accounts/add" icon="key-add">Add API Key</LinkButton>}>Brickset Accounts</Headline>
 
       {accounts.length > 0 && (
         <Accounts.Table>
@@ -52,10 +51,10 @@ export default async function ProfilePage() {
           <Accounts.Column title="Verified" id="verified" sortBy={({ verified }) => verified ? 1 : 0}>
             {({ verified }) => <FlexRow><Icon icon={verified ? 'verified' : 'unverified'}/> {verified ? 'Verified' : 'Not Verified'}</FlexRow>}
           </Accounts.Column>
-          <Accounts.Column title="Authorized Applications" id="apps" align="end" sortBy={({ _count }) => _count.authorizations}>
-            {({ _count }) => _count.authorizations}
+          <Accounts.Column title="Authorized Applications" id="apps" align="end" sortBy={({ _count }) => _count.applicationGrants}>
+            {({ _count }) => _count.applicationGrants}
           </Accounts.Column>
-          <Accounts.Column title="API Keys" id="keys" align="end" sortBy={({ _count }) => _count.authorizations}>
+          <Accounts.Column title="API Keys" id="keys" align="end" sortBy={({ _count }) => _count.apiTokens}>
             {({ _count }) => _count.apiTokens}
           </Accounts.Column>
           <Accounts.Column small title="Actions" id="actions">

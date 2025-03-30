@@ -47,7 +47,7 @@ export const AccountAddForm: FC<AccountAddFormProps> = async ({ returnTo, requir
           </div>
           <FlexRow>
             {returnTo && (<LinkButton href={returnTo}>Cancel</LinkButton>)}
-            <SubmitButton type="submit" icon="add">Add API key</SubmitButton>
+            <SubmitButton type="submit" icon="key-add">Add API key</SubmitButton>
           </FlexRow>
           <FlexRow>
             <ul className="mt-4 text-small">

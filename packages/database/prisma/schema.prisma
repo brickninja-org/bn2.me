@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
@@ -11,10 +11,10 @@ datasource db {
 model User {
   id String @id @default(uuid())
 
-  name  String  @unique
+  name String @unique
 
-  emails UserEmail[] @relation("emails")
-  defaultEmail UserEmail? @relation("default")
+  emails       UserEmail[] @relation("emails")
+  defaultEmail UserEmail?  @relation("default")
 
   roles UserRole[]
 
@@ -22,13 +22,15 @@ model User {
   providers UserProvider[] @relation("provider")
   passkeys  Passkey[]      @relation("userPasskeys")
 
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  applications   Application[]   @relation("applications")
-  authorizations Authorization[] @relation("userAuthorization")
+  applications          Application[]          @relation("applications")
+  authorizations        Authorization[]        @relation("userAuthorization")
+  authorizationRequests AuthorizationRequest[]
+  applicationGrants     ApplicationGrant[]     @relation("applicationGrants")
 
-  accounts       Account[]      @relation("userAccount")
+  accounts Account[] @relation("userAccount")
 }
 
 enum UserRole {
@@ -38,33 +40,33 @@ enum UserRole {
 model UserEmail {
   id String @id @default(uuid())
 
-  email String
+  email    String
   verified Boolean @default(false)
 
   verificationToken String? @unique
 
   userId String
-  user   User @relation("emails", fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation("emails", fields: [userId], references: [id], onDelete: Cascade)
 
   isDefaultForUserId String? @unique
-  isDefaultForUser User? @relation("default", fields: [isDefaultForUserId], references: [id], onDelete: Cascade)
+  isDefaultForUser   User?   @relation("default", fields: [isDefaultForUserId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   verifiedAt DateTime?
 
-  authorizations Authorization[]
-  applications   Application[] @relation("email")
+  applicationGrants ApplicationGrant[]
+  applications      Application[]      @relation("email")
 
   @@unique([userId, email])
 }
 
 model UserSession {
   id String @id @default(uuid())
-  
+
   info String
 
-  user   User @relation("session", fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation("session", fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   createdAt DateTime @default(now())
@@ -74,21 +76,22 @@ model UserSession {
 model UserProvider {
   provider          UserProviderType
   providerAccountId String
-  @@id([provider, providerAccountId])
 
   displayName String
-  
+
   token Json?
-  
+
   passkey   Passkey?
-  passkeyId String? @unique
+  passkeyId String?  @unique
 
   userId String
   user   User   @relation("provider", fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
-  usedAt         DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  usedAt    DateTime?
+
+  @@id([provider, providerAccountId])
 }
 
 model UserProviderRequest {
@@ -102,9 +105,9 @@ model UserProviderRequest {
 
   redirect_uri  String
   code_verifier String?
-  
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum UserProviderType {
@@ -123,46 +126,86 @@ model Passkey {
   publicKey Bytes
 
   provider UserProvider @relation(fields: [id], references: [passkeyId], onDelete: Cascade)
-  
+
   user           User   @relation("userPasskeys", fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   webAuthnUserId String
-  @@unique([webAuthnUserId, userId])
 
   counter    BigInt
   deviceType String
   backedUp   Boolean
   transports String[]
+
+  @@unique([webAuthnUserId, userId])
 }
 
 model Application {
-  id           String @default(uuid()) @id
+  id String @id @default(uuid())
 
-  name         String   @unique
-  description  String   @default("")
-  public       Boolean  @default(false)
-  publicUrl    String   @default("")
+  name        String  @unique
+  description String  @default("")
+  public      Boolean @default(false)
+  publicUrl   String  @default("")
 
   privacyPolicyUrl  String @default("")
   termsOfServiceUrl String @default("")
-  
-  imageId      String?
-  image        File?    @relation("applicationImage", fields: [imageId], references: [id], onDelete: SetNull)
 
-  ownerId      String
-  owner        User     @relation("applications", fields: [ownerId], references: [id], onDelete: Cascade)
+  imageId String?
+  image   File?   @relation("applicationImage", fields: [imageId], references: [id], onDelete: SetNull)
 
-  emailId      String?
-  email        UserEmail? @relation("email", fields: [emailId], references: [id], onDelete: SetNull)
-  
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  ownerId String
+  owner   User   @relation("applications", fields: [ownerId], references: [id], onDelete: Cascade)
 
-  clients       Client[]       @relation("applicationClients")
+  emailId String?
+  email   UserEmail? @relation("email", fields: [emailId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  clients        Client[]           @relation("applicationClients")
+  authorizations Authorization[]
+  users          ApplicationGrant[] @relation("applicationGrants")
+}
+
+model ApplicationGrant {
+  id String @id @default(uuid())
+
+  userId        String
+  applicationId String
+
+  user        User        @relation("applicationGrants", fields: [userId], references: [id], onDelete: Cascade)
+  application Application @relation("applicationGrants", fields: [applicationId], references: [id], onDelete: Cascade)
+
+  scope String[]
+
+  accounts Account[] @relation("applicationGrant")
+
+  emailId String?
+  email   UserEmail? @relation(fields: [emailId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorizations Authorization[]
+  settings       ApplicationUserSettings?
+
+  @@unique([userId, applicationId])
+}
+
+model ApplicationUserSettings {
+  applicationGrantId String           @id
+  applicationGrant   ApplicationGrant @relation(fields: [applicationGrantId], references: [id], onDelete: Cascade)
+
+  settings Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Client {
   id String @id @default(uuid())
+
+  name String @default("Default Client")
 
   type ClientType
 
@@ -174,8 +217,11 @@ model Client {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  authorizations Authorization[] @relation("clientAuthorization")
-  secrets       ClientSecret[] @relation("clientSecret")
+  authorizations        Authorization[]        @relation("clientAuthorization")
+  secrets               ClientSecret[]         @relation("clientSecret")
+  authorizationRequests AuthorizationRequest[]
+
+  @@unique([applicationId, name])
 }
 
 enum ClientType {
@@ -191,13 +237,13 @@ model ClientSecret {
   clientId String
   client   Client @relation("clientSecret", fields: [clientId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   usedAt    DateTime?
 }
 
 model Authorization {
-  id String @default(uuid()) @id
+  id String @id @default(uuid())
 
   type  AuthorizationType
   token String
@@ -213,15 +259,15 @@ model Authorization {
   usedAt    DateTime?
 
   clientId String
-  client Client @relation("clientAuthorization", fields: [clientId], references: [id], onDelete: Cascade)
+  client   Client @relation("clientAuthorization", fields: [clientId], references: [id], onDelete: Cascade)
+
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
 
   userId String
   user   User   @relation("userAuthorization", fields: [userId], references: [id], onDelete: Cascade)
 
-  emailId String?
-  email   UserEmail? @relation(fields: [emailId], references: [id], onDelete: Cascade)
-
-  accounts Account[] @relation("accountAuthorization")
+  applicationGrant ApplicationGrant @relation(fields: [applicationId, userId], references: [applicationId, userId])
 
   @@unique([type, token])
   @@unique([type, clientId, userId])
@@ -233,8 +279,40 @@ enum AuthorizationType {
   RefreshToken
 }
 
+model AuthorizationRequest {
+  id String @id @default(uuid())
+
+  type  AuthorizationRequestType
+  state AuthorizationRequestState @default(Pending)
+
+  data Json
+
+  clientId String
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+enum AuthorizationRequestType {
+  OAuth2
+  OAuth2_PAR
+  FedCM
+}
+
+enum AuthorizationRequestState {
+  Pushed
+  Pending
+  Cancelled
+  Authorized
+}
+
 model ApiToken {
-  id String @default(uuid()) @id
+  id String @id @default(uuid())
 
   name  String
   token String
@@ -245,16 +323,16 @@ model ApiToken {
   account   Account @relation("accountApiToken", fields: [accountId], references: [id], onDelete: Cascade)
 
   errorCount Int @default(0)
-  
+
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  usedAt DateTime?
+  usedAt    DateTime?
 }
 
 model Account {
-  id String @default(uuid()) @id
+  id String @id @default(uuid())
 
-  accountId String
+  accountId   String
   accountName String
 
   displayName String?
@@ -262,23 +340,23 @@ model Account {
   verified Boolean @default(false)
 
   userId String
-  user   User @relation("userAccount", fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation("userAccount", fields: [userId], references: [id], onDelete: Cascade)
 
-  apiTokens ApiToken[] @relation("accountApiToken")
-  authorizations Authorization[] @relation("accountAuthorization")
+  apiTokens         ApiToken[]         @relation("accountApiToken")
+  applicationGrants ApplicationGrant[] @relation("applicationGrant")
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([accountId, userId])
 }
 
 model File {
-  id       String    @default(uuid()) @id
+  id String @id @default(uuid())
 
-  data      Bytes
-  sha256    String   @unique
-  type      String
+  data   Bytes
+  sha256 String @unique
+  type   String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -290,13 +368,13 @@ model File {
 model ApiRequest {
   id String @id @default(uuid())
 
-  endpoint String
+  endpoint        String
   queryParameters String
-  apiKey String?
-  
-  status Int
-  response String?
+  apiKey          String?
+
+  status         Int
+  response       String?
   responseTimeMs Float
-  
-  createdAt DateTime @default(now()) 
+
+  createdAt DateTime @default(now())
 }
