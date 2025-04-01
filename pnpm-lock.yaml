@@ -5,8 +5,8 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  react: 19.0.0
-  react-dom: 19.0.0
+  react: 19.1.0
+  react-dom: 19.1.0
   '@types/react': 19.0.12
   '@types/react-dom': 19.0.4
 
@@ -31,19 +31,19 @@ importers:
         version: link:../../packages/client
       '@brickninja-org/icons':
         specifier: 0.0.6
-        version: 0.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@brickninja-org/ui':
         specifier: 0.0.21
-        version: 0.0.21(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.0.0-beta.9)(next@15.1.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@4.0.0-beta.9)
+        version: 0.0.21(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.0.0-beta.9)(next@15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.0.0-beta.9)
       next:
         specifier: 15.1.3
-        version: 15.1.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4)
+        version: 15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4)
       react:
-        specifier: 19.0.0
-        version: 19.0.0
+        specifier: 19.1.0
+        version: 19.1.0
       react-dom:
-        specifier: 19.0.0
-        version: 19.0.0(react@19.0.0)
+        specifier: 19.1.0
+        version: 19.1.0(react@19.1.0)
       server-only:
         specifier: 0.0.1
         version: 0.0.1
@@ -107,16 +107,16 @@ importers:
         version: 0.0.1
       '@brickninja-org/icons':
         specifier: 0.0.6
-        version: 0.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@brickninja-org/ui':
         specifier: 0.0.24
-        version: 0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.0.0-beta.9)(next@15.2.4(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@4.0.0-beta.9)
+        version: 0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.0.0-beta.9)(next@15.2.4(@babel/core@7.26.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.0.0-beta.9)
       '@brickset-api/fetch':
         specifier: 0.0.19
         version: 0.0.19(@brickset-api/types@0.0.17)
       '@react-email/render':
         specifier: 1.0.5
-        version: 1.0.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 1.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rebrickableapi/fetch':
         specifier: 0.0.6
         version: 0.0.6(@rebrickableapi/types@0.0.5)
@@ -134,7 +134,7 @@ importers:
         version: 0.0.22
       framer-motion:
         specifier: 11.15.0
-        version: 11.15.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 11.15.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       hast-util-to-jsx-runtime:
         specifier: 2.3.6
         version: 2.3.6
@@ -143,16 +143,16 @@ importers:
         version: 6.0.10
       next:
         specifier: 15.2.4
-        version: 15.2.4(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4)
+        version: 15.2.4(@babel/core@7.26.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4)
       nodemailer:
         specifier: 6.10.0
         version: 6.10.0
       react:
-        specifier: 19.0.0
-        version: 19.0.0
+        specifier: 19.1.0
+        version: 19.1.0
       react-dom:
-        specifier: 19.0.0
-        version: 19.0.0(react@19.0.0)
+        specifier: 19.1.0
+        version: 19.1.0(react@19.1.0)
       server-only:
         specifier: 0.0.1
         version: 0.0.1
@@ -186,7 +186,7 @@ importers:
         version: 10.4.0
       '@testing-library/react':
         specifier: 16.2.0
-        version: 16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@types/node':
         specifier: 22.10.2
         version: 22.10.2
@@ -299,43 +299,43 @@ importers:
     dependencies:
       '@react-email/body':
         specifier: 0.0.11
-        version: 0.0.11(react@19.0.0)
+        version: 0.0.11(react@19.1.0)
       '@react-email/column':
         specifier: 0.0.13
-        version: 0.0.13(react@19.0.0)
+        version: 0.0.13(react@19.1.0)
       '@react-email/container':
         specifier: 0.0.15
-        version: 0.0.15(react@19.0.0)
+        version: 0.0.15(react@19.1.0)
       '@react-email/head':
         specifier: 0.0.12
-        version: 0.0.12(react@19.0.0)
+        version: 0.0.12(react@19.1.0)
       '@react-email/html':
         specifier: 0.0.11
-        version: 0.0.11(react@19.0.0)
+        version: 0.0.11(react@19.1.0)
       '@react-email/img':
         specifier: 0.0.11
-        version: 0.0.11(react@19.0.0)
+        version: 0.0.11(react@19.1.0)
       '@react-email/link':
         specifier: 0.0.12
-        version: 0.0.12(react@19.0.0)
+        version: 0.0.12(react@19.1.0)
       '@react-email/preview':
         specifier: 0.0.12
-        version: 0.0.12(react@19.0.0)
+        version: 0.0.12(react@19.1.0)
       '@react-email/render':
         specifier: 1.0.5
-        version: 1.0.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 1.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@react-email/row':
         specifier: 0.0.12
-        version: 0.0.12(react@19.0.0)
+        version: 0.0.12(react@19.1.0)
       '@react-email/section':
         specifier: 0.0.16
-        version: 0.0.16(react@19.0.0)
+        version: 0.0.16(react@19.1.0)
       '@react-email/text':
         specifier: 0.1.0
-        version: 0.1.0(react@19.0.0)
+        version: 0.1.0(react@19.1.0)
       react:
-        specifier: 19.0.0
-        version: 19.0.0
+        specifier: 19.1.0
+        version: 19.1.0
     devDependencies:
       '@brickninja-org/eslint-config':
         specifier: 0.0.5
@@ -351,7 +351,7 @@ importers:
         version: 8.57.1
       react-email:
         specifier: 3.0.7
-        version: 3.0.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4)
+        version: 3.0.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4)
       typescript:
         specifier: 5.8.2
         version: 5.8.2
@@ -478,8 +478,8 @@ packages:
   '@brickninja-org/icons@0.0.6':
     resolution: {integrity: sha512-Iqdxm5s+3BWoounNxRC/6mIN2BWQ3OEiwFJL5+dx9zuAvyBN/pGecoh8gt9IB8+uHpIoA7Xm8XvUBhroYCef1w==}
     peerDependencies:
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
 
   '@brickninja-org/publish-package@0.0.1-rc.0':
     resolution: {integrity: sha512-3M2JFQXtIThAGeZmIBhwzELcKX0nQP+0G1tJBcsBQDaRYmmxNhrD5nlgfk443M53GBG0pWbeBjPOXvoZzm0IyQ==}
@@ -497,8 +497,8 @@ packages:
       '@tailwindcss/postcss': ^4.0.0-beta
       next: ^15.0.0
       postcss: ^8.5.1
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
       tailwindcss: ^4.0.0-beta
 
   '@brickninja-org/ui@0.0.24':
@@ -510,8 +510,8 @@ packages:
       '@tailwindcss/postcss': ^4.0.0
       next: ^15.0.0
       postcss: ^8.5.1
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
       tailwindcss: ^4.0.0
 
   '@brickset-api/fetch@0.0.19':
@@ -1024,20 +1024,20 @@ packages:
   '@floating-ui/react-dom@2.1.2':
     resolution: {integrity: sha512-06okr5cgPzMNBy+Ycse2A6udMi4bqwW/zgBF/rwjcNqWkyr82Mcg8b0vjX8OJpZFy/FKjJmw6wV7t44kK6kW7A==}
     peerDependencies:
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
 
   '@floating-ui/react@0.27.3':
     resolution: {integrity: sha512-CLHnes3ixIFFKVQDdICjel8muhFLOBdQH7fgtHNPY8UbCNqbeKZ262G7K66lGQOUQWWnYocf7ZbUsLJgGfsLHg==}
     peerDependencies:
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
 
   '@floating-ui/react@0.27.5':
     resolution: {integrity: sha512-BX3jKxo39Ba05pflcQmqPPwc0qdNsdNi/eweAFtoIdrJWNen2sVEWMEac3i6jU55Qfx+lOcdMNKYn2CtWmlnOQ==}
     peerDependencies:
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
 
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
@@ -1418,74 +1418,74 @@ packages:
   '@react-email/body@0.0.11':
     resolution: {integrity: sha512-ZSD2SxVSgUjHGrB0Wi+4tu3MEpB4fYSbezsFNEJk2xCWDBkFiOeEsjTmR5dvi+CxTK691hQTQlHv0XWuP7ENTg==}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@react-email/column@0.0.13':
     resolution: {integrity: sha512-Lqq17l7ShzJG/d3b1w/+lVO+gp2FM05ZUo/nW0rjxB8xBICXOVv6PqjDnn3FXKssvhO5qAV20lHM6S+spRhEwQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@react-email/container@0.0.15':
     resolution: {integrity: sha512-Qo2IQo0ru2kZq47REmHW3iXjAQaKu4tpeq/M8m1zHIVwKduL2vYOBQWbC2oDnMtWPmkBjej6XxgtZByxM6cCFg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@react-email/head@0.0.12':
     resolution: {integrity: sha512-X2Ii6dDFMF+D4niNwMAHbTkeCjlYYnMsd7edXOsi0JByxt9wNyZ9EnhFiBoQdqkE+SMDcu8TlNNttMrf5sJeMA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@react-email/html@0.0.11':
     resolution: {integrity: sha512-qJhbOQy5VW5qzU74AimjAR9FRFQfrMa7dn4gkEXKMB/S9xZN8e1yC1uA9C15jkXI/PzmJ0muDIWmFwatm5/+VA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@react-email/img@0.0.11':
     resolution: {integrity: sha512-aGc8Y6U5C3igoMaqAJKsCpkbm1XjguQ09Acd+YcTKwjnC2+0w3yGUJkjWB2vTx4tN8dCqQCXO8FmdJpMfOA9EQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@react-email/link@0.0.12':
     resolution: {integrity: sha512-vF+xxQk2fGS1CN7UPQDbzvcBGfffr+GjTPNiWM38fhBfsLv6A/YUfaqxWlmL7zLzVmo0K2cvvV9wxlSyNba1aQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@react-email/preview@0.0.12':
     resolution: {integrity: sha512-g/H5fa9PQPDK6WUEG7iTlC19sAktI23qyoiJtMLqQiXFCfWeQMhqjLGKeLSKkfzszqmfJCjZtpSiKtBoOdxp3Q==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@react-email/render@1.0.5':
     resolution: {integrity: sha512-CA69HYXPk21HhtAXATIr+9JJwpDNmAFCvdMUjWmeoD1+KhJ9NAxusMRxKNeibdZdslmq3edaeOKGbdQ9qjK8LQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
 
   '@react-email/row@0.0.12':
     resolution: {integrity: sha512-HkCdnEjvK3o+n0y0tZKXYhIXUNPDx+2vq1dJTmqappVHXS5tXS6W5JOPZr5j+eoZ8gY3PShI2LWj5rWF7ZEtIQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@react-email/section@0.0.16':
     resolution: {integrity: sha512-FjqF9xQ8FoeUZYKSdt8sMIKvoT9XF8BrzhT3xiFKdEMwYNbsDflcjfErJe3jb7Wj/es/lKTbV5QR1dnLzGpL3w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@react-email/text@0.1.0':
     resolution: {integrity: sha512-LG+gEuxpoIiOojkv40iktP8UVjkJVZ+ksEEuf7zRvrcwLcVuzYyirlWdkGr4Vu/AhsD4FDRoxDWlWvLTx+WHUg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@rebrickableapi/fetch@0.0.6':
     resolution: {integrity: sha512-0fa2LJkGTzpeKoa8ulbqHcXb3bZGEYxYx1vmqcX+2FEvd69TNhFN0mcbH8IDrKKtFYO5CLVcfHuvgHl0auHQyw==}
@@ -1716,8 +1716,8 @@ packages:
       '@testing-library/dom': ^10.0.0
       '@types/react': 19.0.12
       '@types/react-dom': 19.0.4
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -2654,8 +2654,8 @@ packages:
     resolution: {integrity: sha512-MLk8IvZntxOMg7lDBLw2qgTHHv664bYoYmnFTmE0Gm/FW67aOJk0WM3ctMcG+Xhcv+vh5uyyXwxvxhSeJzSe+w==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
     peerDependenciesMeta:
       '@emotion/is-prop-valid':
         optional: true
@@ -3326,8 +3326,8 @@ packages:
       '@opentelemetry/api': ^1.1.0
       '@playwright/test': ^1.41.2
       babel-plugin-react-compiler: '*'
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
       sass: ^1.3.0
     peerDependenciesMeta:
       '@opentelemetry/api':
@@ -3347,8 +3347,8 @@ packages:
       '@opentelemetry/api': ^1.1.0
       '@playwright/test': ^1.41.2
       babel-plugin-react-compiler: '*'
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
       sass: ^1.3.0
     peerDependenciesMeta:
       '@opentelemetry/api':
@@ -3368,8 +3368,8 @@ packages:
       '@opentelemetry/api': ^1.1.0
       '@playwright/test': ^1.41.2
       babel-plugin-react-compiler: '*'
-      react: 19.0.0
-      react-dom: 19.0.0
+      react: 19.1.0
+      react-dom: 19.1.0
       sass: ^1.3.0
     peerDependenciesMeta:
       '@opentelemetry/api':
@@ -3594,10 +3594,10 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  react-dom@19.0.0:
-    resolution: {integrity: sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==}
+  react-dom@19.1.0:
+    resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
     peerDependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   react-email@3.0.7:
     resolution: {integrity: sha512-lX9dFCPtTG+79aP9uTdx763byshptPYbOi0KXwxn6nPJoDP/Ty/G1W5fx1lbrmec+pk38MTDZPrzJ/UYIxgP/Q==}
@@ -3617,8 +3617,8 @@ packages:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
 
-  react@19.0.0:
-    resolution: {integrity: sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ==}
+  react@19.1.0:
+    resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
     engines: {node: '>=0.10.0'}
 
   readable-stream@3.6.2:
@@ -3707,8 +3707,8 @@ packages:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
     engines: {node: '>=v12.22.7'}
 
-  scheduler@0.25.0:
-    resolution: {integrity: sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==}
+  scheduler@0.26.0:
+    resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
 
   selderee@0.11.0:
     resolution: {integrity: sha512-5TF+l7p4+OsnP8BCCvSyZiSPc4x4//p5uPwK8TCnVPJYRmU2aYKMpOXvw8zM5a5JvuuCGN1jmsMwuU2W02ukfA==}
@@ -3874,7 +3874,7 @@ packages:
     peerDependencies:
       '@babel/core': '*'
       babel-plugin-macros: '*'
-      react: 19.0.0
+      react: 19.1.0
     peerDependenciesMeta:
       '@babel/core':
         optional: true
@@ -4559,48 +4559,48 @@ snapshots:
 
   '@brickninja-org/helper@0.0.1': {}
 
-  '@brickninja-org/icons@0.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   '@brickninja-org/publish-package@0.0.1-rc.0': {}
 
   '@brickninja-org/tsconfig@0.0.2': {}
 
-  '@brickninja-org/ui@0.0.21(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.0.0-beta.9)(next@15.1.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@4.0.0-beta.9)':
+  '@brickninja-org/ui@0.0.21(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.0.0-beta.9)(next@15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.0.0-beta.9)':
     dependencies:
       '@brickninja-org/helper': 0.0.1
-      '@brickninja-org/icons': 0.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@brickninja-org/icons': 0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@brickninja-org/tsconfig': 0.0.2
-      '@floating-ui/react': 0.27.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@floating-ui/react-dom': 2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@floating-ui/react': 0.27.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@floating-ui/react-dom': 2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tailwindcss/postcss': 4.0.0-beta.9
       client-only: 0.0.1
       clsx: 2.1.1
-      next: 15.1.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4)
+      next: 15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4)
       postcss: 8.5.1
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       server-only: 0.0.1
       tailwind-merge: 2.6.0
       tailwind-variants: 0.3.0(tailwindcss@4.0.0-beta.9)
       tailwindcss: 4.0.0-beta.9
 
-  '@brickninja-org/ui@0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.0.0-beta.9)(next@15.2.4(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@4.0.0-beta.9)':
+  '@brickninja-org/ui@0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.0.0-beta.9)(next@15.2.4(@babel/core@7.26.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.0.0-beta.9)':
     dependencies:
       '@brickninja-org/helper': 0.0.1
-      '@brickninja-org/icons': 0.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@brickninja-org/icons': 0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@brickninja-org/tsconfig': 0.0.2
-      '@floating-ui/react': 0.27.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@floating-ui/react-dom': 2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@floating-ui/react': 0.27.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@floating-ui/react-dom': 2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tailwindcss/postcss': 4.0.0-beta.9
       client-only: 0.0.1
       clsx: 2.1.1
-      next: 15.2.4(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4)
+      next: 15.2.4(@babel/core@7.26.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4)
       postcss: 8.5.1
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       server-only: 0.0.1
       tailwind-merge: 3.0.2
       tailwind-variants: 1.0.0(tailwindcss@4.0.0-beta.9)
@@ -4891,26 +4891,26 @@ snapshots:
       '@floating-ui/core': 1.6.9
       '@floating-ui/utils': 0.2.9
 
-  '@floating-ui/react-dom@2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@floating-ui/react-dom@2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@floating-ui/dom': 1.6.13
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
-  '@floating-ui/react@0.27.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@floating-ui/react@0.27.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@floating-ui/react-dom': 2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@floating-ui/react-dom': 2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@floating-ui/utils': 0.2.9
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       tabbable: 6.2.0
 
-  '@floating-ui/react@0.27.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@floating-ui/react@0.27.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@floating-ui/react-dom': 2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@floating-ui/react-dom': 2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@floating-ui/utils': 0.2.9
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       tabbable: 6.2.0
 
   '@floating-ui/utils@0.2.9': {}
@@ -5204,57 +5204,57 @@ snapshots:
 
   '@prisma/nextjs-monorepo-workaround-plugin@6.5.0': {}
 
-  '@react-email/body@0.0.11(react@19.0.0)':
+  '@react-email/body@0.0.11(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
-  '@react-email/column@0.0.13(react@19.0.0)':
+  '@react-email/column@0.0.13(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
-  '@react-email/container@0.0.15(react@19.0.0)':
+  '@react-email/container@0.0.15(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
-  '@react-email/head@0.0.12(react@19.0.0)':
+  '@react-email/head@0.0.12(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
-  '@react-email/html@0.0.11(react@19.0.0)':
+  '@react-email/html@0.0.11(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
-  '@react-email/img@0.0.11(react@19.0.0)':
+  '@react-email/img@0.0.11(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
-  '@react-email/link@0.0.12(react@19.0.0)':
+  '@react-email/link@0.0.12(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
-  '@react-email/preview@0.0.12(react@19.0.0)':
+  '@react-email/preview@0.0.12(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
-  '@react-email/render@1.0.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@react-email/render@1.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       html-to-text: 9.0.5
       prettier: 3.4.2
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       react-promise-suspense: 0.3.4
 
-  '@react-email/row@0.0.12(react@19.0.0)':
+  '@react-email/row@0.0.12(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
-  '@react-email/section@0.0.16(react@19.0.0)':
+  '@react-email/section@0.0.16(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
-  '@react-email/text@0.1.0(react@19.0.0)':
+  '@react-email/text@0.1.0(react@19.1.0)':
     dependencies:
-      react: 19.0.0
+      react: 19.1.0
 
   '@rebrickableapi/fetch@0.0.6(@rebrickableapi/types@0.0.5)':
     dependencies:
@@ -5450,12 +5450,12 @@ snapshots:
       lz-string: 1.5.0
       pretty-format: 27.5.1
 
-  '@testing-library/react@16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@testing-library/react@16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.26.0
       '@testing-library/dom': 10.4.0
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
     optionalDependencies:
       '@types/react': 19.0.12
       '@types/react-dom': 19.0.4(@types/react@19.0.12)
@@ -6894,14 +6894,14 @@ snapshots:
 
   fraction.js@4.3.7: {}
 
-  framer-motion@11.15.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  framer-motion@11.15.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       motion-dom: 11.14.3
       motion-utils: 11.14.3
       tslib: 2.8.1
     optionalDependencies:
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   fs.realpath@1.0.0: {}
 
@@ -7684,7 +7684,7 @@ snapshots:
 
   negotiator@0.6.3: {}
 
-  next@15.1.2(@babel/core@7.24.5)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4):
+  next@15.1.2(@babel/core@7.24.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4):
     dependencies:
       '@next/env': 15.1.2
       '@swc/counter': 0.1.3
@@ -7692,9 +7692,9 @@ snapshots:
       busboy: 1.6.0
       caniuse-lite: 1.0.30001690
       postcss: 8.4.31
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-      styled-jsx: 5.1.6(@babel/core@7.24.5)(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      styled-jsx: 5.1.6(@babel/core@7.24.5)(react@19.1.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.1.2
       '@next/swc-darwin-x64': 15.1.2
@@ -7710,7 +7710,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.1.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4):
+  next@15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4):
     dependencies:
       '@next/env': 15.1.3
       '@swc/counter': 0.1.3
@@ -7718,9 +7718,9 @@ snapshots:
       busboy: 1.6.0
       caniuse-lite: 1.0.30001690
       postcss: 8.4.31
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-      styled-jsx: 5.1.6(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      styled-jsx: 5.1.6(react@19.1.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.1.3
       '@next/swc-darwin-x64': 15.1.3
@@ -7736,7 +7736,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.2.4(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4):
+  next@15.2.4(@babel/core@7.26.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4):
     dependencies:
       '@next/env': 15.2.4
       '@swc/counter': 0.1.3
@@ -7744,9 +7744,9 @@ snapshots:
       busboy: 1.6.0
       caniuse-lite: 1.0.30001690
       postcss: 8.4.31
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-      styled-jsx: 5.1.6(@babel/core@7.26.0)(react@19.0.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      styled-jsx: 5.1.6(@babel/core@7.26.0)(react@19.1.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.2.4
       '@next/swc-darwin-x64': 15.2.4
@@ -7970,12 +7970,12 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-dom@19.0.0(react@19.0.0):
+  react-dom@19.1.0(react@19.1.0):
     dependencies:
-      react: 19.0.0
-      scheduler: 0.25.0
+      react: 19.1.0
+      scheduler: 0.26.0
 
-  react-email@3.0.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4):
+  react-email@3.0.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4):
     dependencies:
       '@babel/core': 7.24.5
       '@babel/parser': 7.24.5
@@ -7987,7 +7987,7 @@ snapshots:
       glob: 10.3.4
       log-symbols: 4.1.0
       mime-types: 2.1.35
-      next: 15.1.2(@babel/core@7.24.5)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4)
+      next: 15.1.2(@babel/core@7.24.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4)
       normalize-path: 3.0.0
       ora: 5.4.1
       socket.io: 4.8.1
@@ -8013,7 +8013,7 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react@19.0.0: {}
+  react@19.1.0: {}
 
   readable-stream@3.6.2:
     dependencies:
@@ -8133,7 +8133,7 @@ snapshots:
     dependencies:
       xmlchars: 2.2.0
 
-  scheduler@0.25.0: {}
+  scheduler@0.26.0: {}
 
   selderee@0.11.0:
     dependencies:
@@ -8368,24 +8368,24 @@ snapshots:
     dependencies:
       inline-style-parser: 0.2.4
 
-  styled-jsx@5.1.6(@babel/core@7.24.5)(react@19.0.0):
+  styled-jsx@5.1.6(@babel/core@7.24.5)(react@19.1.0):
     dependencies:
       client-only: 0.0.1
-      react: 19.0.0
+      react: 19.1.0
     optionalDependencies:
       '@babel/core': 7.24.5
 
-  styled-jsx@5.1.6(@babel/core@7.26.0)(react@19.0.0):
+  styled-jsx@5.1.6(@babel/core@7.26.0)(react@19.1.0):
     dependencies:
       client-only: 0.0.1
-      react: 19.0.0
+      react: 19.1.0
     optionalDependencies:
       '@babel/core': 7.26.0
 
-  styled-jsx@5.1.6(react@19.0.0):
+  styled-jsx@5.1.6(react@19.1.0):
     dependencies:
       client-only: 0.0.1
-      react: 19.0.0
+      react: 19.1.0
 
   sucrase@3.35.0:
     dependencies:
