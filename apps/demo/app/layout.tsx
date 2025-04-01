@@ -32,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps) {
             <LinkButton appearance="menu" href={getBn2MeUrl()} external icon={undefined /* "bn2me" */} className="ml-auto">Return to bn2.me</LinkButton>
           </div>
         </div>
-        <div className="w-full max-w-(--max-page-width) mx-auto p-4">
+        <div className="w-full max-w-[1400px] mx-auto p-4">
           {children}
         </div>
       </body>

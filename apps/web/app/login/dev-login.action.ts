@@ -16,7 +16,7 @@ export async function devLogin(name: string) {
   const cookieStore = await cookies();
 
   if(!name) {
-    cookieStore.set(loginErrorCookie(LoginError.Unknown));
+    cookieStore.set(await loginErrorCookie(LoginError.Unknown));
     redirect('/login');
   }
 
@@ -32,5 +32,5 @@ export async function devLogin(name: string) {
   });
 
   cookieStore.set(authCookie(session.id));
-  cookieStore.set(userCookie(userId));
+  cookieStore.set(await userCookie(userId));
 }

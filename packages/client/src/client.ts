@@ -86,7 +86,7 @@ export class Bn2MeClient {
       })
       : constructAuthorizationParams(this.#client_id, params);
 
-    return this.#getUrl(`/oauth2/authorize?:${urlParams.toString()}`).toString() + '?' + urlParams.toString();
+    return this.#getUrl(`/oauth2/authorize?${urlParams.toString()}`).toString();
   }
 
   public async pushAuthorizationRequest(params: AuthorizationUrlParams): Promise<PushedAuthorizationRequestResponse> {
@@ -144,7 +144,7 @@ export class Bn2MeClient {
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Basic ${btoa(`${this.#client_id}:${this.#client_secret}`)}`,
+      'Authorization': `Basic ${btoa(`${this.#client_id}:${this.#client_secret}`)}`,
     };
 
     const token = await fetch(this.#getUrl('/api/token'), {
@@ -160,9 +160,7 @@ export class Bn2MeClient {
   async revokeToken({ token }: RevokeTokenParams): Promise<void> {
     const body = new URLSearchParams({ token });
 
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    };
+    const headers: Record<string, string> = { 'Content-Type': 'application/x-www-form-urlencoded' };
     if(this.#client_secret) {
       headers.Authorization = `Basic ${btoa(`${this.#client_id}:${this.#client_secret}`)}`;
     }
@@ -178,9 +176,7 @@ export class Bn2MeClient {
   async introspectToken({ token }: IntrospectTokenParams): Promise<IntrospectTokenResponse> {
     const body = new URLSearchParams({ token });
 
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    };
+    const headers: Record<string, string> = { 'Content-Type': 'application/x-www-form-urlencoded' };
     if(this.#client_secret) {
       headers.Authorization = `Basic ${btoa(`${this.#client_id}:${this.#client_secret}`)}`;
     }

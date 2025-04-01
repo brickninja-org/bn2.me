@@ -21,7 +21,7 @@ export default async function CallbackPage({ searchParams }: PageProps) {
   return (
     <main className="container mx-auto max-w-7xl mb-8 px-6 grow">
       <div>
-        <pre className="mb-4">{JSON.stringify(data, undefined, '  ')}</pre>
+        <pre>{JSON.stringify(data, undefined, '  ')}</pre>
 
         {!('access_token' in data) ? (
           <LinkButton href="/">Back</LinkButton>
@@ -37,7 +37,7 @@ export const metadata = {
   title: 'OAuth2 Callback',
 };
 
-async function parseSearchParams(searchParams: SearchParams) {
+async function parseSearchParams(searchParams: SearchParams): Promise<{ access_token: string, refresh_token?: string } | { error: string }> {
   const params = nextSearchParamsToURLSearchParams(searchParams);
 
   try {

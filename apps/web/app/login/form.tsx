@@ -12,7 +12,7 @@ import { Notice } from '@brickninja-org/ui/components/notice/Notice';
 
 import { LoginErrorCookieName, UserCookieName } from '@/lib/cookie';
 import { db } from '@/lib/db';
-import { createVerifier } from '@/lib/jwt';
+import { verifyJwt } from '@/lib/jwt';
 import { NoticeContext } from '@/components/notice/NoticeContext';
 import { PasskeyAuthenticationButton } from '@/components/passkey/PasskeyAuthenticationButton';
 
@@ -85,11 +85,9 @@ export async function getPreviousUser() {
     return undefined;
   }
 
-  const verifyJwt = createVerifier();
-
   let jwtPayload: { sub: string };
   try {
-    jwtPayload = verifyJwt(jwt);
+    jwtPayload = await verifyJwt(jwt, { requiredClaims: ['sub'] });
   } catch {
     return undefined;
   }
@@ -134,10 +132,8 @@ export async function getLoginErrorCookieValue(): Promise<LoginError | undefined
     return undefined;
   }
 
-  const verifyJwt = createVerifier();
-
   try {
-    const error: { err: LoginError } = verifyJwt(errorCookie);
+    const error: { err: LoginError } = await verifyJwt(errorCookie, { requiredClaims: ['err'] });
     return error.err;
   } catch {
     return LoginError.Unknown;

@@ -44,7 +44,7 @@ export default async function AdminApiKeyPage() {
         <ApiKeys.Column id="id" title="ID" hidden>{({ id }) => <Code inline borderless>{id}</Code>}</ApiKeys.Column>
         <ApiKeys.Column id="name" title="Name" sortBy="name">{({ name }) => name}</ApiKeys.Column>
         <ApiKeys.Column id="token" title="Token" hidden>{({ token }) => <FlexRow><Code inline borderless>{token}</Code><CopyButton copy={token} icon="copy" iconOnly/></FlexRow>}</ApiKeys.Column>
-        <ApiKeys.Column id="permissions" title="Permissions" hidden>{({ permissions }) => <PermissionCount permissions={permissions as Permission[]}/>}</ApiKeys.Column>
+        {/* <ApiKeys.Column id="permissions" title="Permissions" hidden>{({ permissions }) => <PermissionCount permissions={permissions as Permission[]}/>}</ApiKeys.Column> */}
         <ApiKeys.Column id="error" title="Error Count" align="end" sortBy="errorCount">{({ errorCount }) => errorCount}</ApiKeys.Column>
         <ApiKeys.Column id="usedAt" title="Last used" sortBy="usedAt">{({ usedAt }) => usedAt === null ? '-' : <FormatDate date={usedAt}/>}</ApiKeys.Column>
         <ApiKeys.Column id="accountId" title="Account Id" hidden>{({ accountId }) => <Code inline borderless>{accountId}</Code>}</ApiKeys.Column>

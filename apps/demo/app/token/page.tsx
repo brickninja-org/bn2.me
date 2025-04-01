@@ -2,13 +2,13 @@ import { redirect } from 'next/navigation';
 
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
 import { Button } from '@brickninja-org/ui/components/form/Button';
+import { SubmitButton } from '@brickninja-org/ui/components/form/buttons/SubmitButton';
+import { Checkbox } from '@brickninja-org/ui/components/form/Checkbox';
 import { Label } from '@brickninja-org/ui/components/form/Label';
 import { TextInput } from '@brickninja-org/ui/components/form/TextInput';
 
 import { bn2me, getBn2MeUrl } from '@/lib/client';
 import { PageProps } from '@/lib/next';
-import { Checkbox } from '@brickninja-org/ui/components/form/Checkbox';
-import { SubmitButton } from '@brickninja-org/ui/components/form/buttons/SubmitButton';
 import { Client } from './client';
 
 export const dynamic = 'force-dynamic';
@@ -33,11 +33,11 @@ async function revokeAccessToken(data: FormData) {
   const access_token = data.get('access_token')?.toString();
   const refresh_token = data.get('refresh_token')?.toString();
 
-  if (refresh_token) {
-    await bn2me.revokeToken({ token: refresh_token });
+  if (access_token) {
+    await bn2me.revokeToken({ token: access_token });
   }
 
-  redirect(`/token?access_token=${access_token}`);
+  redirect(`/token?refresh_token=${refresh_token}`);
 }
 
 async function revokeRefreshToken(data: FormData) {
@@ -62,8 +62,12 @@ async function getSubtoken(accountId: string, data: FormData) {
     throw new Error('Missing access_token');
   }
 
-  const { subtoken } = await bn2me.api(access_token).subtoken(accountId);
+  // get requested permissions
+  const requestedPermissions = data.getAll('permission').filter((permission) => typeof permission === 'string');
 
+  const { subtoken } = await bn2me.api(access_token).subtoken(accountId, { permissions: requestedPermissions });
+
+  // TODO: validate API subtoken (Brickset | Rebrickable | BrickLink)
   redirect(`https://brickset.com/api/v3.asmx?checkUserHash=${subtoken}`);
 }
 
@@ -95,7 +99,7 @@ export default async function TokenPage({ searchParams: asyncSearchParams }: Pag
         </Label>
 
         <FlexRow>
-          <Button icon={undefined /* "revision" */} type="submit" formAction={refreshTokenAction} disabled={!refresh_token}>Refresh Token</Button>
+          <Button icon="revision" type="submit" formAction={refreshTokenAction} disabled={!refresh_token}>Refresh Token</Button>
           <Button icon="delete" type="submit" formAction={revokeAccessToken} disabled={!access_token}>Revoke access_token</Button>
           <Button icon="delete" type="submit" formAction={revokeRefreshToken} disabled={!refresh_token}>Revoke refresh_token</Button>
         </FlexRow>

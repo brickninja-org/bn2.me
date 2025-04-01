@@ -4,7 +4,7 @@ import { Headline } from '@brickninja-org/ui/components/headline/Headline';
 
 import { PageLayout } from '@/components/layout/PageLayout';
 
-import { AccountAddForm } from './form';
+import { AccountAddForm } from './Form';
 
 export default function AccountCreatePage() {
   return (

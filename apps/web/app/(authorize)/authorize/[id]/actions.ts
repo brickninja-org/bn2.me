@@ -29,7 +29,7 @@ export interface AuthorizeActionParams {
   codeChallenge?: string;
 }
 
-export async function authorize(id: string, _: FormState, formData: FormData) {
+export async function authorize(id: string, _: FormState, formData: FormData): Promise<FormState> {
   // get account ids from form
   const accountIds = formData.getAll('accounts').filter(isString);
 
@@ -42,7 +42,7 @@ export async function authorize(id: string, _: FormState, formData: FormData) {
   if (session) {
     // make sure user cookie is set for better login flow later
     const cookieStore = await cookies();
-    cookieStore.set(userCookie(session.userId));
+    cookieStore.set(await userCookie(session.userId));
   }
 
   return authorizeInternal(id, accountIds, emailId);
@@ -136,7 +136,8 @@ export async function authorizeInternal(
           ...identifier,
           applicationId: authorizationRequest.client.applicationId,
           scope: scopes,
-          redirectUri: authorizationRequest.data.code_challenge_method ? `${authorizationRequest.data.code_challenge_method}:${authorizationRequest.data.code_challenge}` : null,
+          redirectUri: authorizationRequest.type === 'OAuth2' ? authorizationRequest.data.redirect_uri : undefined,
+          codeChallenge: authorizationRequest.data.code_challenge_method ? `${authorizationRequest.data.code_challenge_method}:${authorizationRequest.data.code_challenge}` : null,
           token: generateCode(),
           expiresAt: expiresAt(60),
         },

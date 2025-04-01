@@ -1,20 +1,9 @@
 import { Bn2MeError } from './error';
 
 export async function jsonOrError(response: Response) {
+  await okOrError(response);
+
   const isJson = response.headers.get('Content-Type') === 'application/json';
-
-  if(!response.ok) {
-    let errorMessage: string | undefined;
-
-    // lets check if we can get more details
-    if(isJson) {
-      const error = await response.json();
-
-      errorMessage = error.error_message;
-    }
-
-    throw new Bn2MeError(`bn2.me returned an error: ${errorMessage ?? 'Unknown error'}`);
-  }
 
   if(!isJson) {
     throw new Bn2MeError('bn2.me did not return a valid JSON response');

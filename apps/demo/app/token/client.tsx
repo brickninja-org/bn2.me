@@ -1,7 +1,9 @@
 'use client';
 
+import type { FC } from 'react';
+
+import { useEffect, useMemo } from 'react';
 import { Bn2MeClient } from '@bn2me/client';
-import { type FC, useEffect, useMemo } from 'react';
 
 export interface ClientProps {
   clientId: string;

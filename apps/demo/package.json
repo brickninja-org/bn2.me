@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@bn2me/client": "workspace:*",
-    "@brickninja-org/icons": "0.0.4",
+    "@brickninja-org/icons": "0.0.6",
     "@brickninja-org/ui": "0.0.21",
     "next": "15.1.3",
     "react": "19.0.0",

@@ -1,7 +1,7 @@
 /** @jest-environment node */
 import type { Client, ClientSecret } from '@bn2me/database';
 
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it, beforeEach, beforeAll } from 'vitest';
 import { ClientType } from '@bn2me/database';
 
 import { OAuth2ErrorCode } from '@/lib/oauth/error';
@@ -11,7 +11,7 @@ import { getRequestAuthorization, RequestAuthorization } from './auth';
 
 const client: Client & { secrets: ClientSecret[] } = {
   id: 'test',
-  name: 'Test Client',
+  name: 'test',
   applicationId: 'app-id',
   callbackUrls: [],
   createdAt: new Date(),

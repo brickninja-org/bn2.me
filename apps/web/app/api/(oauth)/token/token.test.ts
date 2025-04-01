@@ -1,5 +1,5 @@
-/** @jest-environment node */
-import { describe, expect, it } from '@jest/globals';
+// @vitest-environment node
+import { describe, expect, it, beforeEach } from 'vitest';
 
 import { Account, Authorization, Client } from '@bn2me/database';
 import { Scope } from '@bn2me/client';
@@ -32,7 +32,7 @@ const mockAuthorization: MockAuthorization = {
 
 const client: Client = {
   id: 'test',
-  name: 'Test',
+  name: 'test',
   applicationId: 'app-id',
   callbackUrls: [],
   createdAt: new Date(),
@@ -82,7 +82,7 @@ describe('/api/token', () => {
       });
     });
 
-    describe('refresh_token', () => {
+    describe.skip('refresh_token', () => {
       // TODO: add refresh token tests
     });
   });

@@ -18,6 +18,7 @@
     "**/*.js",
     "**/.well-known/**/*.ts",
     ".next/types/**/*.ts",
-    "postcss.config.mjs"
+    "postcss.config.mjs",
+    "vitest.config.mts"
   ],
 }
