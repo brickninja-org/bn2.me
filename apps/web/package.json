@@ -35,7 +35,7 @@
     "tailwind-variants": "0.2.1"
   },
   "devDependencies": {
-    "@brickninja-org/eslint-config": "0.0.5",
+    "@brickninja-org/eslint-config": "0.0.6",
     "@brickninja-org/tsconfig": "0.0.2",
     "@brickset-api/types": "0.0.17",
     "@prisma/nextjs-monorepo-workaround-plugin": "6.5.0",
