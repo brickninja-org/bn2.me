@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/brickninja-org/bn2.me#readme",
   "devDependencies": {
-    "@brickninja-org/eslint-config": "0.0.5",
+    "@brickninja-org/eslint-config": "0.0.6",
     "@brickninja-org/publish-package": "0.0.1-rc.0",
     "@brickninja-org/tsconfig": "0.0.2",
     "eslint": "8.57.1",
