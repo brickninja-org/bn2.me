@@ -34,7 +34,7 @@ importers:
         version: 0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@brickninja-org/ui':
         specifier: 0.0.24
-        version: 0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.1.0)(next@15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.0)
+        version: 0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.1.0)(next@15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.0)
       next:
         specifier: 15.1.3
         version: 15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4)
@@ -74,7 +74,7 @@ importers:
         version: 19.0.4(@types/react@19.0.12)
       autoprefixer:
         specifier: 10.4.21
-        version: 10.4.21(postcss@8.5.1)
+        version: 10.4.21(postcss@8.5.3)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -82,8 +82,8 @@ importers:
         specifier: 15.1.3
         version: 15.1.3(eslint@8.57.1)(typescript@5.7.2)
       postcss:
-        specifier: 8.5.1
-        version: 8.5.1
+        specifier: 8.5.3
+        version: 8.5.3
       tailwindcss:
         specifier: 4.1.0
         version: 4.1.0
@@ -110,7 +110,7 @@ importers:
         version: 0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@brickninja-org/ui':
         specifier: 0.0.24
-        version: 0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.1.0)(next@15.2.4(@babel/core@7.26.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.0)
+        version: 0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.1.0)(next@15.2.4(@babel/core@7.26.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.0)
       '@brickset-api/fetch':
         specifier: 0.0.19
         version: 0.0.19(@brickset-api/types@0.0.17)
@@ -204,7 +204,7 @@ importers:
         version: 4.3.4(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.79.4)(yaml@2.6.1))
       autoprefixer:
         specifier: 10.4.21
-        version: 10.4.21(postcss@8.5.1)
+        version: 10.4.21(postcss@8.5.3)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -215,8 +215,8 @@ importers:
         specifier: 26.0.0
         version: 26.0.0
       postcss:
-        specifier: 8.5.1
-        version: 8.5.1
+        specifier: 8.5.3
+        version: 8.5.3
       tailwindcss:
         specifier: 4.1.0
         version: 4.1.0
@@ -3600,10 +3600,6 @@ packages:
     resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.5.1:
-    resolution: {integrity: sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==}
-    engines: {node: ^10 || ^12 || >=14}
-
   postcss@8.5.3:
     resolution: {integrity: sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==}
     engines: {node: ^10 || ^12 || >=14}
@@ -4625,7 +4621,7 @@ snapshots:
 
   '@brickninja-org/tsconfig@0.0.2': {}
 
-  '@brickninja-org/ui@0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.1.0)(next@15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.0)':
+  '@brickninja-org/ui@0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.1.0)(next@15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.0)':
     dependencies:
       '@brickninja-org/helper': 0.0.1
       '@brickninja-org/icons': 0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -4636,7 +4632,7 @@ snapshots:
       client-only: 0.0.1
       clsx: 2.1.1
       next: 15.1.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4)
-      postcss: 8.5.1
+      postcss: 8.5.3
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       server-only: 0.0.1
@@ -4644,7 +4640,7 @@ snapshots:
       tailwind-variants: 1.0.0(tailwindcss@4.1.0)
       tailwindcss: 4.1.0
 
-  '@brickninja-org/ui@0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.1.0)(next@15.2.4(@babel/core@7.26.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.0)':
+  '@brickninja-org/ui@0.0.24(@brickninja-org/helper@0.0.1)(@brickninja-org/icons@0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@brickninja-org/tsconfig@0.0.2)(@tailwindcss/postcss@4.1.0)(next@15.2.4(@babel/core@7.26.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4))(postcss@8.5.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.0)':
     dependencies:
       '@brickninja-org/helper': 0.0.1
       '@brickninja-org/icons': 0.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -4655,7 +4651,7 @@ snapshots:
       client-only: 0.0.1
       clsx: 2.1.1
       next: 15.2.4(@babel/core@7.26.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.79.4)
-      postcss: 8.5.1
+      postcss: 8.5.3
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       server-only: 0.0.1
@@ -5485,7 +5481,7 @@ snapshots:
       '@alloc/quick-lru': 5.2.0
       '@tailwindcss/node': 4.1.0
       '@tailwindcss/oxide': 4.1.0
-      postcss: 8.5.1
+      postcss: 8.5.3
       tailwindcss: 4.1.0
 
   '@testing-library/dom@10.4.0':
@@ -6111,14 +6107,14 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  autoprefixer@10.4.21(postcss@8.5.1):
+  autoprefixer@10.4.21(postcss@8.5.3):
     dependencies:
       browserslist: 4.24.4
       caniuse-lite: 1.0.30001707
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.1.1
-      postcss: 8.5.1
+      postcss: 8.5.3
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
@@ -8151,12 +8147,6 @@ snapshots:
   postcss-value-parser@4.2.0: {}
 
   postcss@8.4.31:
-    dependencies:
-      nanoid: 3.3.8
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
-
-  postcss@8.5.1:
     dependencies:
       nanoid: 3.3.8
       picocolors: 1.1.1
