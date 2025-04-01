@@ -48,7 +48,7 @@ importers:
         specifier: 0.0.1
         version: 0.0.1
       tailwind-variants:
-        specifier: ^0.2.1
+        specifier: 0.2.1
         version: 0.2.1(tailwindcss@4.0.0-beta.9)
     devDependencies:
       '@bn2me/demo-setup':
@@ -3899,9 +3899,6 @@ packages:
 
   tabbable@6.2.0:
     resolution: {integrity: sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew==}
-
-  tailwind-merge@2.5.5:
-    resolution: {integrity: sha512-0LXunzzAZzo0tEPxV3I297ffKZPlKDrjj7NXphC8V5ak9yHC5zRmxnOe2m/Rd/7ivsOMJe3JZ2JVocoDdQTRBA==}
 
   tailwind-merge@2.6.0:
     resolution: {integrity: sha512-P+Vu1qXfzediirmHOC3xKGAYeZtPcV9g76X+xg2FD4tYgR71ewMA35Y3sCz3zhiN/dwefRpJX0yBcgwi1fXNQA==}
@@ -8410,15 +8407,13 @@ snapshots:
 
   tabbable@6.2.0: {}
 
-  tailwind-merge@2.5.5: {}
-
   tailwind-merge@2.6.0: {}
 
   tailwind-merge@3.0.2: {}
 
   tailwind-variants@0.2.1(tailwindcss@4.0.0-beta.9):
     dependencies:
-      tailwind-merge: 2.5.5
+      tailwind-merge: 2.6.0
       tailwindcss: 4.0.0-beta.9
 
   tailwind-variants@0.3.0(tailwindcss@4.0.0-beta.9):
