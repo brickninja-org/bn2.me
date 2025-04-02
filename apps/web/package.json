@@ -13,6 +13,7 @@
     "@bn2me/client": "workspace:*",
     "@bn2me/database": "workspace:*",
     "@bn2me/emails": "workspace:*",
+    "@bn2me/onig": "workspace:*",
     "@brickninja-org/helper": "0.0.1",
     "@brickninja-org/icons": "0.0.6",
     "@brickninja-org/ui": "0.0.26",
