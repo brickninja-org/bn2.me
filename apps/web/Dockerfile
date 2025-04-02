@@ -22,7 +22,7 @@ ARG pnpm_version
 RUN apk add --no-cache libc6-compat \
     && npm i -g pnpm@${pnpm_version}
 WORKDIR /app
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Install dependencies based on the preferred package manager
 COPY --from=source /source/out/json/ .
@@ -38,8 +38,8 @@ FROM node:${node_version} AS runner
 ARG sharp_version
 WORKDIR /app
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
