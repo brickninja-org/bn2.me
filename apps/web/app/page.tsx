@@ -55,7 +55,7 @@ export default async function HomePage() {
               <div className="flex gap-2 items-center mt-4"><Icon icon="checkmark" className="w-5 h-5 p-0.5 rounded-xs bg-focus text-white"/>Main Account (account.1234)<Icon icon="verified"/></div>
               <div className="flex gap-2 items-center mt-4"><Icon icon="add" className="w-5 h-5 p-0.5"/>Add account</div>
               <hr className="h-0 my-4 border-t-2"/>
-              <div className="p-3 border rounded-xs border-green-700 bg-green-100 text-green-800 text-center leading-4"><Icon icon="bn2me-outline"/> Authorize example.com</div>
+              <div className="p-3 border rounded-xs border-green-700 bg-green-100 text-green-800 text-center leading-4"><Icon icon="user"/> Authorize example.com</div>
             </div>
           </div>
 
