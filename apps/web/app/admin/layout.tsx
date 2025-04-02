@@ -13,7 +13,7 @@ export default async function AdminLayout({ children }: LayoutProps) {
       <Navigation prefix="/admin/" items={[
         { segment: 'users', icon: 'user', label: 'Users' },
         { segment: 'apps', icon: 'apps', label: 'Apps' },
-        { segment: 'authorization-requests', icon: 'bn2me-outline', label: 'Auth Requests' },
+        { segment: 'authorization-requests', icon: 'user', label: 'Auth Requests' },
         { segment: 'api-keys', icon: 'key', label: 'API Keys' },
         { segment: 'requests', icon: 'api-status', label: 'API Requests' },
         { segment: 'email', icon: 'mail', label: 'Email' },
