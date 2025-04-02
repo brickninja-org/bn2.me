@@ -3,7 +3,7 @@ import { SubtokenResponse, Scope } from '@bn2me/client';
 import { NextResponse } from 'next/server';
 import { Bn2Scopes, OptionsHandler, withAuthorization } from '../../../auth';
 import { Authorization } from '@bn2me/database';
-import { fetchGw2Api } from '@/lib/gw2-api-request';
+// import { fetchRebrickableApi } from '@/lib/rebrickable-api-request';
 import { RouteProps } from '@/lib/next';
 import { scopeToPermissions } from '@/lib/scope';
 
@@ -64,7 +64,7 @@ export const GET = withAuthorization<RouteProps<{ id: string }>>({ oneOf: Bn2Sco
     } catch(error) {
       console.error(error);
 
-      return NextResponse.json({ error: true, error_description: 'The Guild Wars 2 API returned an error when creating the subtoken' }, { status: 500 });
+      return NextResponse.json({ error: true, error_description: 'The Rebrickable API returned an error when creating the subtoken' }, { status: 500 });
     }
 
     // return response
@@ -83,7 +83,7 @@ async function createSubtoken(apiToken: { id: string, token: string }, requiredP
   let apiResponse;
   try {
     console.log('request subtoken for', apiToken.token);
-    apiResponse = await fetchGw2Api(`/v2/createsubtoken?expire=${expire.toISOString()}&permissions=${requiredPermissions.join(',')}`, { accessToken: apiToken.token });
+    apiResponse = { subtoken: '' }; // await fetchRebrickableApi(`/v2/createsubtoken?expire=${expire.toISOString()}&permissions=${requiredPermissions.join(',')}`, { apiKey: apiToken.token });
   } catch(e) {
     console.error(e);
 
@@ -97,7 +97,7 @@ async function createSubtoken(apiToken: { id: string, token: string }, requiredP
     });
 
     // return error response
-    throw new Error('The Guild Wars 2 API returned an error when creating the subtoken', { cause: e });
+    throw new Error('The Rebrickable API returned an error when creating the subtoken', { cause: e });
   }
 
   // reset errorCount and set usedAt
