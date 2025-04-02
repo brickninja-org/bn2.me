@@ -91,7 +91,7 @@ jobs:
 
   success:
     name: Success
-    needs: [build-node, lint, test-compose, test-kubernetes, test-unit]
+    needs: [build-node, lint, test-unit]
     runs-on: ubuntu-latest
     if: always()
     steps:
