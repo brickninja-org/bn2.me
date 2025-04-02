@@ -160,7 +160,7 @@ export default async function AuthorizePage({ params }: PageProps<{ id: string }
                 Select Accounts {verifiedAccountsOnly && '(Verified only)'}
                 <div className="w-full flex flex-col mt-4">
                   {accounts.map((account) => (
-                    <Checkbox key={account.id} defaultChecked={previousAccountIds.includes(account.id) && (account.verified || !verifiedAccountsOnly)} name="accounts" formValue={account.id} disabled={!account.verified && verifiedAccountsOnly} className="accountCheckbox">
+                    <Checkbox key={account.id} defaultChecked={previousAccountIds.includes(account.id) && (account.verified || !verifiedAccountsOnly)} name="accounts" formValue={account.id} disabled={!account.verified && verifiedAccountsOnly}>
                       <FlexRow>
                         {account.displayName ? <>{account.displayName} <span className="text-muted">({account.accountName})</span></> : account.accountName}
                         {verifiedAccountsOnly && !account.verified && (<Tip tip="Not verified"><Icon icon="unverified"/></Tip>)}
@@ -187,7 +187,7 @@ export default async function AuthorizePage({ params }: PageProps<{ id: string }
 
             <div className="flex flex-wrap gap-4 pt-4 border-2 border-(--color-border)">
               <Button type="submit" formAction={cancelAction} flex className="justify-center">Cancel</Button>
-              <SubmitButton icon="bn2me-outline" type="submit" flex className="justify-center shadow-[0_0_0_1px] shadow-green-600 bg-green-100 text-green-800">Authorize {client.application.name}</SubmitButton>
+              <SubmitButton type="submit" flex className="justify-center shadow-[0_0_0_1px] shadow-green-600 bg-green-100 text-green-800">Authorize {client.application.name}</SubmitButton>
             </div>
 
             {(authRequest.type === 'OAuth2' || authRequest.type === 'OAuth2_PAR') && (
