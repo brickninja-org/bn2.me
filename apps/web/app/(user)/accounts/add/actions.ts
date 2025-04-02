@@ -6,8 +6,9 @@ import { redirect } from 'next/navigation';
 
 import { getApiKeyVerificationName } from '@/lib/api-key-verification-name';
 import { db } from '@/lib/db';
-import { fetchBricksetApi } from '@/lib/brickset-api-request';
+// import { fetchBricksetApi } from '@/lib/brickset-api-request';
 import { getSessionOrRedirect } from '@/lib/session';
+// import { permission } from 'process';
 
 const apiKeyRegex = /^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{20}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/;
 
@@ -28,7 +29,7 @@ export async function addAccount(returnTo: string | undefined, requireVerificati
   // verify token
   let tokeninfo;
   try {
-    tokeninfo = { accessToken: null, name: '' }; // await fetchGw2Api('/v2/tokeninfo', { accessToken: apiKey });
+    tokeninfo = { id: apiKey, accessToken: null, name: '', permissions: [] }; // await fetchGw2Api('/v2/tokeninfo', { accessToken: apiKey });
   } catch {
     return { error: 'Could not verify API key' };
   }
@@ -45,7 +46,7 @@ export async function addAccount(returnTo: string | undefined, requireVerificati
 
   let account;
   try {
-    account = await fetchBricksetApi('/v3/account', { apiKey });
+    account = { id: '123456', name: 'brick.ninja' }; // await fetchBricksetApi('/v3/account', { apiKey });
   } catch {
     return { error: 'Could not load account from Guild Wars 2 API.' };
   }
