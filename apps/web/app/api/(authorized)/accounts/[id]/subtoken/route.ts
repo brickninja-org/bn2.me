@@ -75,6 +75,8 @@ export const GET = withAuthorization<RouteProps<{ id: string }>>({ oneOf: Bn2Sco
 export const OPTIONS = OptionsHandler;
 
 async function createSubtoken(apiToken: { id: string, token: string }, requiredPermissions: string[]): Promise<SubtokenResponse> {
+  console.log(requiredPermissions); // TODO: remove
+
   // create expiration time in 10 minutes
   const expire = new Date();
   expire.setMinutes(expire.getMinutes() + 10);
