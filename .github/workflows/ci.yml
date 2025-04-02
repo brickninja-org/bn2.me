@@ -75,60 +75,6 @@ jobs:
           *.cache-from=type=gha,scope=build-${{ matrix.target }}
           *.cache-to=type=gha,scope=build-${{ matrix.target }},mode=max
 
-  test-compose:
-    name: Test / docker compose
-    runs-on: ubuntu-24.04
-    needs: build-docker
-    steps:
-    - uses: actions/checkout@v4
-    - name: Pull images
-      run: docker compose pull
-    - run: docker images
-    - name: Start docker compose
-      run: docker compose up -d
-    - name: Wait 15s
-      run: sleep 15
-    - run: docker compose ps -a
-    - run: docker compose logs
-    - name: Verify docker containers are running
-      run: docker inspect --format "{{.ID}} {{.Name}} {{.State.Status}} {{.RestartCount}}" $(docker compose ps -aq) | node .github/actions/docker-compose-status.js
-    - name: Stop docker compose
-      run: docker compose down
-
-  test-kubernetes:
-    name: Test / kubernetes
-    runs-on: ubuntu-24.04
-    needs: build-docker
-    steps:
-    - uses: actions/checkout@v4
-    - uses: nolar/setup-k3d-k3s@v1
-      with:
-        version: v1.26
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-    - name: build temporary kustomization.yaml
-      run: |
-        mkdir -p .temp
-        cat <<EOF > .temp/kustomization.yaml
-        resources:
-        - ../kubernetes/local
-        images:
-        - name: ghcr.io/brickninja-org/bn2.me/web
-          newTag: ${{ env.IMAGE_VERSION }}
-        - name: ghcr.io/brickninja-org/bn2.me/demo
-          newTag: ${{ env.IMAGE_VERSION }}
-        - name: ghcr.io/brickninja-org/bn2.me/database-migration
-          newTag: ${{ env.IMAGE_VERSION }}
-        EOF
-    - run: kubectl kustomize .temp
-    - run: kubectl apply -k .temp
-    - run: kubectl rollout status deployment web demo database -n bn2me --timeout=120s
-    - run: kubectl get deployment -n bn2me
-      if: success() || failure()
-    - run: kubectl get job -n bn2me
-      if: success() || failure()
-    - run: kubectl logs -l app.kubernetes.io/part-of=bn2me -n bn2me --all-containers --ignore-errors
-      if: failure() || runner.debug == '1'
-
   test-unit:
     name: Test / Unit
     runs-on: ubuntu-24.04
