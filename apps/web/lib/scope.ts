@@ -1,5 +1,7 @@
 import type { Scope } from '@bn2me/client';
 
+type Permission = string;
+
 export function hasBn2Scopes(scopes: Scope[]): boolean {
   return scopes.some((scope) => scope.startsWith('bn2:'));
 }
