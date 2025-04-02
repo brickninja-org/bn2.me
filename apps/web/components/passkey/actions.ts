@@ -1,7 +1,7 @@
 'use server';
 import 'server-only';
 
-import type { AuthenticationResponseJSON, AuthenticatorTransportFuture, RegistrationResponseJSON } from '@simplewebauthn/server';
+import type { AuthenticationResponseJSON, AuthenticatorTransportFuture, PublicKeyCredentialCreationOptionsJSON, PublicKeyCredentialRequestOptionsJSON, RegistrationResponseJSON } from '@simplewebauthn/server';
 import type { Passkey } from '@bn2me/database';
 
 import { revalidatePath } from 'next/cache';

@@ -137,7 +137,7 @@ export const PasskeyAuthenticationDialog: FC<PasskeyAuthenticationDialogProps> =
       <>
         <p>Passkey authentication challenge has expired.</p>
         <DialogActions>
-          <Button variant="faded" radius="sm" onPress={() => initializeConditionalUi()} icon="revision">Restart</Button>
+          <Button onClick={() => initializeConditionalUi()} icon="revision">Restart</Button>
         </DialogActions>
       </>
     );
