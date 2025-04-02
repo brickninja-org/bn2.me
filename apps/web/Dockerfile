@@ -11,7 +11,7 @@ FROM --platform=$BUILDPLATFORM node:${node_version} AS source
 ARG turbo_version
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat \
-    && npm i -g turbo@${turbo_version}
+  && npm i -g turbo@${turbo_version}
 WORKDIR /source
 COPY . .
 RUN turbo prune web --docker
@@ -20,7 +20,7 @@ RUN turbo prune web --docker
 FROM --platform=$BUILDPLATFORM node:${node_version} AS builder
 ARG pnpm_version
 RUN apk add --no-cache libc6-compat \
-    && npm i -g pnpm@${pnpm_version}
+  && npm i -g pnpm@${pnpm_version}
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
@@ -31,7 +31,7 @@ RUN pnpm install --frozen-lockfile
 
 COPY --from=source /source/out/full/ .
 
-RUN pnpm run build --filter=web...
+RUN pnpm run build --filter=web
 
 # Production image, copy all the files and run next
 FROM node:${node_version} AS runner
