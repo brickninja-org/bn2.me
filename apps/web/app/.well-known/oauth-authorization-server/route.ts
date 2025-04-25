@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { Scope } from '@bn2me/client';
 
+import { supportedDPOPAlgorithms } from '@/lib/oauth/dpop';
 import { AuthenticationMethod } from '@/lib/oauth/types';
 import { getUrlFromRequest } from '@/lib/url';
 
