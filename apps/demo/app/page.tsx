@@ -1,12 +1,13 @@
 import { redirect } from 'next/navigation';
 
-import { Scope } from '@bn2me/client';
+import { AuthorizationUrlParams, Scope } from '@bn2me/client';
+import { jwkThumbprint } from '@bn2me/client/dpop';
 import { SubmitButton } from '@brickninja-org/ui/components/form/buttons/SubmitButton';
 import { Checkbox } from '@brickninja-org/ui/components/form/Checkbox';
 import { Label } from '@brickninja-org/ui/components/form/Label';
 import { Select } from '@brickninja-org/ui/components/form/Select';
 
-import { getCallback, getPKCEPair, bn2me } from '@/lib/client';
+import { createDPoPJwt, getCallback, getPKCEPair, bn2me, getDPoPPair } from '@/lib/client';
 
 export default function HomePage() {
   return (
@@ -29,6 +30,7 @@ export default function HomePage() {
             <Checkbox name="include_granted_scopes" formValue="true">include_granted_scopes</Checkbox>
             <Checkbox name="verified_accounts_only" formValue="true">verified_accounts_only</Checkbox>
             <Checkbox name="par" formValue="true">Use Pushed Authorization Request (PAR)</Checkbox>
+            <Checkbox name="dpop" formValue="true" defaultChecked>Use Demonstrating Proof of Possession (DPoP)</Checkbox>
           </div>
         </Label>
       </div>
@@ -50,18 +52,29 @@ async function login(formData: FormData) {
   const prompt = (formData.get('prompt') || undefined) as 'consent' | 'none' | undefined;
   const include_granted_scopes = formData.get('include_granted_scopes') === 'true';
   const verified_accounts_only = formData.get('verified_accounts_only') === 'true';
+  const par = formData.get('par') === 'true';
+  const dpop = formData.get('dpop') === 'true';
 
   const { challenge } = await getPKCEPair();
+  const dpopKeys = await getDPoPPair();
 
-  const authUrl = bn2me.getAuthorizationUrl({
-    redirect_uri: getCallback(),
+  const requestParams: AuthorizationUrlParams = {
+    redirect_uri: getCallback(dpop),
     scopes,
     state: 'example',
     ...challenge,
+    dpop_jkt: dpop ? await jwkThumbprint(dpopKeys.publicKey) : undefined,
     prompt,
     include_granted_scopes,
     verified_accounts_only,
-  });
+  };
 
-  redirect(authUrl);
+  if (par) {
+    const pushed = await bn2me.pushAuthorizationRequest({ ...requestParams, dpop: dpop ? createDPoPJwt : undefined });
+    const authUrl = bn2me.getAuthorizationUrl(pushed);
+    redirect(authUrl);
+  } else {
+    const authUrl = bn2me.getAuthorizationUrl(requestParams);
+    redirect(authUrl);
+  }
 }

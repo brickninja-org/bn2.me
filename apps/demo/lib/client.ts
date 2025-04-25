@@ -2,21 +2,37 @@ import 'server-only';
 
 import { unstable_noStore } from 'next/cache';
 
-import { Bn2MeClient } from '@bn2me/client';
+import { Bn2MeClient, DPoPCallback } from '@bn2me/client';
 import { generatePKCEPair, type PKCEPair } from '@bn2me/client/pkce';
+import { createDPoPJwt as _createDPoPJwt, generateDPoPKeyPair } from '@bn2me/client/dpop';
 
-const globalForPKCE = globalThis as unknown as { pkce: PKCEPair | undefined };
+const globalForPKCEAndDPoP = globalThis as unknown as {
+  pkce: PKCEPair | undefined;
+  dpop: CryptoKeyPair | undefined;
+};
 
 // generate PKCE pair on first invocation
 // otherwise return cached PKCE pair because we don't store it
 // reusing a PKCE pair is against the spec, but this is just a demo
 // DO NOT DO IT LIKE THIS IN A REAL-WORLD APPLICATION
 export async function getPKCEPair() {
-  if(!globalForPKCE.pkce) {
-    globalForPKCE.pkce = await generatePKCEPair();
+  if(!globalForPKCEAndDPoP.pkce) {
+    globalForPKCEAndDPoP.pkce = await generatePKCEPair();
   }
 
-  return globalForPKCE.pkce;
+  return globalForPKCEAndDPoP.pkce;
+}
+
+export async function getDPoPPair() {
+  if (!globalForPKCEAndDPoP.dpop) {
+    globalForPKCEAndDPoP.dpop = await generateDPoPKeyPair();
+  }
+
+  return globalForPKCEAndDPoP.dpop;
+}
+
+export const createDPoPJwt: DPoPCallback = async (params) => {
+  return _createDPoPJwt(params, await getDPoPPair());
 }
 
 export const bn2me = new Bn2MeClient({
@@ -31,7 +47,14 @@ export function getBn2MeUrl() {
   return process.env.BN2ME_URL ?? 'https://bn2.me';
 }
 
-export function getCallback() {
+export function getCallback(isDPoP: boolean) {
   unstable_noStore();
-  return process.env.CALLBACK_URL ?? 'https://demo.bn2.me/callback';
+
+  const redirect_uri = new URL(process.env.CALLBACK_URL ?? 'https://demo.bn2.me/callback');
+
+  if (isDPoP) {
+    redirect_uri.searchParams.set('dpop', 'true');
+  }
+
+  return redirect_uri.toString();
 }

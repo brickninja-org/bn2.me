@@ -26,7 +26,7 @@ export default async function RootLayout({ children }: LayoutProps) {
     <html lang="en" className={cn(bitter.variable)}>
       <body>
         <div className="flex flex-col min-h-[100svh]">
-          <div className="sticky top-0 flex gap-4 items-center h-12 px-(--max-page-width--padding) bg-white border-b z-3">
+          <div className="sticky top-0 flex gap-4 items-center h-12 px-(--max-page-width--padding) bg-white border-b leading-4 z-3">
             {/* <Icon icon="bn2me" color="var(--color-brand)"/> */}
             <Link href="/" className="font-bitter text-xl">bn2.me</Link>
             <div className="hidden sm:inline-block">by <a href="https://brick.ninja/" className="text-brand underline-offset-2 hover:underline">brick.ninja</a></div>

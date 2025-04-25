@@ -4,7 +4,12 @@
   "files.associations": {
     ".css": "tailwindcss"
   },
+  "tailwindCSS.includeLanguages": {
+    "html": "html",
+    "javascript": "javascript",
+    "css": "css",
+  },
   "tailwindCSS.experimental.classRegex": [
-    ["tv\\(\\{([\\s\\S]*?)\\}\\)", "['\"`]([^'\"`]*)['\"`]"]
+    ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"],
   ]
 }

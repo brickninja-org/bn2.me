@@ -17,6 +17,7 @@ import { PageTitle } from '@/components/layout/PageTitle';
 import { ColumnSelection } from '@/components/table/ColumnSelection';
 
 import { ensureUserIsAdmin } from 'app/admin/admin';
+import { isTruthy } from '@brickninja-org/helper/is';
 
 const getClient = cache(function getClient(id: string) {
   return db.client.findUnique({
@@ -55,6 +56,7 @@ export default async function AdminUserDetailPage({ params }: AdminClientDetailP
       <Authorizations.Table>
         <Authorizations.Column id="id" title="Id" hidden>{({ id }) => <Code inline borderless>{id}</Code>}</Authorizations.Column>
         <Authorizations.Column id="type" title="Type" sortBy="type">{({ type }) => type}</Authorizations.Column>
+        <Authorizations.Column id="flags" title="Flags">{({ codeChallenge, dpopJkt }) => [codeChallenge && 'PKCE', dpopJkt && 'DPoP'].filter(isTruthy).join(', ')}</Authorizations.Column>
         <Authorizations.Column id="user" title="User" sortBy="userId">{({ user }) => <Link href={`/admin/users/${user.id}`}><FlexRow><Icon icon="person"/>{user.name}</FlexRow></Link>}</Authorizations.Column>
         <Authorizations.Column id="scope" title="Scope" hidden>{({ scope }) => scope.join(' ')}</Authorizations.Column>
         <Authorizations.Column id="createdAt" title="Created At" sortBy="createdAt">{({ createdAt }) => <FormatDate date={createdAt}/>}</Authorizations.Column>

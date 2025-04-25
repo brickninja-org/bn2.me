@@ -19,6 +19,7 @@ export function GET(request: NextRequest) {
     scopes_supported: Object.values(Scope),
     code_challenge_methods_supported: ['S256'],
     authorization_response_iss_parameter_supported: true,
+    dpop_signing_alg_values_supported: supportedDPOPAlgorithms,
 
     pushed_authorization_request_endpoint: new URL('/oauth2/par', currentUrl),
     require_pushed_authorization_requests: false,

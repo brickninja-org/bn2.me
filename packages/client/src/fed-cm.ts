@@ -48,6 +48,6 @@ export class Bn2MeFedCM {
         }],
         mode,
       }
-    } as CredentialCreationOptions) as unknown as Promise<null | { token: string, type: 'identity' }>;
+    } as CredentialCreationOptions) as Promise<null | { token: string, type: 'identity' }>;
   }
 }
