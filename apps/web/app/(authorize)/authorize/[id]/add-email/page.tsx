@@ -1,5 +1,6 @@
-import { PageProps } from '@/lib/next';
 import { Headline } from '@brickninja-org/ui/components/headline/Headline';
+
+import { PageProps } from '@/lib/next';
 import { AddEmailForm } from 'app/(user)/emails/add/Form';
 
 export default async function AuthorizeAddEmailPage({ params }: PageProps<{ id: string }>) {

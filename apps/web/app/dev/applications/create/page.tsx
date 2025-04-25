@@ -21,7 +21,6 @@ export default async function CreateApplicationPage() {
     where: { userId, verified: true },
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const emailOptions: SelectProps['options'] = emails.map((email) => ({ value: email.id, label: email.email }));
   const defaultEmailId = emails.find((email) => email.isDefaultForUserId)?.id;
 

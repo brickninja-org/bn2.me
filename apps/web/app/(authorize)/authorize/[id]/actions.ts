@@ -10,6 +10,7 @@ import { Authorization, AuthorizationRequestState, AuthorizationRequestType, Aut
 import { userCookie } from '@/lib/cookie';
 import { expiresAt } from '@/lib/date';
 import { db } from '@/lib/db';
+import { notExpired } from '@/lib/db/helper';
 import { getFormDataString } from '@/lib/form-data';
 import { OAuth2ErrorCode } from '@/lib/oauth/error';
 import { createRedirectUrl } from '@/lib/redirect-url';
@@ -19,7 +20,6 @@ import { generateCode } from '@/lib/token';
 
 import { cancelAuthorizationRequest } from '../helper';
 import { AuthorizationRequest } from '../types';
-import { notExpired } from '@/lib/db/helper';
 
 export interface AuthorizeActionParams {
   clientId: string;

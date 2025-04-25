@@ -48,12 +48,13 @@
   },
   "homepage": "https://github.com/brickninja-org/bn2.me#readme",
   "devDependencies": {
-    "@brickninja-org/eslint-config": "0.0.6",
+    "@brickninja-org/eslint-config": "0.1.0",
     "@brickninja-org/publish-package": "0.0.1-rc.0",
     "@brickninja-org/tsconfig": "0.0.2",
-    "eslint": "8.57.1",
+    "eslint": "9.25.1",
     "tsup": "8.4.0",
-    "typescript": "5.8.2",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.31.0",
     "undici-types": "7.8.0"
   },
   "publishConfig": {

@@ -6,11 +6,11 @@ import { SubmitButton } from '@brickninja-org/ui/components/form/buttons/SubmitB
 import { Checkbox } from '@brickninja-org/ui/components/form/Checkbox';
 import { Label } from '@brickninja-org/ui/components/form/Label';
 import { TextInput } from '@brickninja-org/ui/components/form/TextInput';
+import { Icon } from '@brickninja-org/ui';
 
 import { bn2me, createDPoPJwt, getBn2MeUrl } from '@/lib/client';
 import { PageProps } from '@/lib/next';
 import { Client } from './client';
-import { Icon } from '@brickninja-org/ui';
 
 export const dynamic = 'force-dynamic';
 

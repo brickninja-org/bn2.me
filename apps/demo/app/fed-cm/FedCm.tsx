@@ -4,12 +4,12 @@ import { FC, startTransition, useCallback, useEffect, useMemo, useState } from '
 import { useRouter } from 'next/navigation';
 
 import { Bn2MeClient, Scope } from '@bn2me/client';
+import { PKCEChallenge } from '@bn2me/client/pkce';
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
 import { Button } from '@brickninja-org/ui/components/form/Button';
 import { Label } from '@brickninja-org/ui/components/form/Label';
 import { Select } from '@brickninja-org/ui/components/form/Select';
 import { Notice } from '@brickninja-org/ui/components/notice/Notice';
-import { PKCEChallenge } from '@bn2me/client/pkce';
 import { Checkbox } from '@brickninja-org/ui/components/form/Checkbox';
 
 export interface FedCmProps {

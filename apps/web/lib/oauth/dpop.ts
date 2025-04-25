@@ -1,7 +1,7 @@
-import { createHash } from "crypto";
-import { calculateJwkThumbprint, EmbeddedJWK, jwtVerify } from "jose";
+import { createHash } from 'crypto';
+import { calculateJwkThumbprint, EmbeddedJWK, jwtVerify } from 'jose';
 
-import { OAuth2Error, OAuth2ErrorCode } from "./error";
+import { OAuth2Error, OAuth2ErrorCode } from './error';
 
 // TODO: add additional algorithms
 export const supportedDPOPAlgorithms: string[] = ['ES256'];

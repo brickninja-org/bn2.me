@@ -5,7 +5,6 @@ import { validateRequest } from '../authorize/validate';
 import { AuthorizationRequestExpiration, createAuthorizationRequest } from 'app/(authorize)/authorize/helper';
 import { AuthorizationRequestType } from '@bn2me/database';
 import { PushedAuthorizationRequestResponse } from '@bn2me/client';
-import { headers } from 'next/headers';
 import { checkProof } from '@/lib/oauth/dpop';
 
 export async function handleParRequest({ params, requestAuthorization, headers, url }: OAuth2RequestHandlerProps): Promise<PushedAuthorizationRequestResponse> {

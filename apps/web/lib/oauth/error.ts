@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import { isTruthy } from "@brickninja-org/helper/is";
+import { isTruthy } from '@brickninja-org/helper/is';
 
 export enum OAuth2ErrorCode {
   access_denied = 'access_denied',

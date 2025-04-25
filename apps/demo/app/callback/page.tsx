@@ -1,8 +1,10 @@
+import type { TokenResponse } from '@bn2me/client';
+import type { PageProps, SearchParams } from '@/lib/next';
+
 import { LinkButton } from '@brickninja-org/ui/components/form/Button';
 
 import { bn2me, createDPoPJwt, getCallback, getPKCEPair } from '@/lib/client';
-import { nextSearchParamsToURLSearchParams, PageProps, SearchParams } from '@/lib/next';
-import { TokenResponse } from '@bn2me/client';
+import { nextSearchParamsToURLSearchParams } from '@/lib/next';
 
 export const dynamic = 'force-dynamic';
 

@@ -106,8 +106,7 @@ export async function getPreviousUser() {
 
   return user ?? undefined;
 }
-
-// eslint-disable-next-line require-await
+ 
 async function switchUser() {
   'use server';
 

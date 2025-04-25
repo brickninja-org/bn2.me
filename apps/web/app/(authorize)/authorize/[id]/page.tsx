@@ -1,4 +1,5 @@
 import { cache, FC, ReactNode } from 'react';
+import Link from 'next/link';
 
 import { IconProp } from '@brickninja-org/ui';
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
@@ -7,6 +8,7 @@ import { SubmitButton } from '@brickninja-org/ui/components/form/buttons/SubmitB
 import { Checkbox } from '@brickninja-org/ui/components/form/Checkbox';
 import { Form, FormState } from '@brickninja-org/ui/components/form/Form';
 import { Select } from '@brickninja-org/ui/components/form/Select';
+import { ExternalLink } from '@brickninja-org/ui/components/link/ExternalLink';
 import { Notice } from '@brickninja-org/ui/components/notice/Notice';
 import { Icon } from '@brickninja-org/ui/icons/Icon';
 import { Scope } from '@bn2me/client';
@@ -26,8 +28,6 @@ import { Tip } from '@brickninja-org/ui/components/tip/Tip';
 
 import { AuthorizationRequest } from '../types';
 import { authorize, authorizeInternal, cancelAuthorization } from './actions';
-import { ExternalLink } from '@brickninja-org/ui/components/link/ExternalLink';
-import Link from 'next/link';
 
 const getPendingAuthorizationRequest = cache(
   (id: string) => db.authorizationRequest.findUnique({

@@ -3,8 +3,8 @@ import 'server-only';
 import { unstable_noStore } from 'next/cache';
 
 import { Bn2MeClient, DPoPCallback } from '@bn2me/client';
-import { generatePKCEPair, type PKCEPair } from '@bn2me/client/pkce';
 import { createDPoPJwt as _createDPoPJwt, generateDPoPKeyPair } from '@bn2me/client/dpop';
+import { generatePKCEPair, type PKCEPair } from '@bn2me/client/pkce';
 
 const globalForPKCEAndDPoP = globalThis as unknown as {
   pkce: PKCEPair | undefined;
