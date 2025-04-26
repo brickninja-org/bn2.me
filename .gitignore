@@ -9,6 +9,9 @@ node_modules/
 # docker
 .docker/
 
+# vercel
+.vercel/
+
 # misc
 .DS_Store
 *.pem
