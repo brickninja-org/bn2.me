@@ -7,6 +7,7 @@ import { NextResponse } from 'next/server';
 import { LoginErrorCookieName, SessionCookieName } from '@/lib/cookie';
 import { db } from '@/lib/db';
 import { getUrlFromRequest } from '@/lib/url';
+import { expiresAt } from '@/lib/date';
 
 export async function GET(request: NextRequest) {
   const cookieStore = await cookies();
@@ -25,6 +26,9 @@ export async function GET(request: NextRequest) {
   // delete session cookie
   cookieStore.delete(SessionCookieName);
   cookieStore.delete(LoginErrorCookieName);
+
+  // set cookie to show logout notification
+  cookieStore.set('logout', '1', { expires: expiresAt(5), httpOnly: true, path: '/login', secure: true });
 
   // set cookie to show logout
   const url = getUrlFromRequest(request);

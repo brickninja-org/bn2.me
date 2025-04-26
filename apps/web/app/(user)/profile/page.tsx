@@ -43,7 +43,7 @@ export default async function ProfilePage() {
 
   return (
     <PageLayout>
-      <Headline id="profile" actions={<LinkButton href="/logout" icon="sign-out" external prefetch={false}>Logout</LinkButton>}>
+      <Headline id="profile" actions={<form action="/logout" method="POST"><SubmitButton icon="logout">Logout</SubmitButton></form>}>
         {user.name}
       </Headline>
 
