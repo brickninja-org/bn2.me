@@ -9,7 +9,7 @@ import { db } from '@/lib/db';
 import { getUrlFromRequest } from '@/lib/url';
 import { expiresAt } from '@/lib/date';
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
 
   if (!cookieStore.has(SessionCookieName)) {
