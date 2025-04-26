@@ -100,11 +100,11 @@ export class Bn2MeClient {
 
   constructor(client: ClientInfo, private options?: Partial<Options>) {
     this.#client = client;
-    this.#fedCM = new Bn2MeFedCM(this.#getUrl('/fed-cm/config.json'), this.#client.client_id);
+    this.#fedCM = new Bn2MeFedCM(this.#getUrl('/fed-cm/config.json'), client.client_id);
   }
 
   #getUrl(url: string) {
-    return new URL(url, this.options?.url || 'https://bn2.me/');
+    return new URL(url, this.options?.url || 'https://bn2me.vercel.app/');
   }
 
   #getAuthorizationHeader() {
@@ -206,7 +206,7 @@ export class Bn2MeClient {
     };
 
     if (this.#client.client_secret) {
-      headers.Authorization = this.#getAuthorizationHeader();
+      headers['Authorization'] = this.#getAuthorizationHeader();
     }
 
     const url = this.#getUrl('/api/token');
@@ -215,7 +215,8 @@ export class Bn2MeClient {
       headers.DPoP = await dpop({
         htm: 'POST',
         htu: url.toString(),
-        accessToken: refresh_token_type === 'DPoP' ? refresh_token : undefined,
+         // public clients have their refresh token DPoP bound, confidential clients not, as the secret is used proof of possession
+         accessToken: refresh_token_type === 'DPoP' ? refresh_token : undefined,
       });
     }
 
@@ -234,7 +235,7 @@ export class Bn2MeClient {
 
     const headers: Record<string, string> = { 'Content-Type': 'application/x-www-form-urlencoded' };
     if(this.#client.client_secret) {
-      headers.Authorization = this.#getAuthorizationHeader();
+      headers['Authorization'] = this.#getAuthorizationHeader();
     }
 
     await fetch(this.#getUrl('/api/token/revoke'), {
@@ -250,7 +251,7 @@ export class Bn2MeClient {
 
     const headers: Record<string, string> = { 'Content-Type': 'application/x-www-form-urlencoded' };
     if(this.#client.client_secret) {
-      headers.Authorization = this.#getAuthorizationHeader();
+      headers['Authorization'] = this.#getAuthorizationHeader();
     }
 
     const response = await fetch(this.#getUrl('/api/token/introspect'), {

@@ -67,13 +67,14 @@ export class Bn2MeApi {
   }
 
   #getUrl(url: string) {
-    return new URL(url, this.options?.url || 'https://bn2.me/');
+    return new URL(url, this.options?.url || 'https://bn2me.vercel.app/');
   }
 
   async #requestWithDPoP(endpoint: string | URL, init?: RequestInit): Promise<Request> {
     const url = endpoint instanceof URL ? endpoint : this.#getUrl(endpoint);
 
     const dpop = this.options?.dpop;
+
     const headers = new Headers(init?.headers);
     headers.set('Authorization', `${dpop ? 'DPoP' : 'Bearer'} ${this.access_token}`);
 

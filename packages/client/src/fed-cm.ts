@@ -29,7 +29,8 @@ export class Bn2MeFedCM {
     }
 
     return navigator.credentials.get({
-      mediation, signal,
+      mediation,
+      signal,
       identity: {
         providers: [{
           configURL: this.#configUrl,
