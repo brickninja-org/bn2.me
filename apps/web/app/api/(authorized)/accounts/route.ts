@@ -9,23 +9,28 @@ import { Bn2Scopes, getApplicationGrantByAuthorization, OptionsHandler, withAuth
 
 export const GET = withAuthorization({ oneOf: [...Bn2Scopes, Scope.Accounts] })(
   async (authorization: Authorization) => {
-    const accounts = await getApplicationGrantByAuthorization(authorization).accounts({
-      orderBy: { createdAt: 'asc' },
-      select: {
-        accountId: true,
-        accountName: true,
-        displayName: authorization.scope.includes(Scope.Accounts_DisplayName),
-        verified: authorization.scope.includes(Scope.Accounts_Verified),
-      },
-    }) ?? [];
+    const applicationGrant = getApplicationGrantByAuthorization(authorization);
+    const [accounts] = await Promise.all([
+      applicationGrant.accounts({
+        orderBy: { createdAt: 'asc' },
+        select: {
+          accountId: true,
+          accountName: true,
+          displayName: authorization.scope.includes(Scope.Accounts_DisplayName),
+          verified: authorization.scope.includes(Scope.Accounts_Verified),
+        },
+      }),
+    ]);
 
     const response: AccountsResponse = {
-      accounts: accounts.map(({ accountId, accountName, displayName, verified }) => ({
-        id: accountId,
-        name: accountName,
-        verified,
-        displayName,
-      })),
+      accounts: [
+        ...(accounts ?? []).map(({ accountId, accountName, displayName, verified }) => ({
+          id: accountId,
+          name: accountName,
+          verified,
+          displayName,
+        })),
+      ],
     };
 
     return NextResponse.json(response);
