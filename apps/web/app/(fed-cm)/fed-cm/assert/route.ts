@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
   });
 
   // get previously authorized scopes
-  const previousScopes = new Set(applicationGrant?.scope as Scope[]);
+  const previousScopes = new Set(applicationGrant?.scope as Scope[] ?? []);
 
   // get requested scopes if params.scopes is set, otherwise default to Identify+Email
   const requestedScopes = new Set(params.scope?.split(' ') as Scope[] ?? [Scope.Identify, Scope.Email]);
@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
 
   // always include previous scopes if available (as if `include_granted_scopes` is set during OAuth authorization)
   // TODO: this could be made configurable (params)
-  const scopes = previousScopes.size > 0 ? previousScopes.union(requestedScopes) : requestedScopes;
+  const scopes = previousScopes.union(requestedScopes);
 
   // get new scopes
   const undisclosedNewScopes = scopes.difference(previousScopes);
