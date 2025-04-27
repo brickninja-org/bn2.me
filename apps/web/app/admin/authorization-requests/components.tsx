@@ -12,7 +12,7 @@ export interface StateProps {
 export const State: FC<StateProps> = ({ state }) => {
   return (
     <FlexRow>
-      <span style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: state === 'Expired' || state === 'Cancelled' ? '#f44336' : state === 'Authorized' ? '#4caf50' : '#03a9f4', opacity: .8 }}/>
+      <span style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: state === 'Expired' || state === 'Canceled' ? '#f44336' : state === 'Authorized' ? '#4caf50' : '#03a9f4', opacity: .8 }}/>
       {state}
     </FlexRow>
   );

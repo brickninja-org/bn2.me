@@ -32,7 +32,7 @@ export async function cancelAuthorizationRequest(id: string) {
   const canceled = await db.authorizationRequest.update({
     where: { id, state: { in: ['Pending', 'Pushed'] }, ...notExpired },
     data: {
-      state: 'Cancelled',
+      state: 'Canceled',
       userId: await getOptionalUserId(),
     },
   });

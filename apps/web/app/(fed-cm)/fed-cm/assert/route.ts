@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { Scope } from '@bn2me/client';
 import { PKCEChallenge } from '@bn2me/client/pkce';
-import { Authorization, AuthorizationRequestState, AuthorizationRequestType, AuthorizationType, Prisma } from '@bn2me/database';
+import { Authorization, AuthorizationRequestType, AuthorizationType, Prisma } from '@bn2me/database';
 
 import { corsHeaders } from '@/lib/cors-header';
 import { expiresAt } from '@/lib/date';
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
   if (!user) {
     console.error('[fed-cm/assert] no session');
     return Response.json(
-      { error: { code: OAuth2ErrorCode.access_denied, details: 'No session' }},
+      { error: { code: OAuth2ErrorCode.access_denied, details: 'no session' }},
       { status: 401, headers: corsHeaders(request) },
     );
   }
@@ -53,18 +53,18 @@ export async function POST(request: NextRequest) {
   if (!clientId || !accountId || accountId !== user.id || !origin) {
     console.error('[fed-cm/assert] invalid request');
     return Response.json(
-      { error: { code: OAuth2ErrorCode.invalid_request, details: 'Missing required fields' }},
+      { error: { code: OAuth2ErrorCode.invalid_request, details: 'missing required fields' }},
       { status: 400, headers: corsHeaders(request) },
     );
   }
 
-  // parse PKCE params
+  // parse PKCE
   const pkce = parsePKCE(params, nonce);
 
   // require PKCE
   // TODO: once PAR is supported, instead of requiring PKCE, the PAR request URL could be used instead?
   if (!pkce) {
-    console.error('[fed-cm/assert] invalid request (missing PKCE)');
+    console.error('[fed-cm/assert] invalid request (Missing PKCE)');
     return Response.json(
       { error: { code: OAuth2ErrorCode.invalid_request, details: 'PKCE is required' }},
       { status: 400, headers: corsHeaders(request) },
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
 
   // verify code_challenge_method
   if (!isValidPKCE(pkce)) {
-    console.error('[fed-cm/assert] invalid request (invalid PKCE method)');
+    console.error('[fed-cm/assert] invalid request (Invalid PKCE method)');
     return Response.json(
       { error: { code: OAuth2ErrorCode.invalid_request, details: 'Invalid PKCE method' }},
       { status: 400, headers: corsHeaders(request) },
@@ -88,9 +88,9 @@ export async function POST(request: NextRequest) {
 
   // check that application exists
   if (!client) {
-    console.error('[fed-cm/assert] invalid request (invalid client_id)');
+    console.error('[fed-cm/assert] invalid client');
     return Response.json(
-      { error: { code: OAuth2ErrorCode.invalid_request, details: 'Invalid client_id' }},
+      { error: { code: OAuth2ErrorCode.invalid_client, details: 'invalid client_id' }},
       { status: 404, headers: corsHeaders(request) },
     );
   }
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
   if (!validOrigin) {
     console.error('[fed-cm/assert] invalid origin');
     return Response.json(
-      { error: { code: OAuth2ErrorCode.invalid_request, details: 'Invalid origin' }},
+      { error: { code: OAuth2ErrorCode.invalid_request, details: 'wrong origin' }},
       { status: 400, headers: corsHeaders(request) },
     );
   }
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
   // get previously authorized scopes
   const previousScopes = new Set(applicationGrant?.scope as Scope[]);
 
-  // get requested scopes if params.scope is set, otherwise default to Identify+Email
+  // get requested scopes if params.scopes is set, otherwise default to Identify+Email
   const requestedScopes = new Set(params.scope?.split(' ') as Scope[] ?? [Scope.Identify, Scope.Email]);
   normalizeScopes(requestedScopes);
 
@@ -189,7 +189,7 @@ export async function POST(request: NextRequest) {
         },
         update: {
           scope: Array.from(scopes),
-          accounts: applicationGrant?.accounts ? { connect: applicationGrant.accounts } : undefined,
+          accounts: applicationGrant?.accounts ? { set: applicationGrant.accounts } : undefined,
           emailId: applicationGrant?.emailId ?? user.defaultEmail?.id,
         },
       }),
@@ -202,7 +202,7 @@ export async function POST(request: NextRequest) {
           scope: Array.from(scopes),
           token: generateCode(),
           expiresAt: expiresAt(60),
-          codeChallenge: `${pkce.code_challenge_method}: ${pkce.code_challenge}`,
+          codeChallenge: `${pkce.code_challenge_method}:${pkce.code_challenge}`,
         },
       }),
 
@@ -210,8 +210,8 @@ export async function POST(request: NextRequest) {
       db.authorizationRequest.create({
         data: {
           data: authorizationRequestData as unknown as Prisma.JsonObject,
-          type: AuthorizationRequestType.FedCM,
-          state: AuthorizationRequestState.Authorized,
+          type: 'FedCM',
+          state: 'Authorized',
           clientId: client.id,
           userId: user.id,
         },
@@ -241,7 +241,7 @@ interface Params {
   code_challenge_method?: string;
 }
 
-function parseParams(params: string | undefined): Params {
+function parseParams(params?: string): Params {
   if (!params) {
     return {};
   }
@@ -272,9 +272,9 @@ function parsePKCE(params: Params, nonce: string | undefined): PKCEChallenge | U
   }
 
   // get PKCE from nonce
-  const [code_challenge, code_challenge_method] = nonce.split(':');
+  const [code_challenge_method, code_challenge] = nonce.split(':');
 
-  if (code_challenge && code_challenge_method) {
+  if (code_challenge_method && code_challenge) {
     return { code_challenge, code_challenge_method };
   }
 

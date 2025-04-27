@@ -25,12 +25,12 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  applications          Application[]          @relation("applications")
-  authorizations        Authorization[]        @relation("userAuthorization")
+  applications          Application[]   @relation("applications")
+  authorizations        Authorization[] @relation("userAuthorization")
   authorizationRequests AuthorizationRequest[]
-  applicationGrants     ApplicationGrant[]     @relation("applicationGrants")
+  applicationGrants     ApplicationGrant[] @relation("applicationGrants")
 
-  accounts Account[] @relation("userAccount")
+  accounts       Account[]       @relation("userAccount")
 }
 
 enum UserRole {
@@ -56,7 +56,8 @@ model UserEmail {
   verifiedAt DateTime?
 
   applicationGrants ApplicationGrant[]
-  applications      Application[]      @relation("email")
+
+  applications Application[]   @relation("email")
 
   @@unique([userId, email])
 }
@@ -167,45 +168,11 @@ model Application {
   users          ApplicationGrant[] @relation("applicationGrants")
 }
 
-model ApplicationGrant {
-  id String @id @default(uuid())
-
-  userId        String
-  applicationId String
-
-  user        User        @relation("applicationGrants", fields: [userId], references: [id], onDelete: Cascade)
-  application Application @relation("applicationGrants", fields: [applicationId], references: [id], onDelete: Cascade)
-
-  scope String[]
-
-  accounts Account[] @relation("applicationGrants")
-
-  emailId String?
-  email   UserEmail? @relation(fields: [emailId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  authorizations Authorization[]
-  settings       ApplicationUserSettings?
-
-  @@unique([userId, applicationId])
-}
-
-model ApplicationUserSettings {
-  applicationGrantId String           @id
-  applicationGrant   ApplicationGrant @relation(fields: [applicationGrantId], references: [id], onDelete: Cascade)
-
-  settings Json
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model Client {
   id String @id @default(uuid())
 
   name String @default("Default Client")
+  @@unique([applicationId, name])
 
   type ClientType
 
@@ -220,8 +187,6 @@ model Client {
   authorizations        Authorization[]        @relation("clientAuthorization")
   secrets               ClientSecret[]         @relation("clientSecret")
   authorizationRequests AuthorizationRequest[]
-
-  @@unique([applicationId, name])
 }
 
 enum ClientType {
@@ -242,6 +207,40 @@ model ClientSecret {
   usedAt    DateTime?
 }
 
+model ApplicationGrant {
+  id String @id @default(uuid())
+
+  userId        String
+  applicationId String
+  @@unique([userId, applicationId])
+
+  user        User        @relation("applicationGrants", fields: [userId], references: [id], onDelete: Cascade)
+  application Application @relation("applicationGrants", fields: [applicationId], references: [id], onDelete: Cascade)
+
+  scope String[]
+
+  accounts       Account[]       @relation("applicationGrants")
+
+  emailId String?
+  email   UserEmail? @relation(fields: [emailId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  authorizations Authorization[]
+  settings       ApplicationUserSettings?
+}
+
+model ApplicationUserSettings {
+  applicationGrantId String @id
+  applicationGrant    ApplicationGrant @relation(fields: [applicationGrantId], references: [id], onDelete: Cascade)
+
+  settings Json
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
 model Authorization {
   id String @id @default(uuid())
 
@@ -252,7 +251,7 @@ model Authorization {
 
   redirectUri   String?
   codeChallenge String?
-  dpopJkt      String?
+  dpopJkt       String?
 
   expiresAt DateTime?
   createdAt DateTime  @default(now())
@@ -308,7 +307,7 @@ enum AuthorizationRequestType {
 enum AuthorizationRequestState {
   Pushed
   Pending
-  Cancelled
+  Canceled
   Authorized
 }
 
@@ -325,9 +324,10 @@ model ApiToken {
 
   errorCount Int @default(0)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  usedAt    DateTime?
+  usedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Account {
@@ -343,9 +343,10 @@ model Account {
   userId String
   user   User   @relation("userAccount", fields: [userId], references: [id], onDelete: Cascade)
 
-  apiTokens         ApiToken[]         @relation("accountApiToken")
+  apiTokens ApiToken[] @relation("accountApiToken")
+  
   applicationGrants ApplicationGrant[] @relation("applicationGrants")
-
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
