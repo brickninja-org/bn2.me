@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
 
   // always include previous scopes if available (as if `include_granted_scopes` is set during OAuth authorization)
   // TODO: this could be made configurable (params)
-  const scopes = previousScopes.union(requestedScopes);
+  const scopes = previousScopes.size > 0 ? previousScopes.union(requestedScopes) : requestedScopes;
 
   // get new scopes
   const undisclosedNewScopes = scopes.difference(previousScopes);
