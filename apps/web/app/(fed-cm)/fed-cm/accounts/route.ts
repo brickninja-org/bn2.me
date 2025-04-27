@@ -1,9 +1,11 @@
+import { NextRequest, NextResponse } from 'next/server';
+
 import { corsHeaders } from '@/lib/cors-header';
 import { db } from '@/lib/db';
 import { OAuth2ErrorCode } from '@/lib/oauth/error';
 import { getUser } from '@/lib/session';
-// import { getUrlFromRequest } from '@/lib/url';
-import { NextRequest, NextResponse } from 'next/server';
+import { getUrlFromRequest } from '@/lib/url';
+import accountIcon from './fed-cm-account.png';
 
 export async function GET(request: NextRequest) {
   // verify `Sec-Fetch-Dest: webidentity` header is set
@@ -33,7 +35,7 @@ export async function GET(request: NextRequest) {
   });
 
   // get base url to build absolute url to picture
-  // const baseUrl = getUrlFromRequest(request);
+  const baseUrl = getUrlFromRequest(request);
 
   // respond with account
   return NextResponse.json({
@@ -41,8 +43,8 @@ export async function GET(request: NextRequest) {
       id: user.id,
       name: user.name,
       email: user.defaultEmail?.email ?? user.name,
-      // picture: new URL(accountIcon.src, baseUrl),
+      picture: new URL(accountIcon.src, baseUrl),
       approved_clients: approvedClients.map(({ id }) => id),
-    }]
+    }],
   });
 }

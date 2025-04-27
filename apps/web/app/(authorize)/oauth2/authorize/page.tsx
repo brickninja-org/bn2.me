@@ -18,6 +18,7 @@ import { notExpired } from '@/lib/db/helper';
 import { expiresAt } from '@/lib/date';
 import { AuthorizationRequestData } from 'app/(authorize)/authorize/types';
 import { AuthorizationRequestExpiration, cancelAuthorizationRequest, createAuthorizationRequest } from 'app/(authorize)/authorize/helper';
+import { authorizeInternal } from 'app/(authorize)/authorize/[id]/actions';
 
 export default async function AuthorizePage({ searchParams }: PageProps) {
   const { error, value } = await getAuthorizationRequest(await searchParams);
@@ -45,8 +46,11 @@ export default async function AuthorizePage({ searchParams }: PageProps) {
     const requestedScopes = new Set(request.scope.split(' '));
     const hasEveryScopeAuthorized = appGrant && requestedScopes.values().every((scope) => appGrant.scope.includes(scope));
 
-    if (hasEveryScopeAuthorized) {
+    if(hasEveryScopeAuthorized) {
       // authorize the request. If this fails for some reason, we just ignore it and continue to redirect the user to the auth screen
+      await authorizeInternal(authorizationRequest.id, appGrant.accounts.map(({ id }) => id), appGrant.emailId);
+    } else if(request.prompt === 'none') {
+      // if the request has prompt=none, we have to cancel the authorization request and redirect the user back
       await cancelAuthorizationRequest(authorizationRequest.id);
 
       const errorUrl = await createRedirectUrl(request.redirect_uri, {
