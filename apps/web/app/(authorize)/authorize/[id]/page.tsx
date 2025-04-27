@@ -125,14 +125,14 @@ export default async function AuthorizePage({ params }: PageProps<{ id: string }
 
   return (
     <>
-      <div className="header">
-        <ApplicationImage fileId={client.application.imageId} size={64}/>
-        <span className="title">{client.application.name}</span>
-        <span className="subtitle">{client.application.owner.name}</span>
+      <div className="grid [grid-template:'icon_title'_32px_'icon_subtitle'_24px_/_min-content_1fr] gap-[8px_16px] items-center pb-4 border-b border-(--color-border)">
+        <ApplicationImage fileId={client.application.imageId} size={64} className="rounded-xs"/>
+        <span className="[grid-area:title] font-bitter font-bold text-xl leading-6 [align-self:end]">{client.application.name}</span>
+        <span className="[grid-area:subtitle] text-muted [align-self:start]">{client.application.owner.name}</span>
       </div>
       {!session || !user ? (
         <>
-          <p className="intro">To authorize this application, you need to log in first.</p>
+          <p className="mb-0">To authorize this application, you need to log in first.</p>
           <LoginForm returnTo={selfUrl}/>
           <form action={cancelAction} className="flex">
             <SubmitButton flex appearance="tertiary" className="button">Cancel</SubmitButton>
@@ -140,13 +140,13 @@ export default async function AuthorizePage({ params }: PageProps<{ id: string }
         </>
       ) : (
         <Form action={authorizeAction} initialState={autoAuthorizeState}>
-          <div className="form">
+          <div className="flex flex-col gap-4">
             {newScopes.length === 0 ? (
-              <p className="intro">{client.application.name} wants to reauthorize access to your bn2.me account.</p>
+              <p className="mb-0">{client.application.name} wants to reauthorize access to your bn2.me account.</p>
             ) : oldScopes.length === 0 ? (
-              <p className="intro">{client.application.name} wants to access the following data of your bn2.me account.</p>
+              <p className="mb-0">{client.application.name} wants to access the following data of your bn2.me account.</p>
             ) : (
-              <p className="intro">{client.application.name} wants to access additional data.</p>
+              <p className="mb-0">{client.application.name} wants to access additional data.</p>
             )}
 
             {newScopes.length > 0 && renderScopes(newScopes, user, emails, previousAuthorization?.emailId ?? user.defaultEmail?.id, authRequest.id)}

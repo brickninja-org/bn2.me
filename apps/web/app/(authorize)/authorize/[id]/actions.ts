@@ -125,7 +125,7 @@ export async function authorizeInternal(
         },
         update: {
           scope: scopes,
-          accounts: { connect: accountIds.map((id) => ({ id })) },
+          accounts: { set: accountIds.map((id) => ({ id })) },
           emailId,
         },
       }),
