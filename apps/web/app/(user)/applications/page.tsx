@@ -1,5 +1,3 @@
-import type { Prisma } from '@bn2me/database';
-
 import { cache } from 'react';
 import Link from 'next/link';
 
@@ -22,32 +20,17 @@ import { revokeAccess } from './actions';
 const getUserData = cache(async () => {
   const session = await getSessionOrRedirect();
 
-  const authorizationFilter: Prisma.AuthorizationWhereInput = {
-    userId: session.userId,
-    OR: [
-      { expiresAt: { gte: new Date() }},
-      { expiresAt: null },
-    ],
-  };
-
-  const clients = await db.client.findMany({
-    where: { authorizations: { some: authorizationFilter }},
+  const applications = await db.application.findMany({
+    where: { users: { some: { userId: session.userId }}},
     select: {
       id: true,
-
-      application: {
-        select: {
-          id: true,
-          name: true,
-          imageId: true,
-          public: true,
-          publicUrl: true,
-        },
-      },
-
+      name: true,
+      imageId: true,
+      public: true,
+      publicUrl: true,
       authorizations: {
         take: 1,
-        where: { ...authorizationFilter, usedAt: { not: null }},
+        where: { usedAt: { not: null }},
         orderBy: { usedAt: 'desc' },
         select: { usedAt: true },
       },
@@ -55,12 +38,12 @@ const getUserData = cache(async () => {
   });
 
   return {
-    clients,
+    applications,
   };
 });
 
 export default async function ProfilePage() {
-  const { clients } = await getUserData();
+  const { applications } = await getUserData();
 
   return (
     <PageLayout>
@@ -69,7 +52,7 @@ export default async function ProfilePage() {
       <p>Visit the <Link href="/discover">Discover</Link> page to find new applications using bn2.me.</p>
 
       <Form action={revokeAccess}>
-        {clients.length > 0 && (
+        {applications.length > 0 && (
           <Table>
             <thead>
               <tr>
@@ -79,21 +62,21 @@ export default async function ProfilePage() {
               </tr>
             </thead>
             <tbody className={table().tbody()}>
-              {clients.map((client) => (
-                <tr key={client.id} className={table().tr()}>
+              {applications.map((application) => (
+                <tr key={application.id} className={table().tr()}>
                   <td className={table().td()}>
-                    {client.application.public ? (
-                      <a href={client.application.publicUrl} target="_blank" rel="noopener noreferrer">
+                    {application.public ? (
+                      <a href={application.publicUrl} target="_blank" rel="noopener noreferrer">
                         <FlexRow>
-                          <ApplicationImage fileId={client.application.imageId}/> {client.application.name} <Icon icon="external-link"/>
+                          <ApplicationImage fileId={application.imageId}/> {application.name} <Icon icon="external-link"/>
                         </FlexRow>
                       </a>
                     ) : (
-                      <FlexRow><ApplicationImage fileId={client.application.imageId}/> {client.application.name}</FlexRow>
+                      <FlexRow><ApplicationImage fileId={application.imageId}/> {application.name}</FlexRow>
                     )}
                   </td>
-                  <td>{client.authorizations[0]?.usedAt ? <FormatDate date={client.authorizations[0].usedAt}/> : 'never'}</td>
-                  <td><Button type="submit" name="clientId" value={client.id} className="text-red-600" icon="delete">Revoke Access</Button></td>
+                  <td>{application.authorizations[0]?.usedAt ? <FormatDate date={application.authorizations[0].usedAt}/> : 'never'}</td>
+                  <td><Button type="submit" name="applicationId" value={application.id} className="text-red-600" icon="delete">Revoke Access</Button></td>
                 </tr>
               ))}
             </tbody>

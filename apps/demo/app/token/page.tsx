@@ -93,7 +93,7 @@ export default async function TokenPage({ searchParams: asyncSearchParams }: Pag
 
   const access_token = Array.isArray(searchParams.access_token) ? searchParams.access_token[0] : searchParams.access_token;
   const refresh_token = Array.isArray(searchParams.refresh_token) ? searchParams.refresh_token[0] : searchParams.refresh_token;
-  const token_type =searchParams.token_type === 'DPoP' ? 'DPoP' : 'Bearer';
+  const token_type = searchParams.token_type === 'DPoP' ? 'DPoP' : 'Bearer';
 
   const api = access_token
     ? bn2me.api(access_token, { dpop: token_type === 'DPoP' ? createDPoPJwt : undefined })

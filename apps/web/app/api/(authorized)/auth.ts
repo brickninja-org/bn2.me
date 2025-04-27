@@ -45,7 +45,7 @@ export function withAuthorization<Context>(scopes?: Scope[] | { oneOf: Scope[] }
             type_token: { token, type: AuthorizationType.AccessToken },
             OR: [
               { expiresAt: { gte: new Date() }},
-              { expiresAt: null }
+              { expiresAt: null },
             ]
           },
         });

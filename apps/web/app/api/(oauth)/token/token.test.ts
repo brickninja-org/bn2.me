@@ -43,7 +43,7 @@ const client: Client = {
 
 const request = (params: Record<string, string>): OAuth2RequestHandlerProps => ({
   headers: new Headers(),
-  url: new URL('https://bn2.me/api/token'),
+  url: new URL('https://bn2me.vercel.app/api/token'),
   params: { client_id: client.id, ...params },
   requestAuthorization: { method: 'none', client }
 });
@@ -107,7 +107,7 @@ describe('/api/token', () => {
 
       const response = await handleTokenRequest({
         headers: new Headers(),
-        url: new URL('https://bn2.me/api/token'),
+        url: new URL('https://bn2me/vercel.app/api/token'),
         params: { client_id: confidentialClient.id, grant_type: 'authorization_code', code: 'foo', redirect_uri: '/redirect' },
         requestAuthorization: { method: 'client_secret_basic', client: confidentialClient, client_secret: 'client_secret' }
       });

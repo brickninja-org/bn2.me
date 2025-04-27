@@ -33,7 +33,7 @@ export async function getDPoPPair() {
 
 export const createDPoPJwt: DPoPCallback = async (params) => {
   return _createDPoPJwt(params, await getDPoPPair());
-}
+};
 
 export const bn2me = new Bn2MeClient({
   client_id: process.env.DEMO_CLIENT_ID!,

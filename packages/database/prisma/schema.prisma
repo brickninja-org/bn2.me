@@ -178,7 +178,7 @@ model ApplicationGrant {
 
   scope String[]
 
-  accounts Account[] @relation("applicationGrant")
+  accounts Account[] @relation("applicationGrants")
 
   emailId String?
   email   UserEmail? @relation(fields: [emailId], references: [id], onDelete: Cascade)
@@ -344,7 +344,7 @@ model Account {
   user   User   @relation("userAccount", fields: [userId], references: [id], onDelete: Cascade)
 
   apiTokens         ApiToken[]         @relation("accountApiToken")
-  applicationGrants ApplicationGrant[] @relation("applicationGrant")
+  applicationGrants ApplicationGrant[] @relation("applicationGrants")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

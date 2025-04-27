@@ -106,16 +106,18 @@ export default async function AuthorizePage({ params }: PageProps<{ id: string }
 
   // get accounts
   const bn2Permissions = Array.from(scopes).filter((scope) => scope.startsWith('bn2:')).map((permission) => permission.substring(4));
-  const accounts = session && scopes.has(Scope.Accounts)
-    ? await db.account.findMany({
-      where: { userId: session.userId },
-      orderBy: { createdAt: 'asc' },
-      select: {
-        id: true, accountName: true, displayName: true, verified: true,
-        _count: { select: { apiTokens: { where: { permissions: { hasEvery: bn2Permissions }}}}},
-      },
-    })
-    : [];
+  const [accounts] = session && scopes.has(Scope.Accounts)
+    ? await Promise.all([
+        db.account.findMany({
+          where: { userId: session.userId },
+          orderBy: { createdAt: 'asc' },
+          select: {
+            id: true, accountName: true, displayName: true, verified: true,
+            _count: { select: { apiTokens: { where: { permissions: { hasEvery: bn2Permissions }}}}},
+          },
+        }),
+      ])
+    : [[]];
 
   // bind parameters to authorize action
   const authorizeAction = authorize.bind(null, id);
