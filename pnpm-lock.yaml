@@ -136,8 +136,8 @@ importers:
         specifier: 13.1.1
         version: 13.1.1
       aaguids:
-        specifier: 0.0.23
-        version: 0.0.23
+        specifier: 0.0.24
+        version: 0.0.24
       framer-motion:
         specifier: 12.9.2
         version: 12.9.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1554,8 +1554,8 @@ packages:
   '@vitest/utils@3.1.2':
     resolution: {integrity: sha512-5GGd0ytZ7BH3H6JTj9Kw7Prn1Nbg0wZVrIvou+UWxm54d+WoXXgAgjFJ8wn3LdagWLFSEfpPeyYrByZaGEZHLg==}
 
-  aaguids@0.0.23:
-    resolution: {integrity: sha512-UYlizRNxqiHo9tOusdR0SG7gKiatOMFnM6gk7twRejkR6BuSC6ANPPjfSlRz9Ey+Ta1CiD18rQfxiCLb4xOJEg==}
+  aaguids@0.0.24:
+    resolution: {integrity: sha512-VbNlZBr0ajada8vx2vGksHkqLHBKu59lrKKjOt7OFpZIB0bR9IIRAt1CKfaOUiu/E20ja60OzwbfL+lRrJOBGg==}
 
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
@@ -4944,7 +4944,7 @@ snapshots:
       loupe: 3.1.3
       tinyrainbow: 2.0.0
 
-  aaguids@0.0.23: {}
+  aaguids@0.0.24: {}
 
   accepts@1.3.8:
     dependencies:
