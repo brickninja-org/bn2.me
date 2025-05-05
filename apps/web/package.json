@@ -16,7 +16,7 @@
     "@bn2me/onig": "workspace:*",
     "@brickninja-org/helper": "0.0.1",
     "@brickninja-org/icons": "0.0.6",
-    "@brickninja-org/ui": "0.0.26",
+    "@brickninja-org/ui": "0.0.27",
     "@brickset-api/fetch": "0.0.19",
     "@react-email/render": "1.1.0",
     "@rebrickableapi/fetch": "0.0.12",
