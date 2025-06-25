@@ -72,17 +72,17 @@ export default async function HomePage() {
             </div>
 
             <div>
-              <SectionHeader>Manage your Guild Wars 2 Accounts</SectionHeader>
-              <p>Manage all your Guild Wars 2 Accounts in a single place. Applications will only be able to access the information from the accounts you authorize. You can update the accounts an application has access to at any time.</p>
-              <p>You will be guided through the process of adding new accounts to gw2.me. You can also verify your ownership of accounts, and applications will be able to use this information.</p>
-              <p>gw2.me will monitor the status of your API keys and inform you when you need to take action.</p>
+              <SectionHeader>Manage your brick.ninja Accounts</SectionHeader>
+              <p>Manage all your brick.ninja Accounts in a single place. Applications will only be able to access the information from the accounts you authorize. You can update the accounts an application has access to at any time.</p>
+              <p>You will be guided through the process of adding new accounts to bn2.me. You can also verify your ownership of accounts, and applications will be able to use this information.</p>
+              <p>bn2.me will monitor the status of your API keys and inform you when you need to take action.</p>
               <LinkButton href="/accounts" icon="chevron-right" appearance="menu" className="discoverButton"><span>Add your Accounts</span></LinkButton>
             </div>
           </div>
 
           <SectionHeader>For Developers</SectionHeader>
-          <p>If you are a developer, you can integrate gw2.me into your applications. gw2.me will take care of the authorization and Guild Wars 2 account management, so you can focus on developing your application.</p>
-          <p>Since gw2.me is an OAuth 2.0 provider, you can use existing libraries to use gw2.me in your application. Or use our extensive developer documentation to call the few API endpoints yourself.</p>
+          <p>If you are a developer, you can integrate bn2.me into your applications. bn2.me will take care of the authorization and brick.ninja account management, so you can focus on developing your application.</p>
+          <p>Since bn2.me is an OAuth 2.0 provider, you can use existing libraries to use bn2.me in your application. Or use our extensive developer documentation to call the few API endpoints yourself.</p>
           <LinkButton href="/dev/docs" icon="chevron-right" appearance="menu" className="[--icon-color:var(--color-brand)]"><span>Check Documentation</span></LinkButton>
         </div>
       </div>

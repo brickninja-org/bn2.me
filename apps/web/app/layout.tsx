@@ -53,7 +53,7 @@ export default async function RootLayout({ children }: LayoutProps) {
         </div>
         <div className="p-4 border-t text-sm text-muted">
           <p>This site is not affiliated with LEGO Group, Brickset, Rebrickable, or any of their partners. All copyrights reserved to their respective owners.</p>
-          <p>© LEGO Group. All rights reserved. NCSOFT, ArenaNet, Guild Wars, Guild Wars 2, GW2, Guild Wars 2: Heart of Thorns, Guild Wars 2: Path of Fire, Guild Wars 2: End of Dragons, and Guild Wars 2: Secrets of the Obscure and all associated logos, designs, and composite marks are trademarks or registered trademarks of LEGO Group.</p>
+          <p>LEGO®, the LEGO® logo, the Minifigure, and the Brick and Knob configurations are trademarks of the LEGO® Group of Companies. © 2025 The LEGO® Group. brick.ninja and all content not covered by The LEGO® Group&apos;s copyright is, unless otherwise stated. bn2.me respects the LEGO® Fair Play rules.</p>
         </div>
       </body>
     </html>
