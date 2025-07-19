@@ -13,7 +13,7 @@
   "devDependencies": {
     "@brickninja-org/eslint-config": "0.1.0",
     "@brickninja-org/tsconfig": "0.0.2",
-    "@types/node": "22.15.33",
+    "@types/node": "22.16.5",
     "eslint": "9.31.0",
     "typescript": "5.8.3",
     "typescript-eslint": "8.35.0"
