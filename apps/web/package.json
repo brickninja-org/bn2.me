@@ -18,7 +18,7 @@
     "@brickninja-org/icons": "0.0.6",
     "@brickninja-org/ui": "0.0.27",
     "@brickset-api/fetch": "0.0.19",
-    "@react-email/render": "1.1.3",
+    "@react-email/render": "1.2.1",
     "@rebrickableapi/fetch": "0.0.12",
     "@rebrickableapi/types": "0.0.11",
     "@simplewebauthn/browser": "13.1.2",
