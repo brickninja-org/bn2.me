@@ -27,7 +27,7 @@
     "framer-motion": "12.23.12",
     "hast-util-to-jsx-runtime": "2.3.6",
     "jose": "6.0.12",
-    "next": "15.3.4",
+    "next": "15.4.7",
     "nodemailer": "7.0.5",
     "react": "19.1.1",
     "react-dom": "19.1.1",
