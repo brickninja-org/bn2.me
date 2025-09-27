@@ -36,7 +36,7 @@
     "tailwind-variants": "1.0.0"
   },
   "devDependencies": {
-    "@brickninja-org/eslint-config": "0.1.0",
+    "@brickninja-org/eslint-config": "0.1.1",
     "@brickninja-org/tsconfig": "0.0.2",
     "@brickset-api/types": "0.0.17",
     "@next/eslint-plugin-next": "15.3.4",
