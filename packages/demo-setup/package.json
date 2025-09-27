@@ -11,7 +11,7 @@
     "@bn2me/database": "workspace:*"
   },
   "devDependencies": {
-    "@brickninja-org/eslint-config": "0.1.0",
+    "@brickninja-org/eslint-config": "0.1.1",
     "@brickninja-org/tsconfig": "0.0.2",
     "@types/node": "22.16.5",
     "eslint": "9.31.0",
