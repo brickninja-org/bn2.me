@@ -11,11 +11,11 @@
   "main": "./lib/index.js",
   "types": "./src/index.ts",
   "dependencies": {
-    "@prisma/client": "6.10.1"
+    "@prisma/client": "6.16.2"
   },
   "devDependencies": {
     "@brickninja-org/tsconfig": "0.0.2",
-    "prisma": "6.10.1",
+    "prisma": "6.16.2",
     "typescript": "5.8.3"
   }
 }
