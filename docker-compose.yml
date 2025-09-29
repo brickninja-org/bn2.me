@@ -12,6 +12,7 @@ services:
       - BASE_DOMAIN=localhost
       - FORCE_COLOR=1
       - JWT_SECRET=bn2.me-secret
+      - PORT=4000
     ports:
       - 4000:4000
 

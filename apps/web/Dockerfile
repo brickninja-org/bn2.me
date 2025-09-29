@@ -3,9 +3,9 @@ ARG node_version=22.17.1-alpine3.21
 # renovate: datasource=npm packageName=turbo
 ARG turbo_version=2.5.8
 # renovate: datasource=npm packageName=sharp
-ARG sharp_version=0.34.3
+ARG sharp_version=0.34.4
 # renovate: datasource=npm packageName=pnpm
-ARG pnpm_version=10.13.1
+ARG pnpm_version=10.17.1
 
 FROM --platform=$BUILDPLATFORM node:${node_version} AS source
 ARG turbo_version
@@ -29,7 +29,6 @@ COPY --from=source /source/out/json/ .
 COPY --from=source /source/out/full/ .
 
 RUN pnpm install --frozen-lockfile
-
 RUN pnpm run build --filter=web
 
 # Production image, copy all the files and run next
@@ -51,7 +50,7 @@ COPY --from=builder /app/apps/web/package.json .
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
-# COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
 # workaround for https://github.com/wooorm/starry-night/issues/9
 COPY --link --from=builder --chown=1001:1001 /app/packages/onig/dist/onig.wasm /app/packages/onig/dist/onig.wasm
