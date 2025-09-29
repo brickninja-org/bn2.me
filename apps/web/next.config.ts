@@ -6,7 +6,7 @@ import { createMDX } from 'fumadocs-mdx/next';
 const withMDX = createMDX();
 
 const nextConfig: NextConfig = {
-  outputFileTracingRoot: path.join(__dirname, '../../src/'),
+  outputFileTracingRoot: path.join(__dirname, '../../'),
   transpilePackages: ['@heroui/react', '@heroui/styles', '@brickninja-org/ui'],
   typedRoutes: true,
   typescript: {
