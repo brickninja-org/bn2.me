@@ -50,7 +50,7 @@ COPY --from=builder /app/apps/web/package.json .
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
+# COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
 # workaround for https://github.com/wooorm/starry-night/issues/9
 COPY --link --from=builder --chown=1001:1001 /app/packages/onig/dist/onig.wasm /app/packages/onig/dist/onig.wasm
