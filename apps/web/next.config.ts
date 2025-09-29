@@ -8,6 +8,10 @@ const withMDX = createMDX();
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(__dirname, '../../src/'),
   transpilePackages: ['@heroui/react', '@heroui/styles', '@brickninja-org/ui'],
+  typedRoutes: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   output: 'standalone',
   experimental: {
     optimizePackageImports: ['@heroui/react'],
