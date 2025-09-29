@@ -26,10 +26,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 # Install dependencies based on the preferred package manager
 COPY --from=source /source/out/json/ .
+COPY --from=source /source/out/full/ .
 
 RUN pnpm install --frozen-lockfile
-
-COPY --from=source /source/out/full/ .
 
 RUN pnpm run build --filter=web
 
