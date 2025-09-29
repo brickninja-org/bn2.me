@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import type { TokenResponse } from '@bn2me/client';
 import type { PageProps, SearchParams } from '@/lib/next';
 
@@ -38,7 +39,7 @@ export default async function CallbackPage({ searchParams }: PageProps) {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'OAuth2 Callback',
 };
 

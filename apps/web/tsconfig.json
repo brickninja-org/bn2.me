@@ -4,21 +4,21 @@
     // TODO: remove verbatimModuleSyntax override
     "verbatimModuleSyntax": false,
 
-    "baseUrl": "./",
+    "baseUrl": ".",
+    "jsx": "preserve",
     "paths": {
-      "@/components/*": ["components/*"],
-      "@/lib/*": ["lib/*"],
-      "@/styles/*": ["styles/*"],
+      "@/.source": ["./.source/index.ts"],
+      "@/*": ["./src/*"],
+      "~env": ["./env.ts"]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.js",
     "**/.well-known/**/*.ts",
     ".next/types/**/*.ts",
     "postcss.config.mjs",
     "vitest.config.mts"
-  ],
+  ]
 }

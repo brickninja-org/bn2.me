@@ -7,8 +7,8 @@ import { createDPoPJwt as _createDPoPJwt, generateDPoPKeyPair } from '@bn2me/cli
 import { generatePKCEPair, type PKCEPair } from '@bn2me/client/pkce';
 
 const globalForPKCEAndDPoP = globalThis as unknown as {
-  pkce: PKCEPair | undefined;
-  dpop: CryptoKeyPair | undefined;
+  pkce: PKCEPair | undefined,
+  dpop: CryptoKeyPair | undefined,
 };
 
 // generate PKCE pair on first invocation

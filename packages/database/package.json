@@ -1,21 +1,44 @@
 {
   "name": "@bn2me/database",
   "private": true,
+  "type": "module",
   "scripts": {
-    "prisma:generate": "prisma generate",
+    "prisma:generate": "prisma generate --no-hints",
     "prisma:migrate": "prisma migrate deploy",
     "prisma:migrate-dev": "prisma migrate dev --name",
     "prisma:studio": "prisma studio",
-    "build": "tsc"
+    "build": "rm -rf ./lib && tsc -b"
   },
-  "main": "./lib/index.js",
-  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/generated/prisma/client.d.ts",
+      "browser": "./lib/generated/prisma/browser.js",
+      "default": "./lib/generated/prisma/client.js"
+    },
+    "./enums": {
+      "types": "./lib/generated/prisma/enums.d.ts",
+      "default": "./lib/generated/prisma/enums.js"
+    },
+    "./models": {
+      "types": "./lib/generated/prisma/models.d.ts",
+      "default": "./lib/generated/prisma/models.js"
+    },
+    "./setup": {
+      "types": "./lib/setup.d.ts",
+      "default": "./lib/setup.js"
+    }
+  },
+  "files": [
+    "lib"
+  ],
   "dependencies": {
+    "@prisma/adapter-pg": "6.16.2",
     "@prisma/client": "6.16.2"
   },
   "devDependencies": {
     "@brickninja-org/tsconfig": "0.0.2",
+    "@types/node": "22.18.6",
     "prisma": "6.16.2",
-    "typescript": "5.8.3"
+    "typescript": "5.9.2"
   }
 }

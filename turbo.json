@@ -1,10 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "VERCEL_ENV"
+  ],
   "tasks": {
     "build": {
       "dependsOn": [
         "^build"
       ]
+    },
+    "start": {
+      "dependsOn": ["^build"],
+      "outputs": []
     },
     "lint": {
       "env": [

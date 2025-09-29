@@ -13,8 +13,8 @@ import { Notice } from '@brickninja-org/ui/components/notice/Notice';
 import { Checkbox } from '@brickninja-org/ui/components/form/Checkbox';
 
 export interface FedCmProps {
-  clientId: string;
-  bn2meUrl: string;
+  clientId: string,
+  bn2meUrl: string,
   pkceChallenge: PKCEChallenge,
 }
 

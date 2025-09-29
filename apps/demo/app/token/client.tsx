@@ -6,9 +6,9 @@ import { useEffect, useMemo } from 'react';
 import { Bn2MeClient } from '@bn2me/client';
 
 export interface ClientProps {
-  clientId: string;
-  bn2meUrl: string;
-  accessToken?: string;
+  clientId: string,
+  bn2meUrl: string,
+  accessToken?: string,
 }
 
 export const Client: FC<ClientProps> = ({ clientId, bn2meUrl, accessToken }) => {

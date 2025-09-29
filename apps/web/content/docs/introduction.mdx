@@ -1,0 +1,48 @@
+---
+title: Introduction
+description: TODO
+---
+
+bn2.me uses [OAuth 2.0](https://datatracker.ietf.org/doc/html/rfc6749) to manage the access between users and applications.
+
+This documentation is aimed at developers who want to integrate bn2.me into their applications,
+so their users can use bn2.me to authorize the app to access the Rebrickable API on their behalf.
+
+## Use bn2.me in your application
+
+- [Register your application](/dev/docs/manage-apps#register).
+- [Get an access token](/dev/docs/access-tokens)  by navigating the user to the authorization page.
+- Access the Rebrickable API by [generating subtokens](/dev/docs/rebrickable-api) or
+  use other [bn2.me APIs](/dev/docs/api-reference).
+
+Most of these steps can be handled by using existing OAuth2 libraries or the bn2.me specific [client libraries](/dev/docs/libraries).
+
+## OAuth2 URLs
+
+| Endpoint | URL |
+|----------|-----|
+| Authorization Server Metadata | `https://bn2.me/.well-known/oauth-authorization-server` |
+| Base authorization URL | `https://bn2.me/oauth2/authorize` |
+| Token URL | `https://bn2.me/api/token` |
+
+## Why bn2.me
+
+bn2.me provides secure way for users to manage access between multiple Brickset accounts and applications.
+
+- User don't have to handle API keys for every application, instead they just have to **setup bn2.me once**.
+- bn2.me generates **secure subtokens** with the specific scopes requested by the application.
+- bn2.me also handles all **errors** around invalid API keys, so applications always receive valid API keys.
+- Instead of instructing the user how to generate API keys and which permissions are required,
+  applications can instead just include a **Login with bn2.me** button.
+- Users can review and **revoke access** to any application at any point, which is often not possible with API keys because
+  users tend to reuse the same API key for multiple applications.
+
+## Support ##
+
+If you find any bugs on bn2.me you can report them in the
+[GitHub issue tracker](https://github.com/brickninja-org/bn2.me/issues).
+
+## Contribute ##
+
+You can contribute to the development of bn2.me in the
+[brickninja-org/bn2.me](https://github.com/brickninja-org/bn2.me) repository on github.

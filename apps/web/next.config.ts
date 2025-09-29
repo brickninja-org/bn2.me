@@ -1,20 +1,22 @@
-import { NextConfig } from 'next';
+import type { NextConfig } from 'next';
+
 import path from 'path';
-// @ts-expect-error no types available
-import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
+import { createMDX } from 'fumadocs-mdx/next';
 
-/** @type {import('next').NextConfig} */
+const withMDX = createMDX();
+
 const nextConfig: NextConfig = {
-  outputFileTracingRoot: path.join(__dirname, '../../'),
-  transpilePackages: ['@brickninja-org/ui'],
+  outputFileTracingRoot: path.join(__dirname, '../../src/'),
+  transpilePackages: ['@heroui/react', '@heroui/styles', '@brickninja-org/ui'],
   output: 'standalone',
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.plugins = [...config.plugins, new PrismaPlugin()];
-    }
-
-    return config;
+  experimental: {
+    optimizePackageImports: ['@heroui/react'],
+  },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
   },
 };
 
-export default nextConfig;
+export default withMDX(nextConfig);

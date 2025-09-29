@@ -1,3 +1,4 @@
 node_modules/
 lib/
-.prisma/
+src/generated/prisma/
+*.tsbuildinfo

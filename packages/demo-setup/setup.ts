@@ -1,8 +1,11 @@
 #!/usr/bin/env node
-import { writeFileSync, existsSync } from 'node:fs';
-import { join, resolve } from 'node:path';
 import { randomBytes, scrypt } from 'node:crypto';
-import { ClientType, PrismaClient } from '@bn2me/database';
+import { existsSync, writeFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import { loadEnvFile } from 'node:process';
+import { styleText } from 'node:util';
+import { ClientType } from '@bn2me/database';
+import { createPrismaClient } from '@bn2me/database/setup';
 
 async function run() {
   const demoDir = resolve('.');
@@ -10,15 +13,19 @@ async function run() {
 
   // check if .env.local exists
   const envLocalExists = existsSync(join(demoDir, '.env.local'));
-
   if(envLocalExists) {
-    console.log('demo is already setup');
+    console.log(styleText('green', 'Demo is already setup'));
     return;
   }
 
   console.log('Running first time setup');
 
-  const db = new PrismaClient({});
+  // load .env
+  const databaseEnvFile = join(demoDir, '../../packages/database/.env');
+  console.log(`Loading .env ${styleText('gray', `(${databaseEnvFile})`)}`);
+  loadEnvFile(databaseEnvFile);
+
+  const db = createPrismaClient({ connectionString: process.env.DATABASE_URL! });
 
   // get user
   const existingUser = await db.user.findFirst({ where: { roles: { has: 'Admin' }}});
@@ -55,6 +62,8 @@ async function run() {
   // write clientId and secret to .env.local
   writeFileSync(join(demoDir, '.env.local'), `DEMO_CLIENT_ID="${application.clients[0].id}"\nDEMO_CLIENT_SECRET="${clientSecret}"\n`);
   console.log('.env.local created');
+
+  console.log(styleText('green', 'Demo setup complete'));
 }
 
 run();
@@ -81,6 +90,6 @@ export async function createClientSecret() {
 
   return {
     clientSecretHashed: `${saltHex}:${hashHex}`,
-    clientSecret: clientSecretBuffer.toString('base64url')
+    clientSecret: clientSecretBuffer.toString('base64url'),
   };
 }

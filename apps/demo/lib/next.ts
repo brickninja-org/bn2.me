@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server';
 type Params = Record<string, string | string[] | undefined>;
 
 export type SearchParams = {
-  [key: string]: string | string[] | undefined
+  [key: string]: string | string[] | undefined,
 };
 
 export interface PageProps<P extends Params = {}> {
@@ -19,7 +19,7 @@ export interface LayoutProps<P extends Params = {}> {
 }
 
 export interface RouteProps<P extends Params = {}> {
-  params: Promise<P>
+  params: Promise<P>,
 }
 
 export type RouteHandler<P extends Params = {}> = (request: NextRequest, context: RouteProps<P>) => Promise<Response>;

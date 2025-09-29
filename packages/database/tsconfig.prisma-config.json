@@ -1,0 +1,8 @@
+{
+  "extends": "@brickninja-org/tsconfig/base",
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": true
+  },
+  "include": ["./prisma.config.ts"]
+}

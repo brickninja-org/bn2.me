@@ -2,26 +2,38 @@
   "name": "bn2.me",
   "private": true,
   "scripts": {
-    "dev:web": "turbo run dev --filter=web",
+    "dev:web": "dotenv -- turbo run dev --filter=web",
     "dev:demo": "turbo run dev --filter=demo",
     "dev:emails": "turbo run dev --filter=@bn2me/emails",
     "prisma:studio": "pnpm run --filter @bn2me/database prisma:studio",
     "prisma:migrate-dev": "pnpm run --filter @bn2me/database prisma:migrate-dev",
     "build": "turbo run build",
     "lint": "turbo run lint --continue -- -f gha",
+    "typecheck": "turbo run typecheck",
+    "typecheck:web": "dotenv -- turbo run typecheck --filter=web",
+    "typegen:web": "dotenv -- pnpm --filter web typegen",
     "test": "turbo run test",
-    "publish-package": "turbo run publish-package"
+    "publish-package": "turbo run publish-package",
+    "postinstall": "pnpm typegen:web"
   },
   "devDependencies": {
+    "dotenv": "17.2.2",
+    "dotenv-cli": "10.0.0",
     "eslint-formatter-gha": "1.6.0",
     "turbo": "2.5.8",
-    "typescript": "5.8.3"
+    "typescript": "5.9.2"
+  },
+  "engines": {
+    "node": "20 || >=22",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm",
+    "pnpm": "10.17.1"
   },
   "pnpm": {
     "overrides": {
       "react": "19.1.1",
       "react-dom": "19.1.1",
-      "@types/react": "19.1.14",
+      "@types/react": "19.1.13",
       "@types/react-dom": "19.1.9"
     },
     "onlyBuiltDependencies": [
@@ -32,5 +44,5 @@
       "sharp"
     ]
   },
-  "packageManager": "pnpm@10.13.1"
+  "packageManager": "pnpm@10.17.1"
 }

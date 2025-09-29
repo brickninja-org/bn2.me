@@ -1,9 +1,7 @@
-import tseslint from 'typescript-eslint';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import config from '@brickninja-org/eslint-config';
 
-import reactConfig from '@brickninja-org/eslint-config/react';
-
-export default tseslint.config(
-  { ignores: ['dist/**' ] },
-
-  reactConfig,
+export default defineConfig(
+  globalIgnores(['dist/']),
+  ...config,
 );
