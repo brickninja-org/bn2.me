@@ -7,9 +7,9 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: [
-      './lib/oauth/to-be-oauth2-error.vitest.ts',
-      './lib/db.mock.ts',
-      './lib/next.mock.ts',
+      './src/lib/oauth/to-be-oauth2-error.vitest.ts',
+      './src/lib/db.mock.ts',
+      './src/lib/next.mock.ts',
     ],
   },
 });
