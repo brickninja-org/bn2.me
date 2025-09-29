@@ -13,7 +13,7 @@ services:
       - FORCE_COLOR=1
       - JWT_SECRET=bn2.me-secret
     ports:
-      - 4000:3000
+      - 4000:4000
 
   demo:
     image: ghcr.io/brickninja-org/bn2.me/demo:${IMAGE_VERSION:-latest}
@@ -28,15 +28,15 @@ services:
       - 4001:3000
 
   database:
-    image: postgres:17.5-alpine
+    image: postgres:18.0-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_USER=bn2me
       - POSTGRES_PASSWORD=bn2me
       - POSTGRES_DB=bn2me
-      - PGDATA=/var/lib/postgresql/data/pgdata
+      - PGDATA=/var/lib/postgresql/data-mount/pgdata
     volumes:
-      - .docker/database-pg17:/var/lib/postgresql/data
+      - .docker/database-pg18:/var/lib/postgresql/data-mount
     ports:
       - 54327:5432
 

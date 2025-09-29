@@ -2,7 +2,7 @@
   "name": "bn2.me",
   "private": true,
   "scripts": {
-    "dev:web": "dotenv -- turbo run dev --filter=web",
+    "dev:web": "turbo run dev --filter=web",
     "dev:demo": "turbo run dev --filter=demo",
     "dev:emails": "turbo run dev --filter=@bn2me/emails",
     "prisma:studio": "pnpm run --filter @bn2me/database prisma:studio",
@@ -10,8 +10,8 @@
     "build": "turbo run build",
     "lint": "turbo run lint --continue -- -f gha",
     "typecheck": "turbo run typecheck",
-    "typecheck:web": "dotenv -- turbo run typecheck --filter=web",
-    "typegen:web": "dotenv -- pnpm --filter web typegen",
+    "typecheck:web": "turbo run typecheck --filter=web",
+    "typegen:web": "pnpm --filter web typegen",
     "test": "turbo run test",
     "publish-package": "turbo run publish-package",
     "postinstall": "pnpm typegen:web"

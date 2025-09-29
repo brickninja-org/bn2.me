@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        node: [ 18, 20, 22 ]
+        node: [ 20, 22 ]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: ./.github/actions/setup-node
       name: Setup Node.js environment
       with:
@@ -34,7 +34,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: ./.github/actions/setup-node
       name: Setup Node.js environment
       with:
@@ -53,7 +53,7 @@ jobs:
       contents: read
       packages: write
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
@@ -65,7 +65,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
-      uses: docker/bake-action@v6.8.0
+      uses: docker/bake-action@v6.9.0
       with:
         files: ./docker-compose.yml
         targets: ${{ matrix.target }}
@@ -73,13 +73,67 @@ jobs:
           ${{ matrix.target }}.output=type=image,push=true
           *.platform=linux/amd64,linux/arm64
           *.cache-from=type=gha,scope=build-${{ matrix.target }}
-          *.cache-to=type=gha,scope=build-${{ matrix.target }},mode=max
+          *.cache-to=type=gha,scope=build-${{ matrix.target }},mode=max,ignore-error=true
+
+  test-compose:
+    name: Test / docker compose
+    runs-on: ubuntu-24.04
+    needs: build-docker
+    steps:
+    - uses: actions/checkout@v5
+    - name: Pull images
+      run: docker compose pull
+    - run: docker images
+    - name: Start docker compose
+      run: docker compose up -d
+    - name: Wait 15s
+      run: sleep 15
+    - run: docker compose ps -a
+    - run: docker compose logs
+    - name: Verify docker containers are running
+      run: docker inspect --format "{{.ID}} {{.Name}} {{.State.Status}} {{.RestartCount}}" $(docker compose ps -aq) | node .github/actions/docker-compose-status.js
+    - name: Stop docker compose
+      run: docker compose down
+
+  test-kubernetes:
+    name: Test / kubernetes
+    runs-on: ubuntu-24.04
+    needs: build-docker
+    steps:
+    - uses: actions/checkout@v5
+    - uses: nolar/setup-k3d-k3s@v1
+      with:
+        version: v1.33
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: build temporary kustomization.yaml
+      run: |
+        mkdir -p .temp
+        cat <<EOF > .temp/kustomization.yaml
+        resources:
+        - ../kubernetes/local
+        images:
+        - name: ghcr.io/brickninja-org/bn2.me/web
+          newTag: ${{ env.IMAGE_VERSION }}
+        - name: ghcr.io/brickninja-org/bn2.me/demo
+          newTag: ${{ env.IMAGE_VERSION }}
+        - name: ghcr.io/brickninja-org/bn2.me/database-migration
+          newTag: ${{ env.IMAGE_VERSION }}
+        EOF
+    - run: kubectl kustomize .temp
+    - run: kubectl apply -k .temp
+    - run: kubectl rollout status deployment web demo database-pg18 -n bn2me --timeout=120s
+    - run: kubectl get deployment -n bn2me
+      if: success() || failure()
+    - run: kubectl get job -n bn2me
+      if: success() || failure()
+    - run: kubectl logs -l app.kubernetes.io/part-of=bn2me -n bn2me --all-containers --ignore-errors
+      if: failure() || runner.debug == '1'
 
   test-unit:
     name: Test / Unit
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: ./.github/actions/setup-node
       name: Setup Node.js environment
       with:
@@ -91,8 +145,8 @@ jobs:
 
   success:
     name: Success
-    needs: [build-node, lint, test-unit]
-    runs-on: ubuntu-latest
+    needs: [build-node, lint, test-compose, test-kubernetes, test-unit]
+    runs-on: ubuntu-24.04
     if: always()
     steps:
     - run: jq --exit-status 'all(.result == "success")' <<< '${{ toJson(needs) }}'
@@ -144,7 +198,7 @@ jobs:
       matrix:
         target: [ client ]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: ./.github/actions/setup-node
       name: Setup Node.js environment
       with:
@@ -167,7 +221,7 @@ jobs:
         body-includes: Publish / npm / ${{ matrix.target }}
     - name: Delete comment if found but nothing will be published
       if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id && !steps.publish.outputs.publish
-      uses: actions/github-script@v7
+      uses: actions/github-script@v8
       with:
         script: |
           github.rest.issues.deleteComment({
