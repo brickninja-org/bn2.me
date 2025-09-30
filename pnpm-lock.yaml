@@ -154,8 +154,8 @@ importers:
         specifier: 13.2.1
         version: 13.2.1
       aaguids:
-        specifier: 0.0.29
-        version: 0.0.29
+        specifier: 0.0.37
+        version: 0.0.37
       fumadocs-core:
         specifier: 15.6.8
         version: 15.6.8(@types/react@19.1.13)(next@15.5.4(@babel/core@7.28.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -3134,8 +3134,8 @@ packages:
   '@vitest/utils@3.2.4':
     resolution: {integrity: sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA==}
 
-  aaguids@0.0.29:
-    resolution: {integrity: sha512-Uh41viPf47YLdg4v/THUQiMmPbH91ZWVtSIgqpkfR4x6WZvVPRvP2VrBLUkyRgJ6Eo+MBVSI6+QJZKamc7FBdw==}
+  aaguids@0.0.37:
+    resolution: {integrity: sha512-SKMzIbjjH3vwyjUXkLwaZO8GkYXS+8TE7lJg0KePkGu4stiLjctZyXB6t5acPcENv9X2PVLT3J3kS2KCBSu5dA==}
 
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
@@ -9784,7 +9784,7 @@ snapshots:
       loupe: 3.2.1
       tinyrainbow: 2.0.0
 
-  aaguids@0.0.29: {}
+  aaguids@0.0.37: {}
 
   accepts@1.3.8:
     dependencies:
