@@ -108,27 +108,49 @@ jobs:
     needs: build-docker
     steps:
     - uses: actions/checkout@v5
+
     - uses: nolar/setup-k3d-k3s@v1
       with:
         version: v1.33
         github-token: ${{ secrets.GITHUB_TOKEN }}
-    - name: build temporary kustomization.yaml
+
+    - name: Create namespace and image pull secret
+      run: |
+        kubectl create namespace bn2me || true
+        kubectl create secret docker-registry ghcr-secret \
+          --docker-server=ghcr.io \
+          --docker-username=${{ github.actor }} \
+          --docker-password=${{ secrets.GITHUB_TOKEN }} \
+          --docker-email=ci@github.com \
+          -n bn2me
+        kubectl patch serviceaccount default \
+          -n bn2me \
+          -p '{"imagePullSecrets": [{"name": "ghcr-secret"}]}'
+
+    - name: Generate temporary kustomization.yaml
       run: |
         mkdir -p .temp
         cat <<EOF > .temp/kustomization.yaml
         resources:
-        - ../kubernetes/local
+          - ../kubernetes/local
         images:
-        - name: ghcr.io/brickninja-org/bn2.me/web
-          newTag: ${{ env.IMAGE_VERSION }}
-        - name: ghcr.io/brickninja-org/bn2.me/demo
-          newTag: ${{ env.IMAGE_VERSION }}
-        - name: ghcr.io/brickninja-org/bn2.me/database-migration
-          newTag: ${{ env.IMAGE_VERSION }}
+          - name: ghcr.io/brickninja-org/bn2.me/web
+            newTag: ${{ env.IMAGE_VERSION }}
+          - name: ghcr.io/brickninja-org/bn2.me/demo
+            newTag: ${{ env.IMAGE_VERSION }}
+          - name: ghcr.io/brickninja-org/bn2.me/database-migration
+            newTag: ${{ env.IMAGE_VERSION }}
         EOF
+
     - run: kubectl kustomize .temp
     - run: kubectl apply -k .temp
-    - run: kubectl rollout status deployment web demo database-pg18 -n bn2me --timeout=120s
+
+    - name: Wait for rollout
+      run: |
+        kubectl rollout status deployment/web -n bn2me --timeout=120s
+        kubectl rollout status deployment/demo -n bn2me --timeout=120s
+        kubectl rollout status deployment/database-pg18 -n bn2me --timeout=120s
+
     - run: kubectl get deployment -n bn2me
       if: success() || failure()
     - run: kubectl get job -n bn2me
