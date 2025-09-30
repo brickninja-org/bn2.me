@@ -1,5 +1,6 @@
 'use server';
 
+import type { Route } from 'next';
 import type { FormState } from '@brickninja-org/ui/components/form/Form';
 
 import { redirect } from 'next/navigation';
@@ -29,7 +30,7 @@ export async function addAccount(returnTo: string | undefined, requireVerificati
   // verify token
   let tokeninfo;
   try {
-    tokeninfo = { id: apiKey, accessToken: null, name: '', permissions: [] }; // await fetchGw2Api('/v2/tokeninfo', { accessToken: apiKey });
+    tokeninfo = { id: apiKey, accessToken: null, name: '', permissions: [] }; // await fetchRebrickableApi('/v2/tokeninfo', { accessToken: apiKey });
   } catch {
     return { error: 'Could not verify API key' };
   }
@@ -110,5 +111,5 @@ export async function addAccount(returnTo: string | undefined, requireVerificati
     return { error: 'Could not save api token' };
   }
 
-  redirect(returnTo ?? `/accounts/${accountId}`);
+  redirect((returnTo ?? `/accounts/${accountId}`) as Route);
 }

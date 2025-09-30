@@ -1,6 +1,7 @@
 'use server';
 import 'server-only';
 
+import type { Route } from 'next';
 import type { AuthenticationResponseJSON, AuthenticatorTransportFuture, PublicKeyCredentialCreationOptionsJSON, PublicKeyCredentialRequestOptionsJSON, RegistrationResponseJSON } from '@simplewebauthn/server';
 import type { Passkey } from '@bn2me/database';
 
@@ -179,7 +180,7 @@ export async function submitRegistration(params: RegistrationParams & { returnTo
   revalidatePath('/providers');
   // redirect
   // TODO: verify returnTo to only redirect to to trusted URLs
-  redirect(params.returnTo ?? (params.type === 'add' ? '/providers' : '/profile'));
+  redirect((params.returnTo ?? (params.type === 'add' ? '/providers' : '/profile')) as Route);
 }
 
 export async function submitAuthentication(challengeJwt: string, authentication: AuthenticationResponseJSON, returnTo?: string) {
@@ -239,7 +240,7 @@ export async function submitAuthentication(challengeJwt: string, authentication:
 
   // redirect
   // TODO: verify returnTo to only redirect to to trusted URLs
-  redirect(returnTo ?? '/profile');
+  redirect((returnTo ?? '/profile') as Route);
 }
 
 function mapPasskeyToCredentials({ id, transports }: Pick<Passkey, 'id' | 'transports'>) {

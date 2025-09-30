@@ -26,7 +26,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # typescript
-.tsbuildinfo
+*.tsbuildinfo
 next-env.d.ts
 
 # envs
