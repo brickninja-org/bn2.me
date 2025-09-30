@@ -11,19 +11,19 @@ export enum Scope {
 }
 
 export interface ClientInfo {
-  client_id: string;
-  client_secret?: string;
+  client_id: string,
+  client_secret?: string,
 }
 
 export interface Options {
-  url: string;
+  url: string,
 }
 
 export interface DPoPParams {
-  htm: 'POST' | 'GET' | (string & {});
-  htu: string;
-  nonce?: string;
-  accessToken?: string;
+  htm: 'POST' | 'GET' | (string & {}),
+  htu: string,
+  nonce?: string,
+  accessToken?: string,
 }
 
 export type DPoPCallback = (params: DPoPParams) => string | Promise<string>;

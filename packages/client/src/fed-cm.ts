@@ -2,12 +2,12 @@ import { Bn2MeError } from './error';
 import { Scope } from './types';
 
 export interface FedCMRequestOptions {
-  scopes: Scope[];
-  mediation?: CredentialMediationRequirement;
-  mode?: 'passive' | 'active';
-  signal?: AbortSignal;
-  code_challenge: string;
-  code_challenge_method: 'S256';
+  scopes: Scope[],
+  mediation?: CredentialMediationRequirement,
+  mode?: 'passive' | 'active',
+  signal?: AbortSignal,
+  code_challenge: string,
+  code_challenge_method: 'S256',
 }
 
 export class Bn2MeFedCM {

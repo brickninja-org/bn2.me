@@ -2,36 +2,36 @@ import type { DPoPCallback, Options } from './types';
 import { jsonOrError, okOrError } from './util';
 
 export interface UserResponse {
-  sub: string;
+  sub: string,
   user: {
-    id: string;
-    name: string;
-    email?: string;
-    emailVerified?: boolean;
+    id: string,
+    name: string,
+    email?: string,
+    emailVerified?: boolean,
   },
-  settings?: unknown;
+  settings?: unknown,
 }
 
 export interface AccountsResponse {
   accounts: {
-    id: string;
-    name: string;
-    verified?: boolean;
-    displayName?: string | null;
-  }[]
+    id: string,
+    name: string,
+    verified?: boolean,
+    displayName?: string | null,
+  }[],
 }
 
 export interface SubtokenOptions {
-  permissions?: string[];
+  permissions?: string[],
 }
 
 export interface SubtokenResponse {
-  subtoken: string;
-  expiresAt: string;
+  subtoken: string,
+  expiresAt: string,
 }
 
 export interface ApiOptions extends Options {
-  dpop?: DPoPCallback;
+  dpop?: DPoPCallback,
 }
 
 export class Bn2MeApi {

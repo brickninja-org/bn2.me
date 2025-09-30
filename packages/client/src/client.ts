@@ -5,80 +5,80 @@ import { type ClientInfo, type DPoPCallback, type Options, Scope } from './types
 import { jsonOrError } from './util';
 
 export interface AuthorizationUrlParams {
-  redirect_uri: string;
-  scopes: Scope[];
-  state?: string;
-  code_challenge?: string;
-  code_challenge_method?: 'S256';
-  dpop_jkt?: string;
-  prompt?: 'none' | 'consent'
-  include_granted_scopes?: boolean;
-  verified_accounts_only?: boolean;
+  redirect_uri: string,
+  scopes: Scope[],
+  state?: string,
+  code_challenge?: string,
+  code_challenge_method?: 'S256',
+  dpop_jkt?: string,
+  prompt?: 'none' | 'consent',
+  include_granted_scopes?: boolean,
+  verified_accounts_only?: boolean,
 }
 
 export interface PushedAuthorizationRequestParams extends AuthorizationUrlParams {
-  dpop?: DPoPCallback;
+  dpop?: DPoPCallback,
 }
 
 export interface AuthorizationUrlRequestUriParams {
-  request_uri: string;
+  request_uri: string,
 }
 
 export type TokenType = 'Bearer' | 'DPoP';
 
 export interface AuthTokenParams {
-  code: string;
-  token_type?: TokenType;
-  redirect_uri: string;
-  code_verifier?: string;
-  dpop?: DPoPCallback;
+  code: string,
+  token_type?: TokenType,
+  redirect_uri: string,
+  code_verifier?: string,
+  dpop?: DPoPCallback,
 }
 
 export interface RefreshTokenParams {
-  refresh_token: string;
-  refresh_token_type?: TokenType;
-  dpop?: DPoPCallback;
+  refresh_token: string,
+  refresh_token_type?: TokenType,
+  dpop?: DPoPCallback,
 }
 
 export interface TokenResponse {
-  access_token: string;
-  issued_token_type: 'urn:ietf:params:oauth:token-type:access_token';
-  token_type: TokenType;
-  expires_in: number;
-  refresh_token?: string;
-  scope: string;
+  access_token: string,
+  issued_token_type: 'urn:ietf:params:oauth:token-type:access_token',
+  token_type: TokenType,
+  expires_in: number,
+  refresh_token?: string,
+  scope: string,
 }
 
 export interface RevokeTokenParams {
-  token: string;
+  token: string,
 }
 
 export interface IntrospectTokenParams {
-  token: string;
+  token: string,
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace IntrospectTokenResponse {
   export interface Inactive {
-    active: false;
+    active: false,
   }
 
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace Active {
     export interface Common {
-      active: true;
-      scope: string;
-      client_id: string;
-      exp?: number;
+      active: true,
+      scope: string,
+      client_id: string,
+      exp?: number,
     }
 
     export interface Bearer extends Common {
-      token_type: 'Bearer';
+      token_type: 'Bearer',
     }
 
     export interface DPoP extends Common {
-      token_type: 'DPoP';
-      cnf: { jkt: string };
+      token_type: 'DPoP',
+      cnf: { jkt: string },
     }
   }
 
@@ -90,8 +90,8 @@ export type IntrospectTokenResponse =
   | IntrospectTokenResponse.Active;
 
 export interface PushedAuthorizationRequestResponse {
- request_uri: string;
-  expires_in: number;
+  request_uri: string,
+  expires_in: number,
 }
 
 export class Bn2MeClient {
@@ -215,8 +215,8 @@ export class Bn2MeClient {
       headers.DPoP = await dpop({
         htm: 'POST',
         htu: url.toString(),
-         // public clients have their refresh token DPoP bound, confidential clients not, as the secret is used proof of possession
-         accessToken: refresh_token_type === 'DPoP' ? refresh_token : undefined,
+        // public clients have their refresh token DPoP bound, confidential clients not, as the secret is used proof of possession
+        accessToken: refresh_token_type === 'DPoP' ? refresh_token : undefined,
       });
     }
 
