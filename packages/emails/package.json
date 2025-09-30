@@ -19,7 +19,7 @@
   "devDependencies": {
     "@brickninja-org/eslint-config": "0.1.1",
     "@brickninja-org/tsconfig": "0.0.2",
-    "@types/react": "19.1.14",
+    "@types/react": "19.1.16",
     "eslint": "9.36.0",
     "react-email": "4.2.8",
     "typescript": "5.8.3",
