@@ -1,5 +1,5 @@
-import { base64urlEncode } from './base64';
-import type { DPoPParams } from './types';
+import { base64urlEncode } from './base64.js';
+import type { DPoPParams } from './types.js';
 
 export function generateDPoPKeyPair() {
   return crypto.subtle.generateKey({
@@ -13,14 +13,12 @@ export async function createDPoPJwt({ htm, htu, nonce, accessToken }: DPoPParams
   const header = JSON.stringify({
     alg: 'ES256',
     typ: 'dpop+jwt',
-    jwk: await jwk(keyPair.publicKey),
+    jwk: await jwk(keyPair.publicKey)
   });
   const body = JSON.stringify({
     iat: Math.floor(Date.now() / 1000),
     jti: base64urlEncode(crypto.getRandomValues(new Uint8Array(32))),
-    htm,
-    htu,
-    nonce,
+    htm, htu, nonce,
     ath: accessToken
       ? base64urlEncode(await crypto.subtle.digest('SHA-256', stringToBuffer(accessToken)))
       : undefined,
@@ -36,7 +34,7 @@ export async function createDPoPJwt({ htm, htu, nonce, accessToken }: DPoPParams
 
 const encoder = new TextEncoder();
 
-function stringToBuffer(value: string): Uint8Array {
+function stringToBuffer(value: string) {
   return encoder.encode(value);
 }
 
