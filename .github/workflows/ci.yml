@@ -101,6 +101,40 @@ jobs:
     - name: Stop docker compose
       run: docker compose down
 
+  test-kubernetes:
+    name: Test / kubernetes
+    runs-on: ubuntu-24.04
+    needs: build-docker
+    steps:
+    - uses: actions/checkout@v5
+    - uses: nolar/setup-k3d-k3s@v1
+      with:
+        version: v1.33
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: build temporary kustomization.yaml
+      run: |
+        mkdir -p .temp
+        cat <<EOF > .temp/kustomization.yaml
+        resources:
+        - ../kubernetes/local
+        images:
+        - name: ghcr.io/brickninja-org/bn2.me/web
+          newTag: ${{ env.IMAGE_VERSION }}
+        - name: ghcr.io/brickninja-org/bn2.me/demo
+          newTag: ${{ env.IMAGE_VERSION }}
+        - name: ghcr.io/brickninja-org/bn2.me/database-migration
+          newTag: ${{ env.IMAGE_VERSION }}
+        EOF
+    - run: kubectl kustomize .temp
+    - run: kubectl apply -k .temp
+    - run: kubectl rollout status deployment web demo database-pg18 -n bn2me --timeout=120s
+    - run: kubectl get deployment -n bn2me
+      if: success() || failure()
+    - run: kubectl get job -n bn2me
+      if: success() || failure()
+    - run: kubectl logs -l app.kubernetes.io/part-of=bn2me -n bn2me --all-containers --ignore-errors
+      if: failure() || runner.debug == '1'
+
   test-unit:
     name: Test / Unit
     runs-on: ubuntu-24.04
@@ -117,7 +151,7 @@ jobs:
 
   success:
     name: Success
-    needs: [build-node, lint, test-compose, test-unit]
+    needs: [build-node, lint, test-compose, test-kubernetes, test-unit]
     runs-on: ubuntu-24.04
     if: always()
     steps:
