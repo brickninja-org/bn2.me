@@ -9,7 +9,9 @@
       "env": [
         "POSTGRES_URL",
         "PRISMA_DATABASE_URL",
-        "DATABASE_URL"
+        "DATABASE_URL",
+        "DEMO_CLIENT_ID",
+        "DEMO_CLIENT_SECRET"
       ]
     },
     "start": {
