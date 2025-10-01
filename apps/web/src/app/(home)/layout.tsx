@@ -23,6 +23,18 @@ export default function Layout({ children }: HomeLayoutProps) {
           text: 'Applications',
           type: 'menu',
         },
+        {
+          active: 'none',
+          on: 'nav',
+          text: 'Discover',
+          url: '/discover',
+        },
+        {
+          active: 'none',
+          on: 'nav',
+          text: 'Extension',
+          url: '/extension'
+        },
       ]}
     >
       <div aria-hidden="true" className="gradient-background home-gradient-background"/>
