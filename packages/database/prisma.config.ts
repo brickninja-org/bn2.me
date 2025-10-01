@@ -9,5 +9,4 @@ if (existsSync('.env')) {
 
 export default defineConfig({
   schema: './prisma/schema.prisma',
-  
 });

@@ -5,8 +5,11 @@
   ],
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
+      "dependsOn": [ "^build"],
+      "env": [
+        "POSTGRES_URL",
+        "PRISMA_DATABASE_URL",
+        "DATABASE_URL"
       ]
     },
     "start": {
