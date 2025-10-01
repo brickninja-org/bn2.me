@@ -130,8 +130,8 @@ importers:
         specifier: 0.0.5
         version: 0.0.5
       '@heroui/react':
-        specifier: 3.0.0-alpha.31
-        version: 3.0.0-alpha.31(@types/react-dom@19.1.9(@types/react@19.1.16))(@types/react@19.1.16)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(tailwindcss@4.1.13)
+        specifier: 3.0.0-alpha.32
+        version: 3.0.0-alpha.32(@types/react-dom@19.1.9(@types/react@19.1.16))(@types/react@19.1.16)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(tailwindcss@4.1.13)
       '@iconify-json/gravity-ui':
         specifier: 1.2.10
         version: 1.2.10
@@ -977,8 +977,8 @@ packages:
   '@formatjs/intl-localematcher@0.6.1':
     resolution: {integrity: sha512-ePEgLgVCqi2BBFnTMWPfIghu6FkbZnnBVhO2sSxvLfrdFw7wCHAHiDoM2h4NRgjbaY7+B7HgOLZGkK187pZTZg==}
 
-  '@heroui/react@3.0.0-alpha.31':
-    resolution: {integrity: sha512-xmon/cVQyTxuc34+VdHoS2fR7Y7+QAZbIsCyaV9/NxhhB5qpHytRMwqMvwDt/pR9+HwiofjWN9qCoJiPAmwOAQ==}
+  '@heroui/react@3.0.0-alpha.32':
+    resolution: {integrity: sha512-K91ihG6wrZbMlPWMposbE2lMWgQbqjTxpMDp9u7GZOkwTjPe3r2Y/hHicyCcvC5AIR3PN3bn+OZpc+pAnHWtkA==}
     peerDependencies:
       react: 19.1.1
       react-dom: 19.1.1
@@ -6763,7 +6763,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@heroui/react@3.0.0-alpha.31(@types/react-dom@19.1.9(@types/react@19.1.16))(@types/react@19.1.16)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(tailwindcss@4.1.13)':
+  '@heroui/react@3.0.0-alpha.32(@types/react-dom@19.1.9(@types/react@19.1.16))(@types/react@19.1.16)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(tailwindcss@4.1.13)':
     dependencies:
       '@internationalized/date': 3.9.0
       '@radix-ui/react-avatar': 1.1.10(@types/react-dom@19.1.9(@types/react@19.1.16))(@types/react@19.1.16)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
