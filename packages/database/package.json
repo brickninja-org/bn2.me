@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@brickninja-org/tsconfig": "0.0.2",
-    "@types/node": "22.18.7",
+    "@types/node": "22.18.8",
     "prisma": "6.16.3",
     "typescript": "5.9.2"
   }
