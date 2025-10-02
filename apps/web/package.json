@@ -23,7 +23,7 @@
     "@brickninja-org/ui": "0.0.27",
     "@brickset-api/fetch": "0.0.19",
     "@fedcm/server": "0.0.5",
-    "@heroui/react": "3.0.0-alpha.31",
+    "@heroui/react": "3.0.0-alpha.32",
     "@iconify-json/gravity-ui": "1.2.10",
     "@iconify/react": "6.0.2",
     "@react-email/render": "1.3.1",
