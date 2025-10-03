@@ -34,7 +34,7 @@
     "aaguids": "0.0.38",
     "fumadocs-core": "15.8.3",
     "fumadocs-mdx": "12.0.2",
-    "fumadocs-typescript": "4.0.10",
+    "fumadocs-typescript": "4.0.11",
     "fumadocs-ui": "15.8.2",
     "hast-util-to-jsx-runtime": "2.3.6",
     "jose": "6.1.0",
