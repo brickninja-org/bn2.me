@@ -32,7 +32,7 @@
     "@simplewebauthn/browser": "13.2.0",
     "@simplewebauthn/server": "13.2.1",
     "aaguids": "0.0.38",
-    "fumadocs-core": "15.8.2",
+    "fumadocs-core": "15.8.3",
     "fumadocs-mdx": "12.0.1",
     "fumadocs-typescript": "4.0.10",
     "fumadocs-ui": "15.8.2",
