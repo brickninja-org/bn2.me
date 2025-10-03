@@ -14,7 +14,6 @@ export const ExampleConnectCard = (props: ExampleConnectCardProps) => {
 
   return (
     <Card className={cn('bg-panel shadow-lg dark:shadow-none', className)}>
-      <Card.CloseButton className="pointer-events-none"/>
       <Card.Header>
         <div className="flex items-center gap-4">
           <ApplicationImage fileId={null} size={48}/>
