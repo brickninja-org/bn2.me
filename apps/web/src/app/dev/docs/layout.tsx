@@ -9,8 +9,18 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <DocsLayout
       tree={source.pageTree}
+      sidebar={{
+        collapsible: false,
+        defaultOpenLevel: 0,
+      }}
+      searchToggle={{ enabled: true }}
       themeSwitch={{ mode: 'light-dark' }}
       {...baseOptions}
+      nav={{
+        ...baseOptions.nav,
+        mode: 'top',
+        title: 'bn2.me',
+      }}
     >
       <div aria-hidden="true" className="gradient-background docs-gradient-background"/>
       {children}

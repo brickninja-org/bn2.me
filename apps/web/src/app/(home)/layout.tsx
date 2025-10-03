@@ -20,25 +20,25 @@ export default async function Layout({ children }: HomeLayoutProps) {
         {
           items: [
             {
-              text: 'Discover',
-              url: '/discover',
+              text: 'Getting Started',
+              url: '/dev/docs',
             }
           ],
           on: 'menu',
-          text: 'Applications',
+          text: 'Documentation',
           type: 'menu',
         },
         {
           active: 'none',
           on: 'nav',
-          text: 'Discover',
-          url: '/discover',
+          text: 'Documentation',
+          url: '/dev/docs',
         },
         {
-          active: 'none',
+          active: 'nested-url',
           on: 'nav',
-          text: 'Extension',
-          url: '/extension'
+          text: 'Showcase',
+          url: '/showcase',
         },
         {
           type: 'custom',
@@ -46,6 +46,7 @@ export default async function Layout({ children }: HomeLayoutProps) {
           secondary: true,
         },
       ]}
+      searchToggle={{ enabled: false }}
     >
       <div aria-hidden="true" className="gradient-background home-gradient-background"/>
       {children}

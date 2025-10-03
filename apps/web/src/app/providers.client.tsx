@@ -10,7 +10,7 @@ interface ProviderProps {
 
 export const Providers: FC<ProviderProps> = ({ children }) => {
   return (
-    <RootProvider search={{ enabled: false }}>
+    <RootProvider>
       {children}
     </RootProvider>
   );
