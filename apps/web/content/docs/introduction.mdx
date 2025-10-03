@@ -1,19 +1,35 @@
 ---
 title: Introduction
-description: TODO
+description:
+  This documentation is aimed at developers who want to integrate bn2.me into their applications,
+  so their users can use bn2.me to authorize the app to access the Rebrickable API on their behalf.
+
 ---
 
 bn2.me uses [OAuth 2.0](https://datatracker.ietf.org/doc/html/rfc6749) to manage the access between users and applications.
 
-This documentation is aimed at developers who want to integrate bn2.me into their applications,
-so their users can use bn2.me to authorize the app to access the Rebrickable API on their behalf.
-
 ## Use bn2.me in your application
 
-- [Register your application](/dev/docs/manage-apps#register).
-- [Get an access token](/dev/docs/access-tokens)  by navigating the user to the authorization page.
-- Access the Rebrickable API by [generating subtokens](/dev/docs/rebrickable-api) or
-  use other [bn2.me APIs](/dev/docs/api-reference).
+<Steps>
+<Step>
+
+[Register your application](/dev/docs/manage-apps#register).
+
+</Step>
+
+<Step>
+
+[Get an access token](/dev/docs/access-tokens)  by navigating the user to the authorization page.
+
+</Step>
+
+<Step>
+
+Access the Rebrickable API by [generating subtokens](/dev/docs/rebrickable-api) or
+use other [bn2.me APIs](/dev/docs/api-reference).
+
+</Step>
+</Steps>
 
 Most of these steps can be handled by using existing OAuth2 libraries or the bn2.me specific [client libraries](/dev/docs/libraries).
 

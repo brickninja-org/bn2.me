@@ -21,6 +21,16 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     },
   },
+  // eslint-disable-next-line require-await
+  async redirects() {
+    return [
+      {
+        destination: '/dev/docs/introduction',
+        permanent: true,
+        source: '/dev/docs',
+      },
+    ];
+  },
 };
 
 export default withMDX(nextConfig);
