@@ -35,7 +35,7 @@
     "fumadocs-core": "15.8.1",
     "fumadocs-mdx": "12.0.1",
     "fumadocs-typescript": "4.0.10",
-    "fumadocs-ui": "15.8.1",
+    "fumadocs-ui": "15.8.2",
     "hast-util-to-jsx-runtime": "2.3.6",
     "jose": "6.1.0",
     "next": "15.5.4",
