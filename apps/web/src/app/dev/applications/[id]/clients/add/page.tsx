@@ -22,7 +22,7 @@ export default async function ClientsAddPage({ params }: ClientsAddPageProps) {
 
   return (
     <>
-      <p>Check the <a href="/dev/docs/manage-apps#client">documentation</a> for more information on how to manage your OAuth2 clients.</p>
+      <p>Check the <Link href="/dev/docs/manage-apps#client">documentation</Link> for more information on how to manage your OAuth2 clients.</p>
 
       <Form action={addClient.bind(null, application.id)}>
         <div className="flex flex-col gap-4">

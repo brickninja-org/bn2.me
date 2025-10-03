@@ -1,4 +1,5 @@
 import { cache } from 'react';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { db } from '@/lib/db';
@@ -30,7 +31,7 @@ export default async function EditApplicationPage({ params }: EditClientPageProp
 
   return (
     <>
-      <p>Check the <a href="/dev/docs/manage-apps#client">documentation</a> for more information on how to manage your OAuth2 clients.</p>
+      <p>Check the <Link href="/dev/docs/manage-apps#client">documentation</Link> for more information on how to manage your OAuth2 clients.</p>
 
       <ClientForm
         applicationId={applicationId}

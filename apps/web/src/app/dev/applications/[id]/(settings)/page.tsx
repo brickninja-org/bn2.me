@@ -1,5 +1,7 @@
 import type { PageProps } from '@/lib/next';
 
+import Link from 'next/link';
+
 import { db } from '@/lib/db';
 import { getSessionOrRedirect } from '@/lib/session';
 
@@ -20,7 +22,7 @@ export default async function EditApplicationPage({ params }: EditApplicationPag
 
   return (
     <>
-      <p>Check the <a href="/dev/docs/manage-apps#settings">documentation</a> for more information on how to manage your application.</p>
+      <p>Check the <Link href="/dev/docs/manage-apps#settings">documentation</Link> for more information on how to manage your application.</p>
 
       <ApplicationForm
         application={application}

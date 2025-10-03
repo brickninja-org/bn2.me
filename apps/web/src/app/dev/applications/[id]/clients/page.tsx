@@ -29,7 +29,7 @@ export default async function EditApplicationPage({ params }: ClientsPageProps) 
 
   return (
     <>
-      <p>Check the <a href="/dev/docs/manage-apps#client">documentation</a> for more information on how to manage your OAuth2 client.</p>
+      <p>Check the <Link href="/dev/docs/manage-apps#client">documentation</Link> for more information on how to manage your OAuth2 client.</p>
 
       <div className="border border-gray-300 rounded-xs nth-[*]:not-first:border-t nth-[*]:not-first:border-gray-300">
         {clients.map((client) => (
