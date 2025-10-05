@@ -18,7 +18,7 @@ import { Scope } from '@bn2me/client';
 import { AuthorizationRequestState, AuthorizationRequestType, User, UserEmail } from '@bn2me/database';
 
 import { normalizeScopes } from 'src/app/(authorize)/oauth2/authorize/validate';
-import { LoginForm } from 'src/app/login/form';
+import { LoginForm } from '@/app/(home)/login/form';
 import { db } from '@/lib/db';
 import { isExpired } from '@/lib/date';
 import { getSession, getUser } from '@/lib/session';

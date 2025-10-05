@@ -1,6 +1,6 @@
 import type { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
-import { LoginError } from 'src/app/login/form';
+import { LoginError } from '@/app/(home)/login/form';
 import { createJwt } from './jwt';
 
 const baseDomain = process.env.BASE_DOMAIN;

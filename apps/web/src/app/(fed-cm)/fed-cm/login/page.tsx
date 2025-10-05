@@ -1,7 +1,7 @@
 import { Icon } from '@brickninja-org/ui';
 import { Headline } from '@brickninja-org/ui/components/headline/Headline';
 
-import { LoginForm } from 'src/app/login/form';
+import { LoginForm } from '@/app/(home)/login/form';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { getSession } from '@/lib/session';
 import { SetLoginStatus } from './SetLoginStatus';

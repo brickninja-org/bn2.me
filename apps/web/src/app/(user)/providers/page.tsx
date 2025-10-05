@@ -23,8 +23,8 @@ import { PasskeyRegistrationButton } from '@/components/passkey/PasskeyRegistrat
 import { providers as availableProviders } from 'src/app/auth/providers';
 import { GoogleIcon } from 'src/app/auth/google';
 import { GitHubIcon } from 'src/app/auth/github';
-import { login } from 'src/app/login/action';
-import { getLoginErrorCookieValue, LoginError } from 'src/app/login/form';
+import { login } from '@/app/(home)/login/action';
+import { getLoginErrorCookieValue, LoginError } from '@/app/(home)/login/form';
 
 const getUserData = cache(async () => {
   const currentSession = await getSessionOrRedirect();

@@ -1,3 +1,5 @@
+import type { Route } from 'next';
+
 import { cookies } from 'next/headers';
 import { redirect, unstable_rethrow as rethrow } from 'next/navigation';
 import { NextRequest, NextResponse, userAgent } from 'next/server';
@@ -11,7 +13,7 @@ import { sendEmailVerificationMail } from '@/lib/mail/email-verification';
 import { getSession } from '@/lib/session';
 
 import { ProviderProfile, providers } from 'src/app/auth/providers';
-import { LoginError } from 'src/app/login/form';
+import { LoginError } from '@/app/(home)/login/form';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,9 +40,9 @@ export async function GET(request: NextRequest, { params }: RouteContext<'/auth/
   }
 
   // handle return url
-  let returnUrl: string | undefined;
+  let returnUrl: Route | undefined;
   if(cookieStore.has(`${state}.return`)) {
-    returnUrl = cookieStore.get(`${state}.return`)?.value;
+    returnUrl = cookieStore.get(`${state}.return`)?.value as Route;
 
     cookieStore.delete(`${state}.return`);
   }

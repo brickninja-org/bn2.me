@@ -22,7 +22,7 @@ import { getBaseUrlFromHeaders } from '@/lib/url';
 import { db } from '@/lib/db';
 import { LoginErrorCookieName, authCookie, userCookie } from '@/lib/cookie';
 
-import { getPreviousUser } from 'src/app/login/form';
+import { getPreviousUser } from '@/app/(home)/login/form';
 import { createChallengeJwt, verifyChallengeJwt } from './challenge';
 
 async function getRelayingParty() {

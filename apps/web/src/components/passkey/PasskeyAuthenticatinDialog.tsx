@@ -1,7 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
-import type { LoginOptions } from 'src/app/login/action';
+import type { LoginOptions } from '@/app/(home)/login/action';
 
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
 import { browserSupportsWebAuthnAutofill, startAuthentication, startRegistration, WebAuthnAbortService } from '@simplewebauthn/browser';
