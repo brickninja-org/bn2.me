@@ -4,6 +4,7 @@ import { HomeLayout } from 'fumadocs-ui/layouts/home';
 
 import { baseOptions } from '@/app/layout.config';
 import { LinkButton } from '@/components/button';
+import { Iconify } from '@/components/iconify/iconify.client';
 import { getUser } from '@/lib/session';
 
 export interface HomeLayoutProps {
@@ -20,6 +21,7 @@ export default async function Layout({ children }: HomeLayoutProps) {
         {
           items: [
             {
+              icon: <Iconify icon="book"/>,
               text: 'Getting Started',
               url: '/dev/docs',
             }
@@ -32,7 +34,7 @@ export default async function Layout({ children }: HomeLayoutProps) {
           active: 'none',
           on: 'nav',
           text: 'Documentation',
-          url: '/dev/docs',
+          url: '/dev/docs/introduction',
         },
         {
           active: 'nested-url',
