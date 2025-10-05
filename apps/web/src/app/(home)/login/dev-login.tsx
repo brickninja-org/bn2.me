@@ -3,9 +3,10 @@
 import type { FC } from 'react';
 
 import { useCallback } from 'react';
+import { Button } from '@heroui/react';
 
-import { Button } from '@brickninja-org/ui/components/form/Button';
 import { devLogin } from './dev-login.action';
+import { Iconify } from '@/components/iconify/iconify.client';
 
 export interface DevLoginProps {
   username?: string,
@@ -25,6 +26,9 @@ export const DevLogin: FC<DevLoginProps> = ({ username }) => {
   }, [username]);
 
   return (
-    <Button className="w-full justify-center" icon="person" onClick={login}>Dev Login</Button>
+    <Button className="w-full justify-center" size="lg" variant="tertiary" onPress={login}>
+      <Iconify icon="person"/>
+      Dev Login
+    </Button>
   );
 };

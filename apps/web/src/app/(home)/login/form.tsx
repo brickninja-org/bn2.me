@@ -3,16 +3,17 @@ import type { LoginOptions } from './action';
 
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
+import { Callout } from 'fumadocs-ui/components/callout';
 
 import { UserProviderType } from '@bn2me/database';
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
 import { Button } from '@brickninja-org/ui/components/form/Button';
 import { Form } from '@brickninja-org/ui/components/form/Form';
-import { Notice } from '@brickninja-org/ui/components/notice/Notice';
 
 import { LoginErrorCookieName, UserCookieName } from '@/lib/cookie';
 import { db } from '@/lib/db';
 import { verifyJwt } from '@/lib/jwt';
+import { Iconify } from '@/components/iconify/iconify.client';
 import { NoticeContext } from '@/components/notice/NoticeContext';
 import { PasskeyAuthenticationButton } from '@/components/passkey/PasskeyAuthenticationButton';
 
@@ -21,7 +22,6 @@ import { GitHubIcon } from 'src/app/auth/github';
 import { GoogleIcon } from 'src/app/auth/google';
 import { login } from './action';
 import { DevLogin } from './dev-login';
-import { Icon } from '@brickninja-org/ui';
 
 interface LoginFormProps {
   returnTo?: string,
@@ -44,8 +44,8 @@ export const LoginForm: FC<LoginFormProps> = async ({ returnTo }) => {
   return (
     <div className="max-w-xl mx-auto">
       <Form action={login.bind(null, 'login', options)}>
-        {error === LoginError.Unknown && (<Notice type="error">Unknown error</Notice>)}
-        {error === LoginError.WrongUser && (<Notice type="error">The login provider you tried to login with is not linked to your user.<br/>Please login with the login provider you have previously used. You can add additional login providers in your profile after successfully logging in.</Notice>)}
+        {error === LoginError.Unknown && (<Callout type="error">Unknown error</Callout>)}
+        {error === LoginError.WrongUser && (<Callout type="error">The login provider you tried to login with is not linked to your user.<br/>Please login with the login provider you have previously used. You can add additional login providers in your profile after successfully logging in.</Callout>)}
         <NoticeContext>
           {prevUser ? (
             <div className="mb-4">
@@ -55,7 +55,7 @@ export const LoginForm: FC<LoginFormProps> = async ({ returnTo }) => {
               </FlexRow>
             </div>
           ) : (
-            <Notice type="warning">If you have used bn2.me before, please <b>use the same login provider</b> to access your account. You can add additional providers after login.</Notice>
+            <Callout type="warning">If you have used bn2.me before, please <b>use the same login provider</b> to access your account. You can add additional providers after login.</Callout>
           )}
 
           <div className="max-w-xl flex flex-col gap-2">
@@ -66,9 +66,9 @@ export const LoginForm: FC<LoginFormProps> = async ({ returnTo }) => {
           </div>
         </NoticeContext>
 
-        <div className="mt-4 py-3 px-4 border rounded-xs">
-          <FlexRow>
-            <Icon icon="cookie"/>
+        <div className="mt-4 py-3 px-4 border rounded-xl">
+          <FlexRow className="text-sm">
+            <Iconify icon="lucide:cookie"/>
             <p>By logging in you accept that bn2.me will store cookies in your browser.</p>
           </FlexRow>
         </div>
@@ -113,7 +113,7 @@ async function switchUser() {
   const cookieStore = await cookies();
   cookieStore.delete(UserCookieName);
 
-  revalidatePath('');
+  revalidatePath('/', 'layout');
 }
 
 export const enum LoginError {

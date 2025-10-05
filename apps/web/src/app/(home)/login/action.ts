@@ -1,5 +1,6 @@
 'use server';
 
+import type { Route } from 'next';
 import type { FormState } from '@brickninja-org/ui/components/form/Form';
 
 import { createHash, randomBytes } from 'crypto';
@@ -13,7 +14,7 @@ import { getSessionOrRedirect } from '@/lib/session';
 import { getBaseUrlFromHeaders } from '@/lib/url';
 
 import { getFormDataString } from '@/lib/form-data';
-import { providers } from 'src/app/auth/providers';
+import { providers } from '@/app/auth/providers';
 
 export interface LoginOptions {
   returnTo?: string,
@@ -87,7 +88,7 @@ export async function login(type: UserProviderRequestType, options: LoginOptions
 
   // redirect to provider
   console.log('redirecting to', authUrl);
-  redirect(authUrl);
+  redirect(authUrl as Route);
 }
 
 function generatePKCEParameters() {

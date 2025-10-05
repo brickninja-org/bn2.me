@@ -5,6 +5,7 @@ import { cache } from 'react';
 import { revalidatePath } from 'next/cache';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 import { Icon } from '@brickninja-org/ui';
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
@@ -20,7 +21,6 @@ import { db } from '@/lib/db';
 import { getFormDataString } from '@/lib/form-data';
 import { getSession, getSessionOrRedirect } from '@/lib/session';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { Steps } from '@/components/steps/Steps';
 
 const getUserData = cache(async () => {
   const { userId } = await getSessionOrRedirect();
@@ -50,10 +50,10 @@ export default async function ProfilePage() {
       <p>Thank you for signing up to bn2.me.</p>
 
       <Steps>
-        <div><Link href="/accounts/add">Add your Rebrickable Accounts</Link> by adding API Keys.</div>
-        <div><Link href="/discover">Discover</Link> applications that support bn2.me.</div>
-        <div>Get our <Link href="/extension">browser extension</Link> to generate subtokens for all other websites.</div>
-        <div>Are your a developer? <Link href="/dev/applications">Manage your own applications</Link>.</div>
+        <Step><Link href="/accounts/add">Add your Rebrickable Accounts</Link> by adding API Keys.</Step>
+        <Step><Link href="/discover">Discover</Link> applications that support bn2.me.</Step>
+        {/* <Step>Get our <Link href="/extension">browser extension</Link> to generate subtokens for all other websites.</Step> */}
+        <Step>Are your a developer? <Link href="/dev/applications">Manage your own applications</Link>.</Step>
       </Steps>
 
       <Headline id="settings">Settings</Headline>

@@ -4,15 +4,16 @@ import type { FC } from 'react';
 
 import { useCallback, useEffect, useState, useTransition } from 'react';
 import { browserSupportsWebAuthn, startAuthentication } from '@simplewebauthn/browser';
+import { Button, Spinner } from '@heroui/react';
 
 import { Dialog } from '@brickninja-org/ui/components/dialog/Dialog';
-import { Button } from '@brickninja-org/ui/components/form/Button';
 
-import { LoginOptions } from 'src/app/login/action';
+import { LoginOptions } from '@/app/(home)/login/action';
 import { NoticeContext, useShowNotice } from '@/components/notice/NoticeContext';
 
 import { getAuthenticationOptions, submitAuthentication } from './actions';
 import { PasskeyAuthenticationDialog } from './PasskeyAuthenticatinDialog';
+import { Iconify } from '../iconify/iconify.client';
 
 export interface PasskeyAuthenticationButtonProps {
   className?: string,
@@ -64,7 +65,8 @@ export const PasskeyAuthenticationButton: FC<PasskeyAuthenticationButtonProps> =
 
   return (
     <>
-      <Button icon={pending ? 'loading' : 'person-passkey'} disabled={!supportsPasskeys || pending} onClick={handleClick} className={className}>
+      <Button isPending={pending} isDisabled={!supportsPasskeys || pending} size="lg" variant="tertiary" onPress={handleClick} className={className}>
+        {pending ? <Spinner size="sm"/> : <Iconify icon="person-fill"/>}
         Login with Passkey
       </Button>
       <Dialog open={dialogOpen} title="Passkey" onClose={() => setDialogOpen(false)}>
