@@ -1,5 +1,3 @@
-import type { LayoutProps } from '@/lib/next';
-
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
 
 import { getSessionOrRedirect } from '@/lib/session';
@@ -10,7 +8,7 @@ import { ApplicationImage } from '@/components/application/ApplicationImage';
 import { Navbar } from './Navbar';
 import { getApplicationById } from './helper';
 
-export default async function DevApplicationDetailLayout({ params, children }: LayoutProps<{ id: string }>) {
+export default async function DevApplicationDetailLayout({ params, children }: LayoutProps<'/dev/applications/[id]'>) {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const application = await getApplicationById(id, session.userId);

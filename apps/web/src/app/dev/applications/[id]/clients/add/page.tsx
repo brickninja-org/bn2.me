@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import Link from 'next/link';
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
 import { SubmitButton } from '@brickninja-org/ui/components/form/buttons/SubmitButton';
@@ -6,16 +8,13 @@ import { Label } from '@brickninja-org/ui/components/form/Label';
 import { Select } from '@brickninja-org/ui/components/form/Select';
 import { TextInput } from '@brickninja-org/ui/components/form/TextInput';
 
-import type { PageProps } from '@/lib/next';
 import { getSessionOrRedirect } from '@/lib/session';
 
-import { ClientTypeOptions } from 'src/app/dev/applications/_actions/helper';
+import { ClientTypeOptions } from '@/app/dev/applications/_actions/helper';
 import { getApplicationById } from '../../helper';
 import { addClient } from '../_actions/add';
 
-type ClientsAddPageProps = PageProps<{ id: string }>;
-
-export default async function ClientsAddPage({ params }: ClientsAddPageProps) {
+export default async function ClientsAddPage({ params }: PageProps<'/dev/applications/[id]/clients/add'>) {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const application = await getApplicationById(id, session.userId);
@@ -43,7 +42,7 @@ export default async function ClientsAddPage({ params }: ClientsAddPageProps) {
   );
 }
 
-export async function generateMetadata({ params }: ClientsAddPageProps) {
+export async function generateMetadata({ params }: PageProps<'/dev/applications/[id]/clients/add'>): Promise<Metadata> {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const application = await getApplicationById(id, session.userId);

@@ -1,4 +1,4 @@
-import type { LayoutProps } from '@/lib/next';
+import type { Metadata } from 'next';
 
 import './globals.css';
 
@@ -15,7 +15,7 @@ const bitter = Bitter({
   variable: '--font-bitter',
 });
 
-export default function RootLayout({ children }: LayoutProps) {
+export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html dir="ltr" lang="en" className={bitter.variable} suppressHydrationWarning>
       <head>
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps) {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: {
     template: '%s · bn2.me',
     default: '',

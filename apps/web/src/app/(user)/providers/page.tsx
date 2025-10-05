@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { cache } from 'react';
 import { revalidatePath } from 'next/cache';
 
@@ -113,7 +115,7 @@ export default async function ProfilePage() {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Login Providers'
 };
 

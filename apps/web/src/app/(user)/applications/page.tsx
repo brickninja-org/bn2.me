@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { cache } from 'react';
 import Link from 'next/link';
 
@@ -90,6 +92,6 @@ export default async function ProfilePage() {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Applications',
 };

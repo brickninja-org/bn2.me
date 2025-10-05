@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import type { LayoutProps } from '@/lib/next';
 
 import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
+
 import { source } from '@/lib/source';
 import { baseOptions } from '@/app/layout.config';
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children }: LayoutProps<'/dev/docs'>) {
   return (
     <DocsLayout
       tree={source.pageTree}

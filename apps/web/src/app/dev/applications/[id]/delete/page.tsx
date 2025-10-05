@@ -1,4 +1,4 @@
-import type { PageProps } from '@/lib/next';
+import type { Metadata } from 'next';
 
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
 import { Form } from '@brickninja-org/ui/components/form/Form';
@@ -11,9 +11,7 @@ import { PageLayout } from '@/components/layout/PageLayout';
 import { deleteApplication } from './actions';
 import { getApplicationById } from '../helper';
 
-type DeleteApplicationPageProps = PageProps<{ id: string }>;
-
-export default async function DeleteApplicationPage({ params }: DeleteApplicationPageProps) {
+export default async function DeleteApplicationPage({ params }: PageProps<'/dev/applications/[id]'>) {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const app = await getApplicationById(id, session.userId);
@@ -34,7 +32,7 @@ export default async function DeleteApplicationPage({ params }: DeleteApplicatio
   );
 }
 
-export async function generateMetadata({ params }: DeleteApplicationPageProps) {
+export async function generateMetadata({ params }: PageProps<'/dev/applications/[id]'>): Promise<Metadata> {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const app = await getApplicationById(id, session.userId);

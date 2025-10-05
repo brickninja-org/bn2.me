@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import type { TokenResponse } from '@bn2me/client';
-import type { PageProps, SearchParams } from '@/lib/next';
+import type { SearchParams } from '@/lib/next';
 
 import { LinkButton } from '@brickninja-org/ui/components/form/Button';
 
@@ -21,7 +21,7 @@ async function getToken(code: string, isDPoP: boolean) {
   });
 }
 
-export default async function CallbackPage({ searchParams }: PageProps) {
+export default async function CallbackPage({ searchParams }: PageProps<'/callback'>) {
   const data = await parseSearchParams(await searchParams);
 
   return (

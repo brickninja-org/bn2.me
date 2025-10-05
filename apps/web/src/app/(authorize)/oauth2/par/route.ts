@@ -1,4 +1,4 @@
-import { handleOptionsRequest, handleRequest } from 'src/app/api/(oauth)/request';
+import { handleOptionsRequest, handleRequest } from '@/app/api/(oauth)/request';
 import { handleParRequest } from './par';
 
 export const dynamic = 'force-dynamic';

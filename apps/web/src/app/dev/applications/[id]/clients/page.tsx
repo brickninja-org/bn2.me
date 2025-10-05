@@ -1,14 +1,15 @@
-import type { PageProps } from '@/lib/next';
+import type { Metadata } from 'next';
 
-import { db } from '@/lib/db';
-import { getSessionOrRedirect } from '@/lib/session';
-import { notExpired } from '@/lib/db/helper';
 import Link from 'next/link';
-import { Code } from '@/components/layout/Code';
-import { FormatDate } from '@/components/format/FormatDate';
 import { Icon } from '@brickninja-org/ui';
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
 import { LinkButton } from '@brickninja-org/ui/components/form/Button';
+
+import { db } from '@/lib/db';
+import { notExpired } from '@/lib/db/helper';
+import { getSessionOrRedirect } from '@/lib/session';
+import { Code } from '@/components/layout/Code';
+import { FormatDate } from '@/components/format/FormatDate';
 import { getApplicationById } from '../helper';
 
 const getClients = (applicationId: string, ownerId: string) => {
@@ -20,9 +21,7 @@ const getClients = (applicationId: string, ownerId: string) => {
   });
 };
 
-type ClientsPageProps = PageProps<{ id: string }>;
-
-export default async function EditApplicationPage({ params }: ClientsPageProps) {
+export default async function EditApplicationPage({ params }: PageProps<'/dev/applications/[id]/clients'>) {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const clients = await getClients(id, session.userId);
@@ -50,7 +49,7 @@ export default async function EditApplicationPage({ params }: ClientsPageProps) 
   );
 }
 
-export async function generateMetadata({ params }: ClientsPageProps) {
+export async function generateMetadata({ params }: PageProps<'/dev/applications/[id]/clients'>): Promise<Metadata> {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const application = await getApplicationById(id, session.userId);

@@ -1,9 +1,11 @@
+import type { Metadata } from 'next';
+
 import { PageLayout } from '@/components/layout/PageLayout';
-import { PageProps, searchParamsToURLSearchParams } from '@/lib/next';
+import { searchParamsToURLSearchParams } from '@/lib/next';
 import { Icon } from '@brickninja-org/ui';
 import { ResolveFedCM } from './ResolveFedCM';
 
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page({ searchParams }: PageProps<'/fed-cm/authorize'>) {
   const code = searchParamsToURLSearchParams(await searchParams).get('code');
 
   return (
@@ -16,6 +18,6 @@ export default async function Page({ searchParams }: PageProps) {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Authorize',
 };

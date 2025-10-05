@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import type { LayoutProps } from '@/lib/next';
 
 import './globals.css';
 
@@ -20,7 +19,7 @@ const inter = Inter({
 
 export const dynamic = 'force-dynamic';
 
-export default function RootLayout({ children }: LayoutProps) {
+export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={cn(bitter.variable, inter.className)} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">

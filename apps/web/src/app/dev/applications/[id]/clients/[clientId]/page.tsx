@@ -1,9 +1,10 @@
+import type { Metadata } from 'next';
+
 import { cache } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { db } from '@/lib/db';
-import { PageProps } from '@/lib/next';
 import { getSessionOrRedirect } from '@/lib/session';
 
 import { getApplicationById } from '../../helper';
@@ -18,9 +19,7 @@ const getClient = cache((clientId: string, applicationId: string, ownerId: strin
   });
 });
 
-type EditClientPageProps = PageProps<{ id: string, clientId: string }>;
-
-export default async function EditApplicationPage({ params }: EditClientPageProps) {
+export default async function EditApplicationPage({ params }: PageProps<'/dev/applications/[id]/clients/[clientId]'>) {
   const { id: applicationId, clientId } = await params;
   const session = await getSessionOrRedirect();
   const client = await getClient(clientId, applicationId, session.userId);
@@ -43,7 +42,7 @@ export default async function EditApplicationPage({ params }: EditClientPageProp
   );
 }
 
-export async function generateMetadata({ params }: EditClientPageProps) {
+export async function generateMetadata({ params }: PageProps<'/dev/applications/[id]/clients/[clientId]'>): Promise<Metadata> {
   const { id: applicationId, clientId } = await params;
   const session = await getSessionOrRedirect();
   const application = await getApplicationById(applicationId, session.userId);

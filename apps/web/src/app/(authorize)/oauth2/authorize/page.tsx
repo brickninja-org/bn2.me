@@ -1,4 +1,5 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+
 import { redirect } from 'next/navigation';
 
 import { Notice } from '@brickninja-org/ui/components/notice/Notice';
@@ -7,7 +8,7 @@ import { AuthorizationRequest, AuthorizationRequestType } from '@bn2me/database'
 import { AuthorizationUrlRequestUriParams } from '@bn2me/client';
 
 import { db } from '@/lib/db';
-import { PageProps, SearchParams } from '@/lib/next';
+import { SearchParams } from '@/lib/next';
 import { OAuth2Error, OAuth2ErrorCode } from '@/lib/oauth/error';
 import { createRedirectUrl } from '@/lib/redirect-url';
 import { getSession } from '@/lib/session';
@@ -16,11 +17,11 @@ import { getApplicationByClientId, validateRequest } from './validate';
 import { assert } from '@/lib/oauth/assert';
 import { notExpired } from '@/lib/db/helper';
 import { expiresAt } from '@/lib/date';
-import { AuthorizationRequestData } from 'src/app/(authorize)/authorize/types';
-import { AuthorizationRequestExpiration, cancelAuthorizationRequest, createAuthorizationRequest } from 'src/app/(authorize)/authorize/helper';
-import { authorizeInternal } from 'src/app/(authorize)/authorize/[id]/actions';
+import { AuthorizationRequestData } from '@/app/(authorize)/authorize/types';
+import { AuthorizationRequestExpiration, cancelAuthorizationRequest, createAuthorizationRequest } from '@/app/(authorize)/authorize/helper';
+import { authorizeInternal } from '@/app/(authorize)/authorize/[id]/actions';
 
-export default async function AuthorizePage({ searchParams }: PageProps) {
+export default async function AuthorizePage({ searchParams }: PageProps<'/oauth2/authorize'>) {
   const { error, value } = await getAuthorizationRequest(await searchParams);
 
   // show unrecoverable error

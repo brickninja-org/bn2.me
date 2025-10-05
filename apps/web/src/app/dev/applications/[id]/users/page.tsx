@@ -1,14 +1,16 @@
-import { db } from '@/lib/db';
-import { PageProps } from '@/lib/next';
-import { getSessionOrRedirect } from '@/lib/session';
-import { getApplicationById } from '../helper';
-import { Code } from '@/components/layout/Code';
-import { Scope } from '@bn2me/client';
+import type { Metadata } from 'next';
+
 import Link from 'next/link';
+import { Scope } from '@bn2me/client';
 import { createDataTable } from '@brickninja-org/ui/components/table/DataTable';
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
+
+import { db } from '@/lib/db';
+import { getSessionOrRedirect } from '@/lib/session';
+import { Code } from '@/components/layout/Code';
 import { ColumnSelection } from '@/components/table/ColumnSelection';
 import { FormatDate } from '@/components/format/FormatDate';
+import { getApplicationById } from '../helper';
 
 const getUsers = (applicationId: string, ownerId: string) => {
   return db.applicationGrant.findMany({
@@ -28,9 +30,7 @@ const getUsers = (applicationId: string, ownerId: string) => {
   });
 };
 
-type ApplicationUsersPageProps = PageProps<{ id: string }>;
-
-export default async function ApplicationUsersPage({ params }: ApplicationUsersPageProps) {
+export default async function ApplicationUsersPage({ params }: PageProps<'/dev/applications/[id]/users'>) {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const application = await getApplicationById(id, session.userId);
@@ -78,7 +78,7 @@ export default async function ApplicationUsersPage({ params }: ApplicationUsersP
   );
 }
 
-export async function generateMetadata({ params }: ApplicationUsersPageProps) {
+export async function generateMetadata({ params }: PageProps<'/dev/applications/[id]/users'>): Promise<Metadata> {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const application = await getApplicationById(id, session.userId);

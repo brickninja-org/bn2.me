@@ -4,10 +4,9 @@ import { NextResponse } from 'next/server';
 import { Bn2Scopes, OptionsHandler, withAuthorization } from '../../../auth';
 import { Authorization } from '@bn2me/database';
 // import { fetchRebrickableApi } from '@/lib/rebrickable-api-request';
-import { RouteProps } from '@/lib/next';
 import { scopeToPermissions } from '@/lib/scope';
 
-export const GET = withAuthorization<RouteProps<{ id: string }>>({ oneOf: Bn2Scopes })(
+export const GET = withAuthorization<RouteContext<'/api/accounts/[id]/subtoken'>>({ oneOf: Bn2Scopes })(
   async (authorization: Authorization, request, { params }) => {
     const { id: accountId } = await params;
 

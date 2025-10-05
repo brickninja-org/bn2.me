@@ -1,4 +1,4 @@
-import type { PageProps } from '@/lib/next';
+import type { Metadata } from 'next';
 import type { FormState } from '@brickninja-org/ui/components/form/Form';
 
 import { cache } from 'react';
@@ -53,9 +53,7 @@ const getUser = cache(function getUser(id: string) {
   });
 });
 
-type AdminUserDetailPageProps = PageProps<{ id: string }>;
-
-export default async function AdminUserDetailPage({ params }: AdminUserDetailPageProps) {
+export default async function AdminUserDetailPage({ params }: PageProps<'/admin/users/[id]'>) {
   await ensureUserIsAdmin();
   const { id } = await params;
   const user = await getUser(id);
@@ -149,7 +147,7 @@ export default async function AdminUserDetailPage({ params }: AdminUserDetailPag
   );
 }
 
-export async function generateMetadata({ params }: AdminUserDetailPageProps) {
+export async function generateMetadata({ params }: PageProps<'/admin/users/[id]'>): Promise<Metadata> {
   await ensureUserIsAdmin();
   const { id } = await params;
   const user = await getUser(id);

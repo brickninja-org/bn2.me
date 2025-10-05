@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { redirect } from 'next/navigation';
 
 import { FlexRow } from '@brickninja-org/ui/components/flex-row/FlexRow';
@@ -9,7 +11,6 @@ import { TextInput } from '@brickninja-org/ui/components/form/TextInput';
 import { Icon } from '@brickninja-org/ui';
 
 import { bn2me, createDPoPJwt, getBn2MeUrl } from '@/lib/client';
-import { PageProps } from '@/lib/next';
 import { Client } from './client';
 
 export const dynamic = 'force-dynamic';
@@ -88,7 +89,7 @@ async function getSubtoken(accountId: string, data: FormData) {
   redirect(`https://brickset.com/api/v3.asmx?checkUserHash=${subtoken}`);
 }
 
-export default async function TokenPage({ searchParams: asyncSearchParams }: PageProps) {
+export default async function TokenPage({ searchParams: asyncSearchParams }: PageProps<'/token'>) {
   const searchParams = await asyncSearchParams;
 
   const access_token = Array.isArray(searchParams.access_token) ? searchParams.access_token[0] : searchParams.access_token;
@@ -163,6 +164,6 @@ export default async function TokenPage({ searchParams: asyncSearchParams }: Pag
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Token',
 };

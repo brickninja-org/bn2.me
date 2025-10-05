@@ -1,4 +1,4 @@
-import type { PageProps } from '@/lib/next';
+import type { Metadata } from 'next';
 
 import { cache } from 'react';
 import Link from 'next/link';
@@ -33,9 +33,7 @@ const getClient = cache(function getClient(id: string) {
   });
 });
 
-type AdminClientDetailPageProps = PageProps<{ id: string }>;
-
-export default async function AdminUserDetailPage({ params }: AdminClientDetailPageProps) {
+export default async function AdminUserDetailPage({ params }: PageProps<'/admin/clients/[id]'>) {
   await ensureUserIsAdmin();
   const { id } = await params;
   const client = await getClient(id);
@@ -67,7 +65,7 @@ export default async function AdminUserDetailPage({ params }: AdminClientDetailP
   );
 }
 
-export async function generateMetadata({ params }: AdminClientDetailPageProps) {
+export async function generateMetadata({ params }: PageProps<'/admin/clients/[id]'>): Promise<Metadata> {
   await ensureUserIsAdmin();
   const { id } = await params;
   const client = await getClient(id);

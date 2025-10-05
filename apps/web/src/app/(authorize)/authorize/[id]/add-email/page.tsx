@@ -2,10 +2,9 @@ import type { Metadata } from 'next';
 
 import { Headline } from '@brickninja-org/ui/components/headline/Headline';
 
-import { PageProps } from '@/lib/next';
-import { AddEmailForm } from 'src/app/(user)/emails/add/Form';
+import { AddEmailForm } from '@/app/(user)/emails/add/Form';
 
-export default async function AuthorizeAddEmailPage({ params }: PageProps<{ id: string }>) {
+export default async function AuthorizeAddEmailPage({ params }: PageProps<'/authorize/[id]/add-email'>) {
   const { id } = await params;
 
   return (

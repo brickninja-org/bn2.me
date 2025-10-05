@@ -1,11 +1,11 @@
-import type { LayoutProps } from '@/lib/next';
+import type { Metadata } from 'next';
 
 import { NavLayout } from '@/components/layout/NavLayout';
 import { Navigation } from '@/components/layout/Navigation';
 
 import { ensureUserIsAdmin } from './admin';
 
-export default async function AdminLayout({ children }: LayoutProps) {
+export default async function AdminLayout({ children }: LayoutProps<'/admin'>) {
   await ensureUserIsAdmin();
 
   return (
@@ -22,7 +22,7 @@ export default async function AdminLayout({ children }: LayoutProps) {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: {
     template: 'Admin: %s',
     default: '',

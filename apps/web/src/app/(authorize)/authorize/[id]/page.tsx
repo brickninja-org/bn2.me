@@ -1,4 +1,7 @@
-import { cache, FC, ReactNode } from 'react';
+import type { Metadata } from 'next';
+import type { FC, ReactNode } from 'react';
+
+import { cache } from 'react';
 import Link from 'next/link';
 
 import { IconProp } from '@brickninja-org/ui';
@@ -17,7 +20,6 @@ import { AuthorizationRequestState, AuthorizationRequestType, User, UserEmail } 
 import { normalizeScopes } from 'src/app/(authorize)/oauth2/authorize/validate';
 import { LoginForm } from 'src/app/login/form';
 import { db } from '@/lib/db';
-import { PageProps } from '@/lib/next';
 import { isExpired } from '@/lib/date';
 import { getSession, getUser } from '@/lib/session';
 import { hasBn2Scopes, scopeToPermissions } from '@/lib/scope';
@@ -36,7 +38,7 @@ const getPendingAuthorizationRequest = cache(
   }),
 );
 
-export default async function AuthorizePage({ params }: PageProps<{ id: string }>) {
+export default async function AuthorizePage({ params }: PageProps<'/authorize/[id]'>) {
   const { id } = await params;
 
   const selfUrl = `/authorize/${id}`;
@@ -202,7 +204,7 @@ export default async function AuthorizePage({ params }: PageProps<{ id: string }
   );
 }
 
-export async function generateMetadata({ params }: PageProps<{ id: string }>) {
+export async function generateMetadata({ params }: PageProps<'/authorize/[id]'>): Promise<Metadata> {
   const { id } = await params;
   const authRequest = await getPendingAuthorizationRequest(id);
 

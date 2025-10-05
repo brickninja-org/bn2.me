@@ -1,4 +1,4 @@
-import type { PageProps } from '@/lib/next';
+import type { Metadata } from 'next';
 
 import Link from 'next/link';
 
@@ -9,9 +9,7 @@ import { editApplication } from '../../_actions/edit';
 import { getApplicationById } from '../helper';
 import { ApplicationForm } from './Form';
 
-type EditApplicationPageProps = PageProps<{ id: string }>;
-
-export default async function EditApplicationPage({ params }: EditApplicationPageProps) {
+export default async function EditApplicationPage({ params }: PageProps<'/dev/applications/[id]'>) {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const application = await getApplicationById(id, session.userId);
@@ -33,7 +31,7 @@ export default async function EditApplicationPage({ params }: EditApplicationPag
   );
 }
 
-export async function generateMetadata({ params }: EditApplicationPageProps) {
+export async function generateMetadata({ params }: PageProps<'/dev/applications/[id]'>): Promise<Metadata> {
   const { id } = await params;
   const session = await getSessionOrRedirect();
   const application = await getApplicationById(id, session.userId);

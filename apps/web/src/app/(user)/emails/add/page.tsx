@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { Headline } from '@brickninja-org/ui/components/headline/Headline';
 
 import { PageLayout } from '@/components/layout/PageLayout';
@@ -14,6 +16,6 @@ export default function EmailsAddPage() {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Add Email'
 };

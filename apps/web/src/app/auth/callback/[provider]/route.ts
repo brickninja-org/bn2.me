@@ -8,7 +8,6 @@ import { Prisma, UserProviderRequestType } from '@bn2me/database';
 import { LoginErrorCookieName, authCookie, loginErrorCookie, userCookie } from '@/lib/cookie';
 import { db } from '@/lib/db';
 import { sendEmailVerificationMail } from '@/lib/mail/email-verification';
-import { RouteProps } from '@/lib/next';
 import { getSession } from '@/lib/session';
 
 import { ProviderProfile, providers } from 'src/app/auth/providers';
@@ -16,7 +15,7 @@ import { LoginError } from 'src/app/login/form';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: NextRequest, { params }: RouteProps<{ provider: string }>) {
+export async function GET(request: NextRequest, { params }: RouteContext<'/auth/callback/[provider]'>) {
   const { provider: providerName } = await params;
   const cookieStore = await cookies();
 

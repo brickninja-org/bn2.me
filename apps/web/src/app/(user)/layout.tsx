@@ -1,7 +1,5 @@
 'use client';
 
-import type { LayoutProps } from '@/lib/next';
-
 import { useSelectedLayoutSegment } from 'next/navigation';
 
 import { LinkButton } from '@brickninja-org/ui/components/form/Button';
@@ -10,7 +8,7 @@ import { Separator } from '@brickninja-org/ui/components/layout/Separator';
 import { ActiveButtonClass, NavLayout } from '@/components/layout/NavLayout';
 import { cn } from '@brickninja-org/ui';
 
-export default function ProfileLayout({ children }: LayoutProps) {
+export default function ProfileLayout({ children }: LayoutProps<'/'>) {
   const segment = useSelectedLayoutSegment();
 
   return (

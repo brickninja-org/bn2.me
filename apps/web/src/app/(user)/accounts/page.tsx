@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { cache } from 'react';
 import { redirect } from 'next/navigation';
 
@@ -71,6 +73,6 @@ export default async function ProfilePage() {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Accounts'
 };
