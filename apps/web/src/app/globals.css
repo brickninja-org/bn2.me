@@ -554,22 +554,8 @@
 }
 
 @layer base {
-    table > thead > tr > th {
-    @apply static top-(--table-sticky-top,48px) py-2 px-4 border-b-3 border-border font-medium text-left z-1 whitespace-nowrap;
-  }
-
-  table > tbody > tr > td,
-  table > thead > tr > th {
-    @apply h-[1px] py-2 px-4 font-normal text-left leading-normal transition-colors duration-100;
-  }
-
-  table > tbody > tr + tr > td,
-  table > tbody > tr + tr > th {
-    @apply border-t border-border;
-  }
-
   table > tbody > tr:hover td,
   table > tbody > tr:hover th {
-    @apply bg-default-hover;
+    @apply bg-panel-hover;
   }
 }
