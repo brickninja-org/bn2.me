@@ -4,11 +4,11 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { Headline } from '@brickninja-org/ui/components/headline/Headline';
-import { Notice } from '@brickninja-org/ui/components/notice/Notice';
 
 import { getSession } from '@/lib/session';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { LoginForm } from './form';
+import { Callout } from 'fumadocs-ui/components/callout';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,7 +26,7 @@ export default async function LoginPage() {
       <Headline id="login">Login</Headline>
 
       {cookieStore.has('logout') && (
-        <Notice>Logout successful</Notice>
+        <Callout>Logout successful</Callout>
       )}
 
       <LoginForm/>
