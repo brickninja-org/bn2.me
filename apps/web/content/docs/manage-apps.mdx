@@ -1,0 +1,97 @@
+---
+title: Manage Applications
+---
+
+## Register your Application
+
+The first step to getting an access token is to register your application.
+
+<Steps>
+
+<Step>
+You need to [Login](/login) to bn2.me.
+</Step>
+
+<Step>
+Go to the page to [Create a new application](/dev/applications/create).
+</Step>
+
+<Step>
+Enter the **name** of your application. The name must be unique and should tell the user what your application is about. The name is shown to the user when authorizing your Application and on their profile under [Authorized Applications](/dev/applications).
+</Step>
+
+<Step>
+Select the type of your application. See [Public vs. Confidential Applications](#public-vs-confidential-applications) for the differences. You cannot change this later.
+</Step>
+
+<Step>
+Select a verified email as contact email. This email will not be shown to users and is only used for important notifications about your application.
+</Step>
+
+<Step>
+Click **Create Application**.
+</Step>
+
+<Step>
+You will get redirected to the **Edit Application** page. You can also get there by locating your app on the [Your Applications](/dev/applications) page and clicking **Manage**.
+</Step>
+
+<Step>
+Note your **Client ID**. Client IDs are considered public and can be embedded in a web page's source.
+</Step>
+
+<Step>
+If you have created a **Confidential** application, you will also need a **Client Secret**. Click **Generate Client Secret**. You must copy the secret and store it somewhere safe.
+</Step>
+</Steps>
+
+<Callout type="warning">
+Treat client secrets as you would your password. You must keep it confidential and never expose it to users, even in an obscured form.
+</Callout>
+
+Your application is now created and you have everything necessary to [get a token](/dev/docs/access-token).
+
+## Application Settings ##
+
+These are the general settings of each application that can be edited after registering.
+
+| Setting | Description |
+|---------|-------------|
+| Image | A image to easily identify the application. The image will be resized to 128x128 pixels and svgs will be rasterized. The image will always be shown next to the application name. |
+| Name | The unique name of the application. Users will see the name when authorizing applications and in their list of authorized applications. |
+| Description | A short description of the application. Currently only shown on the [Showcase](/showcase) page. |
+| Contact Email | The contact email is used for important notifications about the application. This email is not shown to users. |
+| Public | Public applications will be shown on the [Showcase](/showcase) page. |
+| Public URL | The URL of the application. This is required for public applications. The URL will be shown on the [Showcase](/showcase) page. |
+| Privacy Policy URL | Link to the privacy policy of the applications. This is shown to users when authorizing the application. |
+| Terms of Service URL | Link to the terms of service of the applications. This is shown to users when authorizing the application. |
+
+## OAuth2 Client Settings ##
+
+These settings can be used to configure the OAuth2 client.
+
+| Setting | Description |
+|---------|-------------|
+| Type | The type of the OAuth2 client. This cannot be changed after creation. See [Public vs. Confidential Applications](#public-vs-confidential-applications) for the differences. |
+| Client ID | The public identifier of the OAuth2 client. This is used to identify the client to the authorization server. |
+| Client Secrets | The secrets used to authenticate the client to the authorization server. Only available for confidential clients. You can create multiple client secrets to allow for key rotation. Deleting a client secret instantly invalidates it. |
+| Redirect URIs | List of allowed redirect URLs. Only https URLs are allowed. The URLs have to be exact matches, including the port and path. Localhost URLs can use http and don&apos;t need to specify a port. |
+
+<Callout type="warning">
+Treat client secrets as you would your password. You must keep it confidential and never expose it to users, even in an obscured form.
+</Callout>
+
+## Public vs. Confidential Applications ##
+
+The [OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-2.1)  classifies applications as either confidential or public clients. The main difference is whether your application is able to hold secrets securely. You will need to select the type of application when registering a new application.
+
+**Confidential applications**  can hold credentials in a secure way without exposing them to unauthorized parties. They require a trusted backend server to store the secret(s).
+Confidential applications can use a Refresh Token to get a new access tokens after they expire.
+
+**Public applications**  cannot hold secrets securely.
+Public applications will not be able to refresh expired access tokens. Instead they will have to get the user to reauthorize the application. They are also required to use PKCE during the authorization flow.
+
+These are examples for public applications:
+
+- Native or mobile applications
+- JavaScript-based client-side web application (such as a single-page app)

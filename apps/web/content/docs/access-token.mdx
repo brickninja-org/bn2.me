@@ -1,0 +1,55 @@
+---
+title: Getting Access Tokens
+description: To access bn2.me APIs to get info about the user or generate subtokens to access the Rebrickable API you will need an access token. To get an access token the user needs to authorize your application first.
+---
+
+## User Authorization ##
+
+The first step is to get the user to authorize your application's access.
+Navigate the user to `https://bn2.me/oauth2/authorize`.
+If your application is a website, you can for example use a hyperlink, a form or a redirect.
+Native and mobile applications should open the default browser.
+Don't use iframes or embedded browsers.
+
+You can also used [Pushed Authorization Requests (PAR)](#par).
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `response_type` | `"code"` | Must be `code` for authorization code grant. Other grants are not supported at the moment. |
+| `redirect_uri` | `URL` | The URL the user will be redirected back to after authorization. Must be an exact URL configured in your application settings. |
+| `client_id` | `String` | The `client_id` of your application. |
+| `scope` | `String` | List of [scopes](/dev/docs/scopes) separate by spaces. |
+| `include_granted_scopes` (optional) | `"true"` | If this parameter is `true`, all previously authorized scopes will be included. This can be used for [incremental authorization](#incremental-authorization). |
+| `prompt` (optional) | `"none" \| "consent"` | `none` - no consent screen will be shown. If the user is not already authenticated this will return an error. `consent` - always display a consent screen. If no value is specified and the user has not previously authorized access, the user will be shown a consent screen. Subsequent requests will not show the consent screen. |
+| `state` (optional) | `String` | [PKCE](#pkce) challenge. Required for public applications. |
+| `code_challenge_method` (optional) | `"S256"` | [PKCE](#pkce) challenge method. Only SHA-256 is supported. |
+| `dpop_jkt` (optional) | `"true"` | JWK Thumbprint of the public key used for [DPoP](#dpop). |
+| `verified_accounts_only` (optional) | `"true"` | Only allow the user to select verified accounts. Shared accounts are hidden. This requires the [`accounts.verified` scope](/dev/docs/scopes). |
+
+An example request could look like this (URL formatted for better readability)
+
+```html
+https://bn2.me/oauth2/authorize
+  ?client_id=1554a6a3-8b8e-4ba7-9c5f-80576d081e10
+  &response_type=code
+  &redirect_uri=http%3A%2F%2Fexample.com%2Fcallback
+  &scope=identify%20email%20gw2%3Aaccount
+  &state=SaOfpb7Ny9mbV6EPCUDcnQ
+  &code_challenge=oFtTjTxdlTh9Tdwe8Rpbly8Qy8AL5rfKc9aueH_PmZM
+  &code_challenge_method=S256
+```
+
+If the user is not logged in to bn2.me yet, they get asked to login first. The user is then presented with a authorization page that shows your applications name, icon and all required scopes. If you requested any scopes for the Rebrickable API, the user has to select at least one Rebrickable account. The user can also add additional accounts on this screen.
+
+After the user authorized your application, the user is redirected to the specified `redirect_uri`.
+
+If the authorization was not successful, the url will contain the `error` and `error_description` query parameters detailing the reason.
+
+```html
+https://example.com/callback
+  ?state=SaOfpb7Ny9mbV6EPCUDcnQ
+  &iss=https%3A%2F%2Fgw2.me
+  &error=access_denied
+  &error_description=user+canceled+authorization
+```
+  
