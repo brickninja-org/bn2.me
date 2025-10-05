@@ -4,11 +4,12 @@ import type { FC } from 'react';
 
 import { useCallback, useEffect, useState, useTransition } from 'react';
 import { browserSupportsWebAuthn, startRegistration } from '@simplewebauthn/browser';
-import { Button } from '@brickninja-org/ui/components/form/Button';
+import { Button, Spinner } from '@heroui/react';
 
 import { useShowNotice } from '@/components/notice/NoticeContext';
 
 import { getRegistrationOptions, submitRegistration } from './actions';
+import { Iconify } from '../iconify/iconify.client';
 
 export const PasskeyRegistrationButton: FC = () => {
   const [supportsPasskeys, setSupportsPasskeys] = useState(false);
@@ -51,6 +52,9 @@ export const PasskeyRegistrationButton: FC = () => {
   }), [notice]);
 
   return (
-    <Button icon={pending ? 'loading' : 'person-passkey'} disabled={!supportsPasskeys || pending} onClick={handleClick}>Add Passkey</Button>
+    <Button isDisabled={!supportsPasskeys || pending} onPress={handleClick}>
+      {pending ? <Spinner/> : <Iconify icon="person-fill"/>}
+      Add Passkey
+    </Button>
   );
 };

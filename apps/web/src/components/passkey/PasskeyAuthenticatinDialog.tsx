@@ -6,13 +6,14 @@ import type { LoginOptions } from '@/app/(home)/login/action';
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
 import { browserSupportsWebAuthnAutofill, startAuthentication, startRegistration, WebAuthnAbortService } from '@simplewebauthn/browser';
 import { DialogActions } from '@brickninja-org/ui/components/dialog/DialogActions';
-import { Button } from '@brickninja-org/ui/components/form/Button';
+import { Button, Spinner } from '@heroui/react';
 import { Label } from '@brickninja-org/ui/components/form/Label';
 import { TextInput } from '@brickninja-org/ui/components/form/TextInput';
 
 import { useShowNotice } from '@/components/notice/NoticeContext';
 
 import { getAuthenticationOptions, getRegistrationOptions, submitAuthentication, submitRegistration } from './actions';
+import { Iconify } from '@/components/iconify/iconify.client';
 
 const invalidUsernameRegex = /[^a-z0-9._-]/i;
 
@@ -137,7 +138,10 @@ export const PasskeyAuthenticationDialog: FC<PasskeyAuthenticationDialogProps> =
       <>
         <p>Passkey authentication challenge has expired.</p>
         <DialogActions>
-          <Button onClick={() => initializeConditionalUi()} icon="revision">Restart</Button>
+          <Button onPress={() => initializeConditionalUi()}>
+            <Iconify icon="clock-arrow-rotate-left"/>
+            Restart
+          </Button>
         </DialogActions>
       </>
     );
@@ -157,12 +161,18 @@ export const PasskeyAuthenticationDialog: FC<PasskeyAuthenticationDialogProps> =
             </div>
           </Label>
           <DialogActions description={<>Already have an account? <Button onClick={() => setIsRegistration(false)}>Sign In</Button></>}>
-            <Button disabled={pending || username.length < 2 || isInvalidUsername} icon={pending ? 'loading' : 'person-passkey'} onClick={handleRegister}>Register</Button>
+            <Button isDisabled={pending || username.length < 2 || isInvalidUsername} onPress={handleRegister}>
+              {pending ? <Spinner/> : <Iconify icon="person-fill"/>}
+              Register
+            </Button>
           </DialogActions>
         </>
       ) : (
         <DialogActions description={<>Don&apos;t have an account? <Button onClick={() => setIsRegistration(true)}>Register Now</Button></>}>
-          <Button disabled={pending} icon={pending ? 'loading' : 'person-passkey'} onClick={handleAuthenticate}>Sign In</Button>
+          <Button isDisabled={pending} onPress={handleAuthenticate}>
+            {pending ? <Spinner/> : <Iconify icon="person-fill"/>}
+            Sign In
+          </Button>
         </DialogActions>
       )}
     </>

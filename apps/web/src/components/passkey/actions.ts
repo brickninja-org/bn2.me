@@ -68,7 +68,7 @@ export async function getRegistrationOptions(params: RegistrationParams): Promis
       userVerification: 'required'
     },
     extensions: {
-      credProps: true
+      credProps: true,
     },
   });
 
@@ -89,8 +89,6 @@ export async function getAuthenticationOptions(): Promise<{ options: PublicKeyCr
     allowCredentials: passkeys.map(mapPasskeyToCredentials),
     timeout: 3 * 60 * 1000, // 3 minutes
   });
-
-  console.log(options);
 
   return { options, challenge: await createChallengeJwt(options) };
 }
@@ -180,7 +178,7 @@ export async function submitRegistration(params: RegistrationParams & { returnTo
   revalidatePath('/providers');
   // redirect
   // TODO: verify returnTo to only redirect to to trusted URLs
-  redirect((params.returnTo ?? (params.type === 'add' ? '/providers' : '/profile')) as Route);
+  redirect(params.returnTo as Route ?? (params.type === 'add' ? '/providers' : '/profile'));
 }
 
 export async function submitAuthentication(challengeJwt: string, authentication: AuthenticationResponseJSON, returnTo?: string) {
@@ -240,7 +238,7 @@ export async function submitAuthentication(challengeJwt: string, authentication:
 
   // redirect
   // TODO: verify returnTo to only redirect to to trusted URLs
-  redirect((returnTo ?? '/profile') as Route);
+  redirect(returnTo as Route ?? '/profile');
 }
 
 function mapPasskeyToCredentials({ id, transports }: Pick<Passkey, 'id' | 'transports'>) {
