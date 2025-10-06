@@ -139,8 +139,8 @@ importers:
         specifier: 6.0.2
         version: 6.0.2(react@19.2.0)
       '@react-email/render':
-        specifier: 1.3.1
-        version: 1.3.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: 1.3.2
+        version: 1.3.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@rebrickableapi/fetch':
         specifier: 0.0.12
         version: 0.0.12(@rebrickableapi/types@0.0.11)
@@ -391,8 +391,8 @@ importers:
         specifier: 0.0.13
         version: 0.0.13(react@19.2.0)
       '@react-email/render':
-        specifier: 1.3.1
-        version: 1.3.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: 1.3.2
+        version: 1.3.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@react-email/row':
         specifier: 0.0.12
         version: 0.0.12(react@19.2.0)
@@ -2057,8 +2057,8 @@ packages:
     peerDependencies:
       react: 19.2.0
 
-  '@react-email/render@1.3.1':
-    resolution: {integrity: sha512-BOc/kanieEVyiuldFFvceriiBGBBVhe4JWWXCXE2ehLIqz+gSWD4rgCoXAGbJRnnVyyp4joPqK62bSfa88yonA==}
+  '@react-email/render@1.3.2':
+    resolution: {integrity: sha512-oq8/BD/I/YspeuBjjdLJG6xaf9tsPYk+VWu8/mX9xWbRN0t0ExKSVm9sEBL6RsCpndQA2jbY2VgPEreIrzUgqw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: 19.2.0
@@ -8218,7 +8218,7 @@ snapshots:
     dependencies:
       react: 19.2.0
 
-  '@react-email/render@1.3.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+  '@react-email/render@1.3.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
       html-to-text: 9.0.5
       prettier: 3.6.2
