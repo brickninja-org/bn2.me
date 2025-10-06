@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react';
-
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 
 import { baseOptions } from '@/app/layout.config';
@@ -7,11 +5,7 @@ import { LinkButton } from '@/components/button';
 import { Iconify } from '@/components/iconify/iconify.client';
 import { getUser } from '@/lib/session';
 
-export interface HomeLayoutProps {
-  children: ReactNode,
-}
-
-export default async function Layout({ children }: HomeLayoutProps) {
+export default async function Layout({ children }: LayoutProps<'/'>) {
   const user = await getUser();
 
   return (

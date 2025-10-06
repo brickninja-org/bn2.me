@@ -3,13 +3,13 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page';
 
-import { source } from '@/lib/source';
+import { docsSource } from '@/lib/source';
 
 // const apiStatusIcons = ['preview', 'new'];
 
-export default async function Page(props: { params: Promise<{ slug?: string[] }> }) {
+export default async function Page(props: PageProps<'/dev/docs/[[...slug]]'>) {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = docsSource.getPage(params.slug);
   if (!page) notFound();
 
   const MDXContent = page.data.body;
@@ -32,18 +32,18 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
   );
 }
 
-export async function generateMetadata(props: { params: Promise<{ slug?: string[] }> }): Promise<Metadata> {
+export async function generateMetadata(props: PageProps<'/dev/docs/[[...slug]]'>): Promise<Metadata> {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = docsSource.getPage(params.slug);
 
   if (!page) notFound();
 
   return {
-    description: page.data.description,
     title: page.data.title,
+    description: page.data.description,
   };
 }
 
 export function generateStaticParams() {
-  return source.generateParams().filter((param) => param.slug && param.slug.length > 0);
+  return docsSource.generateParams().filter((param) => param.slug && param.slug.length > 0);
 }
