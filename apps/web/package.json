@@ -39,7 +39,7 @@
     "hast-util-to-jsx-runtime": "2.3.6",
     "jose": "6.1.0",
     "next": "15.5.9",
-    "nodemailer": "7.0.9",
+    "nodemailer": "9.0.1",
     "react": "19.2.0",
     "react-aria-components": "1.13.0",
     "react-dom": "19.2.0",
