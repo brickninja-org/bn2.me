@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@bn2me/demo-setup": "workspace:*",
-    "@brickninja-org/eslint-config": "0.1.1",
+    "@brickninja-org/eslint-config": "0.2.0",
     "@brickninja-org/tsconfig": "0.0.2",
     "@next/eslint-plugin-next": "15.5.4",
     "@tailwindcss/postcss": "4.1.14",
