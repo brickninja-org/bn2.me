@@ -21,7 +21,7 @@ jobs:
       matrix:
         node: [ 20, 22 ]
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v5.1.0
     - uses: ./.github/actions/setup-node
       name: Setup Node.js environment
       with:
@@ -34,7 +34,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v5.1.0
     - uses: ./.github/actions/setup-node
       name: Setup Node.js environment
       with:
@@ -53,13 +53,13 @@ jobs:
       contents: read
       packages: write
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v5.1.0
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3
+      uses: docker/setup-qemu-action@v3.7.0
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      uses: docker/setup-buildx-action@v3.12.0
     - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
+      uses: docker/login-action@v3.7.0
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
@@ -81,9 +81,9 @@ jobs:
     runs-on: ubuntu-24.04
     needs: build-docker
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v5.1.0
     - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
+      uses: docker/login-action@v3.7.0
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
@@ -107,9 +107,9 @@ jobs:
     runs-on: ubuntu-24.04
     needs: build-docker
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v5.1.0
 
-    - uses: nolar/setup-k3d-k3s@v1
+    - uses: nolar/setup-k3d-k3s@v1.1.0
       with:
         version: v1.33
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -162,7 +162,7 @@ jobs:
     name: Test / Unit
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v5.1.0
     - uses: ./.github/actions/setup-node
       name: Setup Node.js environment
       with:
@@ -192,9 +192,9 @@ jobs:
         target: [ web, demo, database-migration ]
     steps:
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      uses: docker/setup-buildx-action@v3.12.0
     - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
+      uses: docker/login-action@v3.7.0
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
@@ -227,7 +227,7 @@ jobs:
       matrix:
         target: [ client ]
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v5.1.0
     - uses: ./.github/actions/setup-node
       name: Setup Node.js environment
       with:
@@ -242,7 +242,7 @@ jobs:
         GITHUB_EVENT_NAME: ${{ github.event_name }}
     - name: Find Comment
       if: github.event_name == 'pull_request'
-      uses: peter-evans/find-comment@v4
+      uses: peter-evans/find-comment@v4.0.0
       id: fc
       with:
         issue-number: ${{ github.event.pull_request.number }}
@@ -250,7 +250,7 @@ jobs:
         body-includes: Publish / npm / ${{ matrix.target }}
     - name: Delete comment if found but nothing will be published
       if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id && !steps.publish.outputs.publish
-      uses: actions/github-script@v8
+      uses: actions/github-script@v8.0.0
       with:
         script: |
           github.rest.issues.deleteComment({
@@ -260,7 +260,7 @@ jobs:
           })
     - name: Add comment with packages to be published
       if: github.event_name == 'pull_request' && steps.publish.outputs.publish
-      uses: peter-evans/create-or-update-comment@v5
+      uses: peter-evans/create-or-update-comment@v5.0.0
       with:
         comment-id: ${{ steps.fc.outputs.comment-id }}
         issue-number: ${{ github.event.pull_request.number }}
