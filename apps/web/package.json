@@ -30,7 +30,7 @@
     "@rebrickableapi/fetch": "0.0.12",
     "@rebrickableapi/types": "0.0.11",
     "@simplewebauthn/browser": "13.2.2",
-    "@simplewebauthn/server": "13.2.2",
+    "@simplewebauthn/server": "13.3.2",
     "aaguids": "0.0.38",
     "fumadocs-core": "15.8.5",
     "fumadocs-mdx": "12.0.3",
