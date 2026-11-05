@@ -54,7 +54,7 @@
   "devDependencies": {
     "@brickninja-org/eslint-config": "0.1.1",
     "@brickninja-org/tsconfig": "0.0.2",
-    "@brickset-api/types": "0.0.17",
+    "@brickset-api/types": "0.0.19",
     "@heroui/styles": "3.0.0-alpha.33",
     "@next/eslint-plugin-next": "15.5.4",
     "@simplewebauthn/types": "12.0.0",
